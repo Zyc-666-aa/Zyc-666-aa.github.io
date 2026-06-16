@@ -689,6 +689,7 @@ img { max-width: 100%; }
   min-height: 0;
   padding: clamp(22px, 4vw, 48px);
   border-right: 1px solid rgba(241,237,228,.22);
+  overflow-y: auto;
 }
 .project-viewer-copy > p:first-child {
   color: var(--accent);
@@ -698,8 +699,10 @@ img { max-width: 100%; }
 .project-viewer-copy h2 {
   margin: 0;
   font-family: var(--display);
-  font-size: clamp(3rem, 8vw, 7rem);
-  line-height: .88;
+  font-size: clamp(2.4rem, 5.4vw, 5.4rem);
+  line-height: .9;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .project-viewer-copy p[data-project-viewer-summary] {
   color: rgba(241,237,228,.72);

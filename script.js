@@ -3,8 +3,8 @@ const PROJECTS = [
     id: "haojing",
     index: "01",
     title: "濠鏡新紋",
-    label: "DIGITAL CULTURAL PRODUCT",
-    summary: "以澳门城市意象、莲花、海浪和装饰纹样为核心，延展出海报、书签、徽章、包装和文创产品应用。",
+    label: "CULTURAL PRODUCT / MACAU VISUAL SYSTEM",
+    summary: "以澳门城市意象、莲花、海浪和装饰纹样为视觉核心，建立一套偏东方装饰感的文创视觉系统，并延展到海报、书签、徽章、包装和产品应用。",
     kind: "design",
     images: [
       ["./haojing-01.jpg", "主视觉海报"],
@@ -22,8 +22,8 @@ const PROJECTS = [
     id: "lingnan",
     index: "02",
     title: "岭南山水",
-    label: "FASHION METHOD",
-    summary: "把岭南山水的水墨层次转译为服装调研、面辅料、立裁人台和效果图版式。",
+    label: "FASHION METHOD / LINGNAN LANDSCAPE",
+    summary: "从岭南山水的水墨层次、留白关系和地域气质出发，转译为服装调研、面辅料、立裁人台与效果图表达，呈现服装设计方法课的完整过程。",
     kind: "fashion",
     images: [
       ["./lingnan-cover.jpg", "封面"],
@@ -37,8 +37,8 @@ const PROJECTS = [
     id: "landao",
     index: "03",
     title: "浪道",
-    label: "MENSWEAR COLLECTION",
-    summary: "男装系列以海浪、工装和户外叙事为基底，强调蓝白水彩层次、廓形实验和成衣展示。",
+    label: "MENSWEAR COLLECTION / WATER COLOR SYSTEM",
+    summary: "男装系列以海浪、工装和户外叙事为基底，强调蓝白水彩层次、廓形实验和成衣展示，在柔和水色与功能结构之间建立系列统一感。",
     kind: "fashion",
     images: Array.from({ length: 10 }, (_, index) => [
       `./landao-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -49,8 +49,8 @@ const PROJECTS = [
     id: "lychee",
     index: "04",
     title: "一枚荔枝里的岭南",
-    label: "CULTURAL POSTER SERIES",
-    summary: "以苏轼诗句、荔枝、岭南城市记忆和粤港澳湾区意象为线索，形成一组偏文旅叙事的竖版海报。",
+    label: "CULTURAL POSTER SERIES / LINGNAN STORYTELLING",
+    summary: "以苏轼诗句、荔枝、岭南城市记忆和粤港澳大湾区意象为线索，将传统诗意、地方风物和当代城市连接起来，形成一组偏文旅叙事的竖版海报。",
     kind: "design",
     images: Array.from({ length: 6 }, (_, index) => [
       `./lychee-${String(index + 1).padStart(2, "0")}.png`,
@@ -62,7 +62,7 @@ const PROJECTS = [
     index: "05",
     title: "贝曜",
     label: "FASHION COLLECTION / MATERIAL STUDY",
-    summary: "以贝壳、珠光、柔性褶皱和浅色礼服结构为视觉核心，整理成封面、主题、灵感、色彩、面料和款式展板，补充服装方向作品的完整度。",
+    summary: "以贝壳、珠光、柔性褶皱和浅色礼服结构为视觉核心，整理成封面、主题、灵感、色彩、面料和款式展板，重点展示服装系列从氛围到材料的推导过程。",
     kind: "fashion",
     images: [
       ["./beiyao-cover.jpg", "封面"],
@@ -81,7 +81,7 @@ const PPT_PROJECTS = [
     index: "06",
     title: "智链梨园数字传承",
     label: "PDF DECK / AI HERITAGE EDUCATION",
-    summary: "基于 Unity 与 AI 的中小学粤剧数字化传承教学系统汇报材料，重点展示非遗教育、数字交互和系统化教学方案。",
+    summary: "基于 Unity 与 AI 的中小学粤剧数字化传承教学系统汇报材料，围绕非遗教育、数字交互和系统化教学方案组织页面，适合作为完整项目提案展示。",
     kind: "ppt",
     images: Array.from({ length: 14 }, (_, index) => [
       `./zhilian-liyuan-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -93,7 +93,7 @@ const PPT_PROJECTS = [
     index: "07",
     title: "Strata 结课汇报PPT",
     label: "PPT DECK / FASHION FINAL PRESENTATION",
-    summary: "城市街头机能风格男装系列结课汇报，展示从风格定位、视觉系统到成衣方案的完整汇报版式。",
+    summary: "城市街头机能风格男装系列结课汇报，展示从风格定位、视觉系统、面料工艺到成衣方案的完整汇报版式，强化 Strata 系列的品牌化表达。",
     kind: "ppt",
     images: Array.from({ length: 7 }, (_, index) => [
       `./strata-ppt-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -104,8 +104,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-ipo",
     index: "08",
     title: "IPO 解决方案",
-    label: "CLIENT PPT / FINANCE PRESENTATION",
-    summary: "面向商业汇报的金融类 PPT 视觉方案，强调版式秩序、信息层级和专业可信的图文组织。",
+    label: "PPT COMMISSION / FINANCE PRESENTATION",
+    summary: "面向商业汇报的金融类 PPT 视觉方案，强调版式秩序、信息层级和专业可信的图文组织，属于接单型商务文档案例。",
     kind: "ppt",
     images: Array.from({ length: 1 }, (_, index) => [
       `./ppt-case-ipo-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -116,8 +116,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-opera",
     index: "09",
     title: "Peking Opera Decoded",
-    label: "CLIENT PPT / CULTURE STORYTELLING",
-    summary: "京剧主题文化讲解型 PPT，偏叙事长图结构，用强视觉主题统领知识内容与段落节奏。",
+    label: "PPT COMMISSION / CULTURE STORYTELLING",
+    summary: "京剧主题文化讲解型 PPT，偏叙事长图结构，用强视觉主题统领知识内容与段落节奏，兼顾课堂展示和视觉吸引力。",
     kind: "ppt",
     images: Array.from({ length: 10 }, (_, index) => [
       `./ppt-case-opera-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -128,8 +128,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-literature",
     index: "10",
     title: "Stray Dog Redemption",
-    label: "CLIENT PPT / LITERATURE ANALYSIS",
-    summary: "文学与动漫主题分析型 PPT，使用暗色叙事、图像拼贴和长页结构组织复杂内容。",
+    label: "PPT COMMISSION / LITERATURE ANALYSIS",
+    summary: "文学与动漫主题分析型 PPT，使用暗色叙事、图像拼贴和长页结构组织复杂内容，让内容分析更有情绪和段落推进感。",
     kind: "ppt",
     images: Array.from({ length: 9 }, (_, index) => [
       `./ppt-case-literature-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -140,8 +140,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-youth",
     index: "11",
     title: "青春担当向未来",
-    label: "CLIENT PPT / CAMPUS PRESENTATION",
-    summary: "校园主题汇报 PPT，采用清爽图文排布与情绪化场景图，强化主题演讲的节奏感。",
+    label: "PPT COMMISSION / CAMPUS PRESENTATION",
+    summary: "校园主题汇报 PPT，采用清爽图文排布与情绪化场景图，强化主题演讲的节奏感，适合班会、汇报与主题展示场景。",
     kind: "ppt",
     images: Array.from({ length: 5 }, (_, index) => [
       `./ppt-case-youth-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -152,8 +152,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-strategy",
     index: "12",
     title: "市场策略汇报",
-    label: "CLIENT PPT / STRATEGY REPORT",
-    summary: "策略型商业汇报页面，处理数据、结构说明和阶段规划，突出信息清晰度与可读性。",
+    label: "PPT COMMISSION / STRATEGY REPORT",
+    summary: "策略型商业汇报页面，处理数据、结构说明和阶段规划，突出信息清晰度与可读性，重点展示商业信息的整理能力。",
     kind: "ppt",
     images: Array.from({ length: 2 }, (_, index) => [
       `./ppt-case-strategy-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -164,8 +164,8 @@ const PPT_PROJECTS = [
     id: "ppt-case-legacy",
     index: "13",
     title: "Henry Lee Legacy",
-    label: "CLIENT PPT / BIOGRAPHY DECK",
-    summary: "人物主题叙事 PPT，使用深色视觉线索与分段式长页内容，适合演讲和课堂展示。",
+    label: "PPT COMMISSION / BIOGRAPHY DECK",
+    summary: "人物主题叙事 PPT，使用深色视觉线索与分段式长页内容组织人物经历、观点和影响力，适合演讲与课堂展示。",
     kind: "ppt",
     images: Array.from({ length: 12 }, (_, index) => [
       `./ppt-case-legacy-slide-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -317,7 +317,7 @@ function renderProjectThumbs(project) {
     const button = document.createElement("button");
     button.className = "project-thumb-button";
     button.type = "button";
-    button.innerHTML = `<img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" /><span>${caption}</span>`;
+    button.innerHTML = `<img src="${src}" alt="${project.title} ${caption}" loading="eager" decoding="async" /><span>${caption}</span>`;
     button.addEventListener("click", () => setProjectViewerImage(index));
     projectViewerThumbs.append(button);
   });
