@@ -253,6 +253,7 @@ function renderProjects() {
     const row = document.createElement("button");
     row.className = "project-row";
     row.type = "button";
+    row.dataset.projectTitle = project.title;
     row.setAttribute("aria-haspopup", "dialog");
     const previewImages = project.images
       .slice(0, 3)
