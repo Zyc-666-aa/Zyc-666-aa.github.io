@@ -254,14 +254,21 @@ function renderProjects() {
     row.className = "project-row";
     row.type = "button";
     row.setAttribute("aria-haspopup", "dialog");
+    const previewImages = project.images
+      .slice(0, 3)
+      .map(([src, caption]) => `<img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" />`)
+      .join("");
     row.innerHTML = `
       <span class="project-number">${project.index}</span>
       <span class="project-copy">
+        <span class="project-tag">OPEN PROJECT</span>
         <h2>${project.title}</h2>
         <p>${project.label}</p>
+        <em>${String(project.images.length).padStart(2, "0")} IMAGES / CLICK TO VIEW</em>
       </span>
       <figure class="project-thumb">
         <img src="${project.images[0][0]}" alt="${project.title}" loading="lazy" decoding="async" />
+        <span class="project-preview-strip" aria-hidden="true">${previewImages}</span>
       </figure>
     `;
     row.addEventListener("click", () => openProjectViewer(index));
