@@ -176,11 +176,31 @@ const PPT_PROJECTS = [
 
 const ALL_PROJECTS = [...PROJECTS, ...PPT_PROJECTS];
 
+function assetStem(src) {
+  const clean = src.split("?")[0].split("#")[0];
+  const file = clean.split("/").pop() || clean;
+  return file.replace(/\.(png|jpe?g|webp|avif)$/i, "");
+}
+
+function webpVariant(src, folder) {
+  if (!src || src.startsWith("data:")) return src;
+  return `./${folder}/${assetStem(src)}.webp`;
+}
+
+function optimizedSrc(src) {
+  return webpVariant(src, "optimized");
+}
+
+function thumbSrc(src) {
+  return webpVariant(src, "thumbs");
+}
+
 const navLinks = [...document.querySelectorAll(".nav-links a")];
 const sectionTargets = navLinks
   .map((link) => [link.getAttribute("href"), document.querySelector(link.getAttribute("href"))])
   .filter(([, section]) => section);
 const sectionByHref = new Map(navLinks.map((link) => [link.getAttribute("href"), link]));
+let currentActiveHref = "";
 
 function updateActiveLink() {
   const marker = window.scrollY + window.innerHeight * 0.42;
@@ -190,6 +210,14 @@ function updateActiveLink() {
   }
   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) currentHref = "#contact";
   navLinks.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === currentHref));
+  if (currentHref !== currentActiveHref) {
+    currentActiveHref = currentHref;
+    const activeLink = sectionByHref.get(currentHref);
+    const nav = activeLink?.closest(".nav-links");
+    if (activeLink && nav && nav.scrollWidth > nav.clientWidth) {
+      activeLink.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+  }
 }
 
 let ticking = false;
@@ -258,7 +286,7 @@ function renderProjects() {
     row.setAttribute("aria-haspopup", "dialog");
     const previewImages = project.images
       .slice(0, 3)
-      .map(([src, caption]) => `<img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" />`)
+      .map(([src, caption]) => `<img src="${thumbSrc(src)}" alt="${project.title} ${caption}" loading="lazy" decoding="async" />`)
       .join("");
     row.innerHTML = `
       <span class="project-number">${project.index}</span>
@@ -269,7 +297,7 @@ function renderProjects() {
         <em>${String(project.images.length).padStart(2, "0")} IMAGES / CLICK TO VIEW</em>
       </span>
       <figure class="project-thumb">
-        <img src="${project.images[0][0]}" alt="${project.title}" loading="lazy" decoding="async" />
+        <img src="${thumbSrc(project.images[0][0])}" alt="${project.title}" loading="lazy" decoding="async" />
         <span class="project-preview-strip" aria-hidden="true">${previewImages}</span>
       </figure>
     `;
@@ -297,7 +325,7 @@ function renderPptProjects() {
         <span>${pageLabel}</span>
       </div>
       <figure>
-        <img src="${project.images[0][0]}" alt="${project.title}" loading="lazy" decoding="async" />
+        <img src="${thumbSrc(project.images[0][0])}" alt="${project.title}" loading="lazy" decoding="async" />
         <figcaption>COVER / SLIDE 01</figcaption>
       </figure>
     `;
@@ -311,19 +339,32 @@ function setProjectViewerImage(imageIndex) {
   if (!project || !projectViewerImage) return;
   activeProjectImageIndex = (imageIndex + project.images.length) % project.images.length;
   const [src, caption] = project.images[activeProjectImageIndex];
+  const nextSrc = optimizedSrc(src);
   projectViewerStage?.classList.add("is-loading");
-  projectViewerImage.onload = () => projectViewerStage?.classList.remove("is-loading");
-  projectViewerImage.onerror = () => projectViewerStage?.classList.remove("is-loading");
+  const releaseImageLoading = () => {
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => projectViewerStage?.classList.remove("is-loading"));
+    });
+  };
+  projectViewerImage.onload = async () => {
+    try {
+      await projectViewerImage.decode?.();
+    } catch (error) {
+      // Some browsers reject decode() for cached images even though they can paint.
+    }
+    releaseImageLoading();
+  };
+  projectViewerImage.onerror = releaseImageLoading;
   projectViewerImage.loading = "eager";
   projectViewerImage.decoding = "async";
   projectViewerImage.fetchPriority = "high";
-  projectViewerImage.src = src;
+  projectViewerImage.src = nextSrc;
   projectViewerImage.alt = `${project.title} ${caption}`;
-  window.requestAnimationFrame(() => {
-    if (projectViewerImage.complete && projectViewerImage.naturalWidth > 0) {
-      projectViewerStage?.classList.remove("is-loading");
+  window.setTimeout(() => {
+    if (projectViewerImage.currentSrc.endsWith(nextSrc.replace("./", "")) && projectViewerImage.complete && projectViewerImage.naturalWidth > 0) {
+      releaseImageLoading();
     }
-  });
+  }, 0);
   projectViewerCaption.textContent = caption;
   projectViewerCount.textContent = `${String(activeProjectImageIndex + 1).padStart(2, "0")} / ${String(project.images.length).padStart(2, "0")}`;
   projectViewerThumbs
@@ -337,7 +378,7 @@ function renderProjectThumbs(project) {
     const button = document.createElement("button");
     button.className = "project-thumb-button";
     button.type = "button";
-    button.innerHTML = `<img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" fetchpriority="low" /><span>${caption}</span>`;
+    button.innerHTML = `<img src="${thumbSrc(src)}" alt="${project.title} ${caption}" loading="lazy" decoding="async" fetchpriority="low" /><span>${caption}</span>`;
     button.addEventListener("click", () => setProjectViewerImage(index));
     projectViewerThumbs.append(button);
   });
@@ -378,6 +419,13 @@ document.querySelector("[data-project-viewer-next]")?.addEventListener("click", 
 projectViewer?.addEventListener("click", (event) => {
   if (event.target === projectViewer) closeProjectViewer();
 });
+document.querySelectorAll("[data-open-project]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const projectId = button.getAttribute("data-open-project");
+    const projectIndex = PROJECTS.findIndex((project) => project.id === projectId);
+    if (projectIndex >= 0) openProjectViewer(projectIndex);
+  });
+});
 
 const galleryRoot = document.querySelector("[data-gallery]");
 const flatGalleryItems = [];
@@ -398,12 +446,12 @@ function renderGallery() {
     `;
     const grid = article.querySelector(".gallery-grid");
     project.images.forEach(([src, caption]) => {
-      const item = { src, caption, projectTitle: project.title };
+      const item = { src: optimizedSrc(src), thumbSrc: thumbSrc(src), caption, projectTitle: project.title };
       flatGalleryItems.push(item);
       const card = document.createElement("button");
       card.className = "gallery-card glass-tilt";
       card.type = "button";
-      card.innerHTML = `<span><img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" /></span><figcaption>${caption}</figcaption>`;
+      card.innerHTML = `<span><img src="${item.thumbSrc}" alt="${project.title} ${caption}" loading="lazy" decoding="async" /></span><figcaption>${caption}</figcaption>`;
       card.addEventListener("click", () => openLightbox(flatGalleryItems.indexOf(item)));
       grid.append(card);
     });
@@ -471,7 +519,7 @@ function initPointerGlow() {
 
 function initGlassInteractions() {
   if (!supportsDesktopPointer()) return;
-  const targets = document.querySelectorAll(".glass-tilt, .ai-tool-grid article");
+  const targets = document.querySelectorAll(".glass-tilt, .ai-tool-grid article, .featured-case-copy, .featured-card");
   targets.forEach((target) => {
     target.addEventListener("pointermove", (event) => {
       const rect = target.getBoundingClientRect();
@@ -501,6 +549,8 @@ function initRevealOnScroll() {
   const targets = document.querySelectorAll(
     [
       ".ai-lab-heading",
+      ".featured-case-copy",
+      ".featured-card",
       ".ai-system-main",
       ".ai-tool-grid article",
       ".ai-evidence",
