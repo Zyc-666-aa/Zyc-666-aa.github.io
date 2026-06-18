@@ -58,8 +58,20 @@ const PROJECTS = [
     ]),
   },
   {
-    id: "beiyao",
+    id: "shiwan-yubingshao",
     index: "05",
+    title: "石湾玉冰烧",
+    label: "IP IMAGE DESIGN / CULTURAL PRODUCT",
+    summary: "围绕石湾玉冰烧酒瓶形象进行 IP 角色与文创延展设计，包含角色设定、三视图、表情延展、标准色与文创产品展示，作为普通项目收录在作品集中。",
+    kind: "design",
+    images: [
+      ["./shiwan-yubingshao-01.png", "IP形象设计"],
+      ["./shiwan-yubingshao-02.png", "文创产品展示"],
+    ],
+  },
+  {
+    id: "beiyao",
+    index: "06",
     title: "贝曜",
     label: "FASHION COLLECTION / MATERIAL STUDY",
     summary: "以贝壳、珠光、柔性褶皱和浅色礼服结构为视觉核心，整理成封面、主题、灵感、色彩、面料和款式展板，重点展示服装系列从氛围到材料的推导过程。",
@@ -78,7 +90,7 @@ const PROJECTS = [
 const PPT_PROJECTS = [
   {
     id: "zhilian-liyuan",
-    index: "06",
+    index: "07",
     title: "智链梨园数字传承",
     label: "PDF DECK / AI HERITAGE EDUCATION",
     summary: "基于 Unity 与 AI 的中小学粤剧数字化传承教学系统汇报材料，围绕非遗教育、数字交互和系统化教学方案组织页面，适合作为完整项目提案展示。",
@@ -90,7 +102,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "strata-ppt",
-    index: "07",
+    index: "08",
     title: "Strata 结课汇报PPT",
     label: "PPT DECK / FASHION FINAL PRESENTATION",
     summary: "城市街头机能风格男装系列结课汇报，展示从风格定位、视觉系统、面料工艺到成衣方案的完整汇报版式，强化 Strata 系列的品牌化表达。",
@@ -102,7 +114,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-ipo",
-    index: "08",
+    index: "09",
     title: "IPO 解决方案",
     label: "PPT COMMISSION / FINANCE PRESENTATION",
     summary: "面向商业汇报的金融类 PPT 视觉方案，强调版式秩序、信息层级和专业可信的图文组织，属于接单型商务文档案例。",
@@ -114,7 +126,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-opera",
-    index: "09",
+    index: "10",
     title: "Peking Opera Decoded",
     label: "PPT COMMISSION / CULTURE STORYTELLING",
     summary: "京剧主题文化讲解型 PPT，偏叙事长图结构，用强视觉主题统领知识内容与段落节奏，兼顾课堂展示和视觉吸引力。",
@@ -126,7 +138,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-literature",
-    index: "10",
+    index: "11",
     title: "Stray Dog Redemption",
     label: "PPT COMMISSION / LITERATURE ANALYSIS",
     summary: "文学与动漫主题分析型 PPT，使用暗色叙事、图像拼贴和长页结构组织复杂内容，让内容分析更有情绪和段落推进感。",
@@ -138,7 +150,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-youth",
-    index: "11",
+    index: "12",
     title: "青春担当向未来",
     label: "PPT COMMISSION / CAMPUS PRESENTATION",
     summary: "校园主题汇报 PPT，采用清爽图文排布与情绪化场景图，强化主题演讲的节奏感，适合班会、汇报与主题展示场景。",
@@ -150,7 +162,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-strategy",
-    index: "12",
+    index: "13",
     title: "市场策略汇报",
     label: "PPT COMMISSION / STRATEGY REPORT",
     summary: "策略型商业汇报页面，处理数据、结构说明和阶段规划，突出信息清晰度与可读性，重点展示商业信息的整理能力。",
@@ -162,7 +174,7 @@ const PPT_PROJECTS = [
   },
   {
     id: "ppt-case-legacy",
-    index: "13",
+    index: "14",
     title: "Henry Lee Legacy",
     label: "PPT COMMISSION / BIOGRAPHY DECK",
     summary: "人物主题叙事 PPT，使用深色视觉线索与分段式长页内容组织人物经历、观点和影响力，适合演讲与课堂展示。",
