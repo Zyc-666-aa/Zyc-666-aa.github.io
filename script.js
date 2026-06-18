@@ -251,7 +251,7 @@ function renderProjects() {
   projectList.textContent = "";
   PROJECTS.forEach((project, index) => {
     const row = document.createElement("button");
-    row.className = "project-row";
+    row.className = "project-row glass-tilt";
     row.type = "button";
     row.dataset.projectTitle = project.title;
     row.setAttribute("aria-haspopup", "dialog");
@@ -282,7 +282,7 @@ function renderPptProjects() {
   pptList.textContent = "";
   PPT_PROJECTS.forEach((project, index) => {
     const card = document.createElement("button");
-    card.className = "deck-card";
+    card.className = "deck-card glass-tilt";
     card.type = "button";
     card.setAttribute("aria-haspopup", "dialog");
     const pageLabel = project.images.length === 1 ? "01 PAGE" : `${String(project.images.length).padStart(2, "0")} PAGES`;
@@ -389,7 +389,7 @@ function renderGallery() {
       const item = { src, caption, projectTitle: project.title };
       flatGalleryItems.push(item);
       const card = document.createElement("button");
-      card.className = "gallery-card";
+      card.className = "gallery-card glass-tilt";
       card.type = "button";
       card.innerHTML = `<span><img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" /></span><figcaption>${caption}</figcaption>`;
       card.addEventListener("click", () => openLightbox(flatGalleryItems.indexOf(item)));
@@ -435,6 +435,101 @@ window.addEventListener("keydown", (event) => {
   if (lightbox && !lightbox.hidden && event.key === "Escape") closeLightbox();
 });
 
+function supportsDesktopPointer() {
+  return window.matchMedia("(hover: hover) and (pointer: fine)").matches && window.innerWidth > 760;
+}
+
+function initPointerGlow() {
+  if (!supportsDesktopPointer()) return;
+  const glow = document.createElement("div");
+  glow.className = "cursor-glow";
+  glow.setAttribute("aria-hidden", "true");
+  document.body.append(glow);
+
+  window.addEventListener("pointermove", (event) => {
+    document.documentElement.style.setProperty("--glow-x", `${event.clientX}px`);
+    document.documentElement.style.setProperty("--glow-y", `${event.clientY}px`);
+    glow.classList.add("is-visible");
+  });
+
+  window.addEventListener("pointerleave", () => {
+    glow.classList.remove("is-visible");
+  });
+}
+
+function initGlassInteractions() {
+  if (!supportsDesktopPointer()) return;
+  const targets = document.querySelectorAll(".glass-tilt, .ai-tool-grid article");
+  targets.forEach((target) => {
+    target.addEventListener("pointermove", (event) => {
+      const rect = target.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      const maxTilt = target.classList.contains("project-row") ? 2.2 : 4.2;
+      target.style.setProperty("--spot-x", `${Math.round(x * 100)}%`);
+      target.style.setProperty("--spot-y", `${Math.round(y * 100)}%`);
+      target.style.setProperty("--tilt-x", `${((x - 0.5) * maxTilt).toFixed(2)}deg`);
+      target.style.setProperty("--tilt-y", `${((0.5 - y) * maxTilt).toFixed(2)}deg`);
+    });
+
+    target.addEventListener("pointerleave", () => {
+      target.style.removeProperty("--spot-x");
+      target.style.removeProperty("--spot-y");
+      target.style.removeProperty("--tilt-x");
+      target.style.removeProperty("--tilt-y");
+      target.classList.remove("is-pressed");
+    });
+
+    target.addEventListener("pointerdown", () => target.classList.add("is-pressed"));
+    target.addEventListener("pointerup", () => target.classList.remove("is-pressed"));
+  });
+}
+
+function initRevealOnScroll() {
+  const targets = document.querySelectorAll(
+    [
+      ".ai-lab-heading",
+      ".ai-system-main",
+      ".ai-tool-grid article",
+      ".ai-evidence",
+      ".section-heading",
+      ".project-row",
+      ".deck-card",
+      ".resume-hero",
+      ".resume-card",
+      ".timeline article",
+      ".gallery-category",
+      ".award-list article",
+      ".contact h2",
+      ".contact-grid",
+      ".wechat-card",
+    ].join(",")
+  );
+  if (!targets.length) return;
+
+  targets.forEach((target) => target.classList.add("reveal-item"));
+  if (!("IntersectionObserver" in window)) {
+    targets.forEach((target) => target.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+
+  targets.forEach((target) => observer.observe(target));
+}
+
 renderProjects();
 renderPptProjects();
 renderGallery();
+initPointerGlow();
+initGlassInteractions();
+initRevealOnScroll();
