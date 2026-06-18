@@ -294,7 +294,10 @@ function renderProjects() {
     const row = document.createElement("button");
     row.className = "project-row glass-tilt";
     row.type = "button";
+    row.id = `case-${project.id}`;
+    row.dataset.projectId = project.id;
     row.dataset.projectTitle = project.title;
+    row.setAttribute("aria-label", `打开项目：${project.title}`);
     row.setAttribute("aria-haspopup", "dialog");
     const previewImages = project.images
       .slice(0, 3)
@@ -325,6 +328,9 @@ function renderPptProjects() {
     const card = document.createElement("button");
     card.className = "deck-card glass-tilt";
     card.type = "button";
+    card.id = `deck-${project.id}`;
+    card.dataset.projectId = project.id;
+    card.setAttribute("aria-label", `打开PPT案例：${project.title}`);
     card.setAttribute("aria-haspopup", "dialog");
     const pageLabel = project.images.length === 1 ? "01 PAGE" : `${String(project.images.length).padStart(2, "0")} PAGES`;
     card.innerHTML = `
@@ -372,6 +378,7 @@ function setProjectViewerImage(imageIndex) {
   projectViewerImage.fetchPriority = "high";
   projectViewerImage.src = nextSrc;
   projectViewerImage.alt = `${project.title} ${caption}`;
+  projectViewerImage.title = "点击查看下一张；左右方向键切换图片";
   window.setTimeout(() => {
     if (projectViewerImage.currentSrc.endsWith(nextSrc.replace("./", "")) && projectViewerImage.complete && projectViewerImage.naturalWidth > 0) {
       releaseImageLoading();
@@ -425,18 +432,17 @@ function stepProject(delta) {
   openProjectViewer(nextIndex);
 }
 
+function stepProjectImage(delta) {
+  if (activeProjectIndex < 0) return;
+  setProjectViewerImage(activeProjectImageIndex + delta);
+}
+
 document.querySelector("[data-project-viewer-close]")?.addEventListener("click", closeProjectViewer);
 document.querySelector("[data-project-viewer-prev]")?.addEventListener("click", () => stepProject(-1));
 document.querySelector("[data-project-viewer-next]")?.addEventListener("click", () => stepProject(1));
+projectViewerImage?.addEventListener("click", () => stepProjectImage(1));
 projectViewer?.addEventListener("click", (event) => {
   if (event.target === projectViewer) closeProjectViewer();
-});
-document.querySelectorAll("[data-open-project]").forEach((button) => {
-  button.addEventListener("click", () => {
-    const projectId = button.getAttribute("data-open-project");
-    const projectIndex = PROJECTS.findIndex((project) => project.id === projectId);
-    if (projectIndex >= 0) openProjectViewer(projectIndex);
-  });
 });
 
 const galleryRoot = document.querySelector("[data-gallery]");
@@ -500,8 +506,14 @@ lightbox?.addEventListener("click", (event) => {
 window.addEventListener("keydown", (event) => {
   if (projectViewer && !projectViewer.hidden) {
     if (event.key === "Escape") closeProjectViewer();
-    if (event.key === "ArrowLeft") setProjectViewerImage(activeProjectImageIndex - 1);
-    if (event.key === "ArrowRight") setProjectViewerImage(activeProjectImageIndex + 1);
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      event.shiftKey ? stepProject(-1) : stepProjectImage(-1);
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      event.shiftKey ? stepProject(1) : stepProjectImage(1);
+    }
     return;
   }
   if (lightbox && !lightbox.hidden && event.key === "Escape") closeLightbox();
@@ -531,7 +543,7 @@ function initPointerGlow() {
 
 function initGlassInteractions() {
   if (!supportsDesktopPointer()) return;
-  const targets = document.querySelectorAll(".glass-tilt, .ai-tool-grid article, .featured-case-copy, .featured-card");
+  const targets = document.querySelectorAll(".glass-tilt, .ai-tool-grid article");
   targets.forEach((target) => {
     target.addEventListener("pointermove", (event) => {
       const rect = target.getBoundingClientRect();
@@ -561,8 +573,6 @@ function initRevealOnScroll() {
   const targets = document.querySelectorAll(
     [
       ".ai-lab-heading",
-      ".featured-case-copy",
-      ".featured-card",
       ".ai-system-main",
       ".ai-tool-grid article",
       ".ai-evidence",
