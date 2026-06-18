@@ -243,6 +243,7 @@ const projectViewerImage = document.querySelector("[data-project-viewer-image]")
 const projectViewerCaption = document.querySelector("[data-project-viewer-caption]");
 const projectViewerCount = document.querySelector("[data-project-viewer-count]");
 const projectViewerThumbs = document.querySelector("[data-project-viewer-thumbs]");
+const projectViewerStage = document.querySelector(".project-viewer-stage");
 let activeProjectIndex = -1;
 let activeProjectImageIndex = 0;
 
@@ -310,11 +311,19 @@ function setProjectViewerImage(imageIndex) {
   if (!project || !projectViewerImage) return;
   activeProjectImageIndex = (imageIndex + project.images.length) % project.images.length;
   const [src, caption] = project.images[activeProjectImageIndex];
+  projectViewerStage?.classList.add("is-loading");
+  projectViewerImage.onload = () => projectViewerStage?.classList.remove("is-loading");
+  projectViewerImage.onerror = () => projectViewerStage?.classList.remove("is-loading");
   projectViewerImage.loading = "eager";
   projectViewerImage.decoding = "async";
   projectViewerImage.fetchPriority = "high";
   projectViewerImage.src = src;
   projectViewerImage.alt = `${project.title} ${caption}`;
+  window.requestAnimationFrame(() => {
+    if (projectViewerImage.complete && projectViewerImage.naturalWidth > 0) {
+      projectViewerStage?.classList.remove("is-loading");
+    }
+  });
   projectViewerCaption.textContent = caption;
   projectViewerCount.textContent = `${String(activeProjectImageIndex + 1).padStart(2, "0")} / ${String(project.images.length).padStart(2, "0")}`;
   projectViewerThumbs
