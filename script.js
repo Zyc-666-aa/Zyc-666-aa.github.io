@@ -310,6 +310,9 @@ function setProjectViewerImage(imageIndex) {
   if (!project || !projectViewerImage) return;
   activeProjectImageIndex = (imageIndex + project.images.length) % project.images.length;
   const [src, caption] = project.images[activeProjectImageIndex];
+  projectViewerImage.loading = "eager";
+  projectViewerImage.decoding = "async";
+  projectViewerImage.fetchPriority = "high";
   projectViewerImage.src = src;
   projectViewerImage.alt = `${project.title} ${caption}`;
   projectViewerCaption.textContent = caption;
@@ -325,7 +328,7 @@ function renderProjectThumbs(project) {
     const button = document.createElement("button");
     button.className = "project-thumb-button";
     button.type = "button";
-    button.innerHTML = `<img src="${src}" alt="${project.title} ${caption}" loading="eager" decoding="async" /><span>${caption}</span>`;
+    button.innerHTML = `<img src="${src}" alt="${project.title} ${caption}" loading="lazy" decoding="async" fetchpriority="low" /><span>${caption}</span>`;
     button.addEventListener("click", () => setProjectViewerImage(index));
     projectViewerThumbs.append(button);
   });
