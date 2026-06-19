@@ -117,7 +117,7 @@ const PPT_PROJECTS = [
     index: "09",
     title: "IPO 解决方案",
     label: "PPT COMMISSION / FINANCE PRESENTATION",
-    summary: "金融/上市顾问类 PPT 案例，展示封面、公司介绍、服务范围、IPO 工作流程、香港上市要求、18C 制度说明、案例页与打码联系页。涉及客户、联系人和项目细节的页面已做遮挡处理。",
+    summary: "金融/上市顾问类 PPT 案例，展示公司介绍、服务范围、IPO 流程、上市规则与打码案例页。涉及客户、联系人和项目细节的内容已遮挡处理。",
     kind: "ppt",
     images: [
       ["./ppt-case-ipo-slide-01.jpg", "封面"],
