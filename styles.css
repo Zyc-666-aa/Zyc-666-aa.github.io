@@ -751,15 +751,55 @@ img { max-width: 100%; }
   pointer-events: none;
 }
 .ui-showcase .section-heading,
-.ui-project-list,
 .ui-showcase-grid {
   position: relative;
   z-index: 1;
 }
-.ui-project-list {
-  display: grid;
-  gap: clamp(28px, 5vw, 64px);
+.ui-project {
+  max-width: var(--max);
+  margin: 0 auto;
 }
+.ui-project + .ui-project {
+  margin-top: clamp(64px, 9vw, 112px);
+  padding-top: clamp(42px, 6vw, 72px);
+  border-top: 1px solid rgba(241,237,228,.2);
+}
+.ui-project-label {
+  margin-bottom: 18px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+.ui-project-label span {
+  color: var(--alert);
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 7vw, 6.4rem);
+  line-height: .78;
+}
+.ui-project-label p {
+  margin: 0;
+  color: rgba(241,237,228,.58);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-align: right;
+}
+.ui-showcase-grid--reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+}
+.ui-preview-card--light iframe { background: #f4f4f2; }
+.ui-preview-card--light .ui-browser-bar { background: rgba(245,245,242,.88); }
+.ui-preview-card--light .ui-browser-bar span { background: #aeb3af; }
+.ui-preview-card--light .ui-browser-bar span:nth-child(1) { background: #777e79; }
+.ui-preview-card--light .ui-browser-bar span:nth-child(2) { background: #c5c9c6; }
+.ui-link-card--light {
+  background:
+    radial-gradient(520px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.13), transparent 55%),
+    linear-gradient(135deg, rgba(210,214,210,.13), rgba(255,255,255,.03)),
+    rgba(241,237,228,.045);
+}
+.ui-link-card--light::after { content: "02"; color: rgba(200,206,201,.11); }
 .ui-showcase-grid {
   max-width: var(--max);
   margin: 0 auto;
@@ -767,10 +807,6 @@ img { max-width: 100%; }
   grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
   gap: 18px;
   align-items: stretch;
-}
-.ui-showcase-grid + .ui-showcase-grid {
-  padding-top: clamp(28px, 5vw, 64px);
-  border-top: 1px solid rgba(241,237,228,.18);
 }
 .ui-preview-card,
 .ui-link-card {
@@ -831,7 +867,7 @@ img { max-width: 100%; }
   overflow: hidden;
 }
 .ui-link-card::after {
-  content: attr(data-ui-index);
+  content: "UI";
   position: absolute;
   right: -.08em;
   bottom: -.18em;
@@ -1945,6 +1981,8 @@ img { max-width: 100%; }
   .career-card { min-height: 0; }
   .career-roadmap { grid-template-columns: 1fr; }
   .ui-showcase-grid { grid-template-columns: 1fr; }
+  .ui-project-label { align-items: center; }
+  .ui-project-label p { max-width: 54%; }
   .ui-preview-card,
   .ui-link-card { min-height: 0; }
   .ui-preview-card iframe { min-height: 520px; }
