@@ -206,6 +206,7 @@ function assetStem(src) {
 
 function webpVariant(src, folder) {
   if (!src || src.startsWith("data:")) return src;
+  if (/ppt-case-ipo-slide-(0[2-9]|1[0-2])\.jpe?g$/i.test(src)) return src;
   return `./${folder}/${assetStem(src)}.webp`;
 }
 
