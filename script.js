@@ -587,6 +587,9 @@ function initRevealOnScroll() {
       ".ai-system-main",
       ".ai-tool-grid article",
       ".ai-evidence",
+      ".career-heading",
+      ".career-card",
+      ".career-roadmap article",
       ".section-heading",
       ".project-row",
       ".deck-card",
@@ -622,9 +625,19 @@ function initRevealOnScroll() {
   targets.forEach((target) => observer.observe(target));
 }
 
+function restoreInitialHashPosition() {
+  if (!window.location.hash) return;
+  const target = document.querySelector(window.location.hash);
+  if (!target) return;
+  window.setTimeout(() => {
+    target.scrollIntoView({ block: "start" });
+  }, 160);
+}
+
 renderProjects();
 renderPptProjects();
 renderGallery();
 initPointerGlow();
 initGlassInteractions();
 initRevealOnScroll();
+restoreInitialHashPosition();
