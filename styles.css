@@ -751,9 +751,14 @@ img { max-width: 100%; }
   pointer-events: none;
 }
 .ui-showcase .section-heading,
+.ui-project-list,
 .ui-showcase-grid {
   position: relative;
   z-index: 1;
+}
+.ui-project-list {
+  display: grid;
+  gap: clamp(28px, 5vw, 64px);
 }
 .ui-showcase-grid {
   max-width: var(--max);
@@ -762,6 +767,10 @@ img { max-width: 100%; }
   grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
   gap: 18px;
   align-items: stretch;
+}
+.ui-showcase-grid + .ui-showcase-grid {
+  padding-top: clamp(28px, 5vw, 64px);
+  border-top: 1px solid rgba(241,237,228,.18);
 }
 .ui-preview-card,
 .ui-link-card {
@@ -822,7 +831,7 @@ img { max-width: 100%; }
   overflow: hidden;
 }
 .ui-link-card::after {
-  content: "UI";
+  content: attr(data-ui-index);
   position: absolute;
   right: -.08em;
   bottom: -.18em;
