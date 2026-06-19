@@ -345,6 +345,7 @@ img { max-width: 100%; }
 .work,
 .ai-lab,
 .career-fit,
+.ui-showcase,
 .ppt-showcase,
 .resume,
 .awards,
@@ -725,6 +726,164 @@ img { max-width: 100%; }
   border-right: 2px solid rgba(216,255,38,.65);
   border-bottom: 2px solid rgba(216,255,38,.65);
   opacity: .52;
+}
+
+.ui-showcase {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(680px circle at 18% 18%, rgba(216,255,38,.1), transparent 42%),
+    radial-gradient(760px circle at 86% 52%, rgba(255,59,31,.11), transparent 44%),
+    linear-gradient(rgba(241,237,228,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241,237,228,.055) 1px, transparent 1px),
+    #0a0a09;
+  background-size: auto, auto, 72px 72px, 72px 72px, auto;
+  color: var(--paper);
+  border-top: 1px solid rgba(241,237,228,.16);
+}
+.ui-showcase::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(118deg, transparent 0 50%, rgba(216,255,38,.08) 50.2% 50.7%, transparent 51%),
+    linear-gradient(0deg, rgba(11,11,10,.18), rgba(11,11,10,.64));
+  pointer-events: none;
+}
+.ui-showcase .section-heading,
+.ui-showcase-grid {
+  position: relative;
+  z-index: 1;
+}
+.ui-showcase-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+  gap: 18px;
+  align-items: stretch;
+}
+.ui-preview-card,
+.ui-link-card {
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 8px;
+  background:
+    radial-gradient(520px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.13), transparent 55%),
+    linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.028)),
+    rgba(241,237,228,.045);
+  box-shadow: 0 24px 84px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.1);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  transform: perspective(1100px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x)) translateY(var(--raise, 0));
+  transition: transform 160ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+.ui-preview-card:hover,
+.ui-preview-card:focus-within,
+.ui-link-card:hover,
+.ui-link-card:focus-within {
+  --raise: -3px;
+  border-color: rgba(216,255,38,.58);
+}
+.ui-preview-card {
+  min-height: 620px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 46px minmax(0, 1fr);
+}
+.ui-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(241,237,228,.18);
+  background: rgba(255,255,255,.04);
+}
+.ui-browser-bar span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(241,237,228,.34);
+}
+.ui-browser-bar span:nth-child(1) { background: var(--alert); }
+.ui-browser-bar span:nth-child(2) { background: var(--accent); }
+.ui-browser-bar span:nth-child(3) { background: rgba(241,237,228,.46); }
+.ui-preview-card iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 574px;
+  border: 0;
+  background: #090909;
+}
+.ui-link-card {
+  min-height: 620px;
+  display: grid;
+  align-content: space-between;
+  padding: clamp(22px, 3vw, 34px);
+  overflow: hidden;
+}
+.ui-link-card::after {
+  content: "UI";
+  position: absolute;
+  right: -.08em;
+  bottom: -.18em;
+  z-index: 0;
+  color: rgba(216,255,38,.12);
+  font-family: var(--display);
+  font-size: clamp(9rem, 18vw, 16rem);
+  line-height: .8;
+}
+.ui-link-card > * {
+  position: relative;
+  z-index: 1;
+}
+.ui-link-card p {
+  margin: 0;
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+.ui-link-card h2 {
+  margin: 18px 0;
+  font-family: var(--display);
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  line-height: .86;
+  font-weight: 900;
+}
+.ui-link-card span {
+  display: block;
+  color: rgba(241,237,228,.72);
+  line-height: 1.8;
+  font-weight: 800;
+}
+.ui-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 28px;
+}
+.ui-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(216,255,38,.45);
+  border-radius: 8px;
+  background: rgba(216,255,38,.06);
+  color: var(--accent);
+  font-size: .78rem;
+  font-weight: 900;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+.ui-actions a::after {
+  content: "OPEN";
+  color: rgba(241,237,228,.62);
+  font-size: .62rem;
+}
+.ui-actions a:hover,
+.ui-actions a:focus-visible {
+  border-color: var(--accent);
+  background: rgba(216,255,38,.14);
 }
 .ai-evidence {
   position: relative;
@@ -1776,6 +1935,10 @@ img { max-width: 100%; }
   .career-grid { grid-template-columns: 1fr; }
   .career-card { min-height: 0; }
   .career-roadmap { grid-template-columns: 1fr; }
+  .ui-showcase-grid { grid-template-columns: 1fr; }
+  .ui-preview-card,
+  .ui-link-card { min-height: 0; }
+  .ui-preview-card iframe { min-height: 520px; }
   .project-row { grid-template-columns: 56px minmax(0, 1fr); }
   .project-thumb { grid-column: 1 / -1; height: auto; aspect-ratio: 16 / 10; }
   .deck-grid { grid-template-columns: 1fr; }
@@ -1800,7 +1963,7 @@ img { max-width: 100%; }
 }
 
 @media (max-width: 560px) {
-  .work, .ai-lab, .career-fit, .ppt-showcase, .resume, .awards, .contact, .gallery-section { padding: 72px 18px; }
+  .work, .ai-lab, .career-fit, .ui-showcase, .ppt-showcase, .resume, .awards, .contact, .gallery-section { padding: 72px 18px; }
   .corner-card { display: none; }
   .cover { min-height: 82svh; }
   .cover-title {
@@ -1870,6 +2033,8 @@ img { max-width: 100%; }
   .career-heading h1 { font-size: clamp(3.7rem, 18vw, 5.5rem); }
   .career-heading span { font-size: .9rem; }
   .career-card h2 { font-size: clamp(2.15rem, 9.2vw, 3rem); }
+  .ui-preview-card iframe { min-height: 420px; }
+  .ui-link-card h2 { font-size: clamp(2.5rem, 14vw, 4rem); }
   .project-preview-strip { height: 64px; }
   .deck-card-copy { grid-template-columns: 1fr; gap: 10px; padding: 18px 18px 0; }
   .deck-card figure { min-height: 210px; }
@@ -1902,7 +2067,9 @@ img { max-width: 100%; }
   .deck-card,
   .gallery-card,
   .ai-tool-grid article,
-  .career-card {
+  .career-card,
+  .ui-preview-card,
+  .ui-link-card {
     transform: none;
   }
 }

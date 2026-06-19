@@ -590,6 +590,8 @@ function initRevealOnScroll() {
       ".career-heading",
       ".career-card",
       ".career-roadmap article",
+      ".ui-preview-card",
+      ".ui-link-card",
       ".section-heading",
       ".project-row",
       ".deck-card",
