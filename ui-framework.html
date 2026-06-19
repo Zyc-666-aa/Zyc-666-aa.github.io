@@ -1,685 +1,2035 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YUCONG UI Framework</title>
+    <meta name="description" content="yucong fintech dashboard UI framework showcase." />
+    <title>yucong fintech dashboard</title>
+    <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%236f4df6"/><text x="10" y="42" font-family="Arial,sans-serif" font-size="26" font-weight="900" fill="white">y</text></svg>' />
     <style>
       :root {
-        --ink: #090909;
-        --paper: #f1ede4;
-        --line: rgba(241, 237, 228, 0.18);
-        --line-strong: rgba(241, 237, 228, 0.36);
-        --accent: #d8ff26;
-        --alert: #ff3b1f;
-        --glass: rgba(255, 255, 255, 0.065);
-        --glass-strong: rgba(255, 255, 255, 0.11);
-        --display: Impact, Haettenschweiler, "Arial Black", sans-serif;
-        --body: "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
-        --tilt-x: 0deg;
-        --tilt-y: 0deg;
-        --spot-x: 50%;
-        --spot-y: 50%;
+        color-scheme: light;
+        --page: #e9e4f6;
+        --frame: #151418;
+        --surface: #ffffff;
+        --surface-soft: #faf8ff;
+        --panel-soft: #f7f5fb;
+        --ink: #111016;
+        --muted: #7b7584;
+        --line: #e8e3ef;
+        --bar: #cfc8d8;
+        --bar-dark: #292631;
+        --purple: #6f4df6;
+        --purple-2: #8d5cff;
+        --purple-soft: #efe8ff;
+        --cyan: #31c7c9;
+        --cyan-soft: #defafa;
+        --pink: #ef67b1;
+        --pink-soft: #ffe7f3;
+        --green: #31c892;
+        --green-soft: #dff7ee;
+        --blue: #76b9ee;
+        --blue-soft: #e5f2ff;
+        --gold: #f3b23d;
+        --gold-soft: #fff0ca;
+        --radius: 16px;
+        --shadow: 0 22px 54px rgba(42, 31, 68, 0.08);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-synthesis: none;
+        text-rendering: geometricPrecision;
       }
 
-      * { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
+        min-width: 320px;
+        min-height: 100%;
         margin: 0;
+      }
+
+      body {
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 7% 5%, rgba(255, 255, 255, 0.82), transparent 24%),
+          radial-gradient(circle at 92% 10%, rgba(111, 77, 246, 0.16), transparent 28%),
+          var(--page);
+      }
+
+      button {
+        border: 0;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .page-shell {
         min-height: 100vh;
-        overflow-x: hidden;
-        background:
-          radial-gradient(760px circle at 12% 14%, rgba(216,255,38,.12), transparent 42%),
-          radial-gradient(680px circle at 86% 34%, rgba(255,59,31,.1), transparent 40%),
-          linear-gradient(rgba(241,237,228,.055) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(241,237,228,.055) 1px, transparent 1px),
-          var(--ink);
-        background-size: auto, auto, 84px 84px, 84px 84px, auto;
-        color: var(--paper);
-        font-family: var(--body);
-      }
-
-      .noise {
-        position: fixed;
-        inset: 0;
-        z-index: 5;
-        pointer-events: none;
-        opacity: .18;
-        background-image:
-          linear-gradient(115deg, transparent 0 54%, rgba(255,59,31,.16) 54.2% 54.6%, transparent 54.8%),
-          repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 4px);
-        mix-blend-mode: screen;
-      }
-
-      .site-shell {
-        position: relative;
-        z-index: 10;
-        width: min(1440px, 100%);
-        margin: 0 auto;
-        border-inline: 1px solid var(--line);
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        height: 72px;
-        display: grid;
-        grid-template-columns: minmax(180px, .28fr) 1fr;
-        border-bottom: 1px solid var(--line);
-        background:
-          linear-gradient(90deg, rgba(255,255,255,.065), transparent 24% 76%, rgba(216,255,38,.05)),
-          rgba(9, 9, 9, 0.68);
-        -webkit-backdrop-filter: blur(24px) saturate(160%);
-        backdrop-filter: blur(24px) saturate(160%);
-      }
-
-      .brand {
-        display: grid;
-        align-items: center;
-        padding-left: clamp(22px, 4.6vw, 64px);
-        color: var(--accent);
-        font-weight: 900;
-        letter-spacing: .02em;
-      }
-
-      .nav-skeleton {
-        display: grid;
-        grid-template-columns: repeat(7, minmax(84px, 1fr));
-        border-left: 1px solid var(--line);
-      }
-
-      .nav-skeleton span {
         display: grid;
         place-items: center;
-        border-right: 1px solid var(--line);
+        padding: 24px;
       }
 
-      .bar {
-        display: block;
-        width: min(62%, 86px);
-        height: 10px;
-        border-radius: 999px;
-        background:
-          linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.52), rgba(255,255,255,.16));
-        opacity: .72;
-      }
-
-      .nav-skeleton span:first-child .bar {
-        background: var(--accent);
-        box-shadow: 0 0 22px rgba(216,255,38,.24);
-      }
-
-      .hero {
-        position: relative;
-        min-height: 760px;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .corner {
-        position: absolute;
-        width: 210px;
-        min-height: 140px;
+      .device-frame {
+        width: min(1500px, 100%);
+        min-height: 888px;
         padding: 26px;
-        border: 1px solid var(--line-strong);
-        background: rgba(255,255,255,.035);
-        -webkit-backdrop-filter: blur(18px) saturate(140%);
-        backdrop-filter: blur(18px) saturate(140%);
+        border-radius: 48px;
+        background: var(--frame);
+        box-shadow:
+          0 34px 80px rgba(30, 22, 51, 0.22),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       }
 
-      .corner::before,
-      .corner::after {
-        content: "";
-        position: absolute;
-        left: 26px;
-        top: 34px;
-        width: 26px;
-        height: 2px;
-        background: var(--accent);
-      }
-
-      .corner::after {
-        transform: rotate(90deg);
-      }
-
-      .corner--lt { left: clamp(22px, 5vw, 86px); top: 34px; }
-      .corner--rt { right: clamp(22px, 5vw, 86px); top: 34px; text-align: right; }
-      .corner--lb { left: clamp(22px, 5vw, 86px); bottom: 34px; }
-      .corner--rb { right: clamp(22px, 5vw, 86px); bottom: 34px; text-align: right; }
-
-      .corner-lines {
+      .app-window {
+        min-height: 836px;
         display: grid;
-        gap: 10px;
-        margin-top: 64px;
+        grid-template-columns: 260px minmax(0, 1fr);
+        overflow: hidden;
+        border-radius: 28px;
+        background: var(--surface);
       }
 
-      .corner-lines i,
-      .caption-line i,
-      .card-lines i,
-      .gallery-card i {
-        display: block;
-        height: 8px;
-        border-radius: 999px;
-        background: rgba(241,237,228,.28);
+      .sidebar {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        padding: 34px 22px 0;
+        border-right: 1px solid var(--line);
+        background: #fdfcff;
       }
 
-      .corner-lines i:nth-child(1) { width: 70%; background: var(--accent); }
-      .corner-lines i:nth-child(2) { width: 92%; }
-      .corner-lines i:nth-child(3) { width: 54%; }
-
-      .hero-title {
-        position: relative;
-        z-index: 2;
-        width: min(72vw, 920px);
-        aspect-ratio: 6 / 1.1;
-        display: grid;
-        place-items: center;
-      }
-
-      .hero-title::before {
-        content: "YUCONG";
-        color: var(--paper);
-        font-family: var(--display);
-        font-size: clamp(5.8rem, 15vw, 14rem);
-        line-height: .8;
+      .brand,
+      .mobile-brand {
+        color: #0d0c12;
+        font-size: 31px;
+        line-height: 1;
+        font-weight: 900;
         letter-spacing: 0;
       }
 
-      .hero-title::after {
+      .side-nav {
+        display: grid;
+        gap: 7px;
+      }
+
+      .side-nav-item,
+      .logout-row {
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px;
+        border-radius: 8px;
+        background: transparent;
+        color: #17151d;
+      }
+
+      .side-nav-item.is-active {
+        min-height: 42px;
+        color: white;
+        background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      }
+
+      .side-nav-item:hover,
+      .logout-row:hover {
+        background: var(--surface-soft);
+      }
+
+      .side-nav-item.is-active:hover {
+        background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      }
+
+      .icon {
+        position: relative;
+        width: 18px;
+        height: 18px;
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 18px;
+      }
+
+      .icon::before,
+      .icon::after {
         content: "";
         position: absolute;
-        left: 5%;
-        right: 4%;
-        top: 48%;
-        height: 22px;
-        background: #050505;
-        transform: rotate(-7deg);
+        border-color: currentColor;
       }
 
-      .hero-panel {
-        position: absolute;
-        left: 50%;
-        bottom: 112px;
-        width: min(680px, calc(100% - 40px));
-        display: grid;
-        justify-items: center;
-        gap: 14px;
-        transform: translateX(-50%);
-      }
-
-      .caption-line {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .caption-line i { width: 86px; }
-      .caption-line i:nth-child(2) { width: 160px; background: rgba(241,237,228,.46); }
-      .caption-line i:nth-child(4) { width: 120px; background: var(--alert); }
-
-      .chip-row {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .chip {
-        width: 112px;
-        height: 30px;
-        border: 1px solid rgba(216,255,38,.55);
-        border-radius: 999px;
-        background: rgba(216,255,38,.07);
-      }
-
-      .section {
-        padding: clamp(72px, 7vw, 112px) clamp(18px, 6vw, 86px);
-        border-bottom: 1px solid var(--line);
-      }
-
-      .section-head {
-        display: grid;
-        grid-template-columns: minmax(0, .76fr) minmax(240px, .42fr);
-        gap: 26px;
-        align-items: end;
-        margin-bottom: 34px;
-        padding-bottom: 22px;
-        border-bottom: 2px solid rgba(241,237,228,.82);
-      }
-
-      .number {
-        color: var(--alert);
-        font-family: var(--display);
-        font-size: clamp(3.6rem, 9vw, 7.4rem);
-        line-height: .82;
-      }
-
-      .title-block {
-        display: grid;
-        gap: 14px;
-      }
-
-      .title-block i {
-        display: block;
-        height: clamp(54px, 8vw, 96px);
-        border-radius: 6px;
-        background: rgba(241,237,228,.9);
-      }
-
-      .title-block i:nth-child(2) {
-        width: 58%;
-      }
-
-      .head-lines {
-        display: grid;
-        gap: 12px;
-      }
-
-      .head-lines i {
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(241,237,228,.28);
-      }
-
-      .head-lines i:nth-child(1) { width: 92%; }
-      .head-lines i:nth-child(2) { width: 78%; }
-      .head-lines i:nth-child(3) { width: 62%; background: var(--accent); }
-
-      .glass-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.12fr) repeat(3, minmax(170px, .62fr));
-        gap: 14px;
-      }
-
-      .glass-card,
-      .project-row,
-      .deck-card,
-      .gallery-card,
-      .contact-card {
-        border: 1px solid rgba(255,255,255,.18);
-        border-radius: 8px;
-        background:
-          radial-gradient(360px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.14), transparent 58%),
-          linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.028)),
-          rgba(241,237,228,.04);
-        box-shadow: 0 22px 72px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.09);
-        -webkit-backdrop-filter: blur(20px) saturate(150%);
-        backdrop-filter: blur(20px) saturate(150%);
-        transform: perspective(1000px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
-        transition: transform 160ms ease, border-color 180ms ease, background 180ms ease;
-      }
-
-      .glass-card:hover,
-      .project-row:hover,
-      .deck-card:hover,
-      .gallery-card:hover {
-        border-color: rgba(216,255,38,.6);
-      }
-
-      .glass-card {
-        min-height: 310px;
-        padding: 28px;
-      }
-
-      .glass-card--main {
-        min-height: 360px;
-        display: grid;
-        align-content: space-between;
-      }
-
-      .display-bars {
-        display: grid;
-        gap: 14px;
-      }
-
-      .display-bars i {
-        height: clamp(42px, 5vw, 66px);
-        border-radius: 7px;
-        background: rgba(241,237,228,.9);
-      }
-
-      .display-bars i:nth-child(1) { width: 88%; }
-      .display-bars i:nth-child(2) { width: 70%; }
-
-      .card-lines {
-        display: grid;
-        gap: 12px;
-      }
-
-      .card-lines i:nth-child(1) { width: 92%; }
-      .card-lines i:nth-child(2) { width: 74%; }
-      .card-lines i:nth-child(3) { width: 58%; background: var(--accent); }
-
-      .project-stack {
-        display: grid;
-        gap: 16px;
-      }
-
-      .project-row {
-        min-height: 220px;
-        display: grid;
-        grid-template-columns: 78px minmax(180px, .4fr) minmax(0, .6fr);
-        gap: 20px;
-        align-items: center;
-        padding: 24px;
-        color: var(--ink);
-        background:
-          radial-gradient(460px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.68), transparent 50%),
-          rgba(241,237,228,.72);
-      }
-
-      .project-no {
-        color: var(--alert);
-        font-family: var(--display);
-        font-size: 3.3rem;
-        line-height: 1;
-      }
-
-      .project-copy {
-        display: grid;
-        gap: 12px;
-      }
-
-      .project-copy i {
-        display: block;
-        height: 12px;
-        border-radius: 999px;
-        background: rgba(11,11,10,.22);
-      }
-
-      .project-copy i:nth-child(1) { width: 54px; height: 22px; background: var(--alert); border-radius: 6px; }
-      .project-copy i:nth-child(2) { width: 90%; height: 44px; background: rgba(11,11,10,.86); border-radius: 4px; }
-      .project-copy i:nth-child(3) { width: 70%; }
-
-      .image-frame {
-        min-height: 180px;
-        border: 1px solid rgba(11,11,10,.18);
-        border-radius: 8px;
-        background:
-          linear-gradient(135deg, rgba(11,11,10,.18), transparent 32%),
-          linear-gradient(90deg, rgba(11,11,10,.16) 1px, transparent 1px),
-          linear-gradient(rgba(11,11,10,.16) 1px, transparent 1px),
-          rgba(241,237,228,.72);
-        background-size: auto, 32px 32px, 32px 32px, auto;
-      }
-
-      .deck-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-      }
-
-      .deck-card {
-        min-height: 390px;
-        display: grid;
-        grid-template-rows: 94px minmax(0, 1fr);
-        overflow: hidden;
-      }
-
-      .deck-head {
-        display: grid;
-        grid-template-columns: 64px 1fr 64px;
-        gap: 14px;
-        align-items: center;
-        padding: 20px;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .deck-head i {
-        height: 14px;
-        border-radius: 999px;
-        background: rgba(241,237,228,.3);
-      }
-
-      .deck-head i:nth-child(1) {
-        height: 40px;
+      .icon-grid::before {
+        inset: 2px;
+        border: 2px solid currentColor;
         border-radius: 4px;
-        background: var(--alert);
-      }
-
-      .deck-head i:nth-child(3) {
-        background: var(--accent);
-      }
-
-      .deck-screen {
-        margin: 20px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
         background:
-          linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.035)),
-          repeating-linear-gradient(0deg, transparent 0 26px, rgba(255,255,255,.08) 26px 27px);
+          linear-gradient(currentColor, currentColor) center/2px 100% no-repeat,
+          linear-gradient(90deg, currentColor, currentColor) center/100% 2px no-repeat;
       }
 
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
+      .icon-card::before,
+      .icon-wallet::before {
+        inset: 3px 1px;
+        border: 2px solid currentColor;
+        border-radius: 4px;
       }
 
-      .gallery-card {
-        min-height: 260px;
-        display: grid;
-        grid-template-rows: minmax(0, 1fr) 66px;
-        overflow: hidden;
+      .icon-card::after {
+        left: 4px;
+        right: 4px;
+        top: 8px;
+        border-top: 2px solid currentColor;
       }
 
-      .gallery-card .image-frame {
-        min-height: 0;
+      .icon-transfer::before,
+      .icon-transfer::after {
+        width: 12px;
+        height: 2px;
+        background: currentColor;
         border: 0;
+      }
+
+      .icon-transfer::before {
+        top: 5px;
+        right: 2px;
+        box-shadow: -4px 4px 0 currentColor;
+      }
+
+      .icon-transfer::after {
+        bottom: 5px;
+        left: 2px;
+      }
+
+      .icon-circle::before {
+        inset: 2px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+      }
+
+      .icon-circle::after {
+        width: 2px;
+        height: 7px;
+        top: 5px;
+        left: 8px;
+        background: currentColor;
+        border: 0;
+        transform-origin: bottom;
+        transform: rotate(36deg);
+      }
+
+      .icon-chart::before {
+        left: 3px;
+        right: 3px;
+        bottom: 3px;
+        height: 12px;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+      }
+
+      .icon-chart::after {
+        width: 12px;
+        height: 8px;
+        left: 4px;
+        bottom: 5px;
+        border-left: 2px solid currentColor;
+        border-top: 2px solid currentColor;
+        transform: skewY(-30deg);
+      }
+
+      .icon-gear::before {
+        inset: 2px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        box-shadow: 0 -4px 0 -2px currentColor, 0 4px 0 -2px currentColor, 4px 0 0 -2px currentColor, -4px 0 0 -2px currentColor;
+      }
+
+      .icon-help::before {
+        inset: 2px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+      }
+
+      .icon-help::after {
+        width: 3px;
+        height: 3px;
+        left: 8px;
+        bottom: 4px;
+        border-radius: 50%;
+        background: currentColor;
+        border: 0;
+      }
+
+      .icon-logout::before {
+        inset: 3px 7px 3px 1px;
+        border: 2px solid currentColor;
+        border-radius: 3px;
+      }
+
+      .icon-logout::after {
+        right: 1px;
+        top: 8px;
+        width: 10px;
+        height: 2px;
+        background: currentColor;
+        border: 0;
+      }
+
+      .bar {
+        width: var(--w, 80px);
+        max-width: 100%;
+        height: var(--h, 10px);
+        display: block;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        background: var(--bar);
+      }
+
+      .bar.light {
+        background: rgba(255, 255, 255, 0.84);
+      }
+
+      .bar.dark {
+        background: var(--bar-dark);
+      }
+
+      .bar.purple {
+        background: var(--purple);
+      }
+
+      .bar.success {
+        background: #0eb879;
+      }
+
+      .side-nav-item:not(.is-active) .bar,
+      .logout-row .bar {
+        background: #26232d;
+        opacity: 0.88;
+      }
+
+      .side-nav-item.is-active .bar {
+        background: rgba(255, 255, 255, 0.86);
+      }
+
+      .sidebar-promo {
+        display: grid;
+        gap: 10px;
+        margin-top: auto;
+        padding: 20px;
+        border-radius: var(--radius);
+        background:
+          linear-gradient(135deg, rgba(111, 77, 246, 0.1), rgba(255, 255, 255, 0.74)),
+          #f7f2ff;
+      }
+
+      .promo-icon,
+      .crown-badge,
+      .security-icon {
+        display: grid;
+        place-items: center;
+        color: white;
+        background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      }
+
+      .promo-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+      }
+
+      .crown-mark,
+      .shield-mark,
+      .plane-mark,
+      .home-mark,
+      .spark-mark,
+      .bag-mark,
+      .briefcase-mark,
+      .bank-mark,
+      .lock-mark {
+        position: relative;
+        width: 18px;
+        height: 18px;
+      }
+
+      .crown-mark::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        bottom: 3px;
+        height: 8px;
+        border-radius: 3px;
+        background: currentColor;
+        clip-path: polygon(0 100%, 0 32%, 25% 58%, 50% 0, 75% 58%, 100% 32%, 100% 100%);
+      }
+
+      .shield-mark::before {
+        content: "";
+        position: absolute;
+        inset: 1px 3px;
+        background: currentColor;
+        clip-path: polygon(50% 0, 100% 18%, 88% 72%, 50% 100%, 12% 72%, 0 18%);
+      }
+
+      .plane-mark::before {
+        content: "";
+        position: absolute;
+        inset: 2px;
+        background: currentColor;
+        clip-path: polygon(0 42%, 100% 0, 58% 100%, 45% 58%, 18% 66%);
+      }
+
+      .home-mark::before {
+        content: "";
+        position: absolute;
+        inset: 3px 2px 1px;
+        border: 2px solid currentColor;
+        border-top: 0;
+      }
+
+      .home-mark::after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 2px;
+        width: 12px;
+        height: 12px;
+        border-left: 2px solid currentColor;
+        border-top: 2px solid currentColor;
+        transform: rotate(45deg);
+      }
+
+      .spark-mark::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        background: currentColor;
+        clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%);
+      }
+
+      .bag-mark::before,
+      .briefcase-mark::before {
+        content: "";
+        position: absolute;
+        inset: 5px 2px 2px;
+        border: 2px solid currentColor;
+        border-radius: 4px;
+      }
+
+      .bag-mark::after,
+      .briefcase-mark::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        top: 3px;
+        height: 6px;
+        border: 2px solid currentColor;
+        border-bottom: 0;
+        border-radius: 7px 7px 0 0;
+      }
+
+      .bank-mark::before {
+        content: "";
+        position: absolute;
+        inset: 6px 2px 2px;
+        border-left: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+        box-shadow: 5px 0 0 -3px currentColor, 10px 0 0 -3px currentColor;
+      }
+
+      .bank-mark::after {
+        content: "";
+        position: absolute;
+        left: 1px;
+        right: 1px;
+        top: 2px;
+        border-bottom: 2px solid currentColor;
+        transform: skewX(-28deg);
+      }
+
+      .lock-mark::before {
+        content: "";
+        position: absolute;
+        inset: 8px 3px 2px;
+        border-radius: 3px;
+        background: currentColor;
+      }
+
+      .lock-mark::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        top: 2px;
+        height: 8px;
+        border: 2px solid currentColor;
+        border-bottom: 0;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .promo-copy {
+        display: grid;
+        gap: 7px;
+        margin: 4px 0 8px;
+      }
+
+      .dark-pill,
+      .premium-button {
+        min-height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        background: #08070a;
+      }
+
+      .logout-row {
+        min-height: 62px;
+        margin: 0 -22px;
+        padding: 0 34px;
+        border-top: 1px solid var(--line);
         border-radius: 0;
       }
 
-      .gallery-card footer {
+      .content-shell {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(252, 250, 255, 0.92)),
+          #fff;
+      }
+
+      .topbar {
+        min-height: 92px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 24px;
+        padding: 26px 34px 14px;
+      }
+
+      .mobile-brand {
+        display: none;
+      }
+
+      .top-tabs {
+        width: fit-content;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 6px;
+        overflow-x: auto;
+        border-radius: 9px;
+        background: #f6f5f9;
+      }
+
+      .top-tab {
+        min-width: 98px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 8px;
+        background: transparent;
+      }
+
+      .top-tab:nth-child(3) {
+        min-width: 138px;
+      }
+
+      .top-tab.is-active {
+        background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .search-control {
+        width: 235px;
+        height: 43px;
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr) 18px;
+        align-items: center;
+        gap: 10px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: white;
+        color: #1c1a22;
+      }
+
+      .search-icon {
+        position: relative;
+        width: 17px;
+        height: 17px;
+      }
+
+      .search-icon::before {
+        content: "";
+        position: absolute;
+        inset: 2px 4px 5px 2px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+      }
+
+      .search-icon::after {
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 2px;
+        right: 1px;
+        bottom: 2px;
+        background: currentColor;
+        transform: rotate(45deg);
+      }
+
+      .icon-button,
+      .profile-button {
+        position: relative;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        color: #08070a;
+        background: transparent;
+      }
+
+      .bell-button {
+        background: white;
+      }
+
+      .bell {
+        position: relative;
+        width: 18px;
+        height: 18px;
+      }
+
+      .bell::before {
+        content: "";
+        position: absolute;
+        left: 4px;
+        right: 4px;
+        top: 2px;
+        height: 11px;
+        border: 2px solid currentColor;
+        border-bottom: 0;
+        border-radius: 10px 10px 2px 2px;
+      }
+
+      .bell::after {
+        content: "";
+        position: absolute;
+        left: 2px;
+        right: 2px;
+        bottom: 3px;
+        height: 2px;
+        background: currentColor;
+        box-shadow: 6px 4px 0 -1px currentColor;
+      }
+
+      .notify-dot {
+        position: absolute;
+        top: 6px;
+        right: 7px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--purple);
+      }
+
+      .profile-button {
+        width: 82px;
+        grid-template-columns: 46px 16px;
+        gap: 6px;
+      }
+
+      .profile-core {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--purple-soft);
+      }
+
+      .profile-core .bar {
+        background: var(--purple);
+      }
+
+      .chevron {
+        width: 9px;
+        height: 9px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+      }
+
+      .status-strip {
+        display: none;
+      }
+
+      .dashboard-layout {
+        display: grid;
+        grid-template-columns: minmax(390px, 1.38fr) minmax(280px, 0.93fr) minmax(320px, 1.14fr);
+        gap: 18px;
+        padding: 12px 34px 26px;
+      }
+
+      .dashboard-column {
+        min-width: 0;
+        display: grid;
+        align-content: start;
+        gap: 18px;
+      }
+
+      .card-shell {
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: var(--shadow);
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .small-outline,
+      .select-pill {
+        border: 1px solid var(--line);
+        background: white;
+      }
+
+      .small-outline {
+        border-radius: 12px;
+      }
+
+      .plus {
+        position: relative;
+        width: 16px;
+        height: 16px;
+      }
+
+      .plus::before,
+      .plus::after {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 2px;
+        width: 2px;
+        height: 12px;
+        background: currentColor;
+      }
+
+      .plus::after {
+        transform: rotate(90deg);
+      }
+
+      .balance-card {
+        min-height: 432px;
+        padding: 26px 18px 18px;
+      }
+
+      .balance-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 0 2px;
+      }
+
+      .label-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .eye {
+        position: relative;
+        width: 16px;
+        height: 16px;
+      }
+
+      .eye::before {
+        content: "";
+        position: absolute;
+        inset: 3px 1px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        transform: scaleX(1.45);
+      }
+
+      .eye::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      .amount-block {
+        height: 30px;
+        margin: 18px 0 14px;
+        border-radius: 8px;
+        background: #111015;
+      }
+
+      .trend-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .trend-pill {
+        height: 24px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 0 8px;
+        border-radius: 999px;
+        color: #039a6c;
+        background: #c8f5e7;
+      }
+
+      .down-arrow {
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(-45deg);
+      }
+
+      .trend-pill .bar {
+        background: #039a6c;
+      }
+
+      .select-pill {
+        min-width: 104px;
+        height: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 8px;
+      }
+
+      .select-pill.compact {
+        min-width: 96px;
+      }
+
+      .chart-area {
+        position: relative;
+        min-height: 205px;
+        display: grid;
+        grid-template-columns: 38px minmax(0, 1fr);
+        align-items: end;
+        margin-top: 20px;
+      }
+
+      .axis-bars {
+        height: 176px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 8px;
+      }
+
+      .axis-bars .bar {
+        background: #a9a3b0;
+        opacity: 0.72;
+      }
+
+      .balance-svg {
+        width: 100%;
+        height: 205px;
+        overflow: visible;
+      }
+
+      .chart-popover {
+        position: absolute;
+        right: 52px;
+        top: 18px;
         display: grid;
         gap: 8px;
-        padding: 14px;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 16px 30px rgba(42, 33, 58, 0.12);
+      }
+
+      .metric-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .metric-card {
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 10px;
+        background: var(--panel-soft);
+      }
+
+      .metric-card > div {
+        display: grid;
+        gap: 8px;
+      }
+
+      .metric-icon,
+      .goal-icon,
+      .budget-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: 50%;
+      }
+
+      .metric-icon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .cards-panel {
+        min-height: 322px;
+        padding: 24px 20px 18px;
+      }
+
+      .credit-preview {
+        position: relative;
+        height: 164px;
+        display: grid;
+        gap: 18px;
+        margin-top: 22px;
+        padding: 20px 18px;
+        border-radius: 8px;
+        color: white;
+        background:
+          radial-gradient(circle at 78% 8%, rgba(255, 255, 255, 0.28), transparent 28%),
+          linear-gradient(135deg, #5d34eb 0%, #7247f5 48%, #a37cff 100%);
+      }
+
+      .contactless {
+        position: absolute;
+        right: 20px;
+        top: 24px;
+        width: 18px;
+        height: 24px;
+        border-right: 3px solid rgba(255, 255, 255, 0.82);
+        border-radius: 50%;
+      }
+
+      .chip {
+        width: 32px;
+        height: 24px;
+        margin-top: 8px;
+        border-radius: 7px;
+        background:
+          linear-gradient(90deg, transparent 48%, rgba(90, 83, 105, 0.35) 49%, rgba(90, 83, 105, 0.35) 51%, transparent 52%),
+          linear-gradient(#f3f0e4, #c7c1b5);
+      }
+
+      .card-caption {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 14px;
+      }
+
+      .card-caption > div {
+        display: grid;
+        gap: 8px;
+      }
+
+      .more-dots {
+        width: 22px;
+        height: 6px;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle at 3px 3px, currentColor 0 2px, transparent 2.5px),
+          radial-gradient(circle at 11px 3px, currentColor 0 2px, transparent 2.5px),
+          radial-gradient(circle at 19px 3px, currentColor 0 2px, transparent 2.5px);
+      }
+
+      .pager-dots {
+        display: flex;
+        justify-content: center;
+        gap: 9px;
+        margin-top: 16px;
+      }
+
+      .pager-dots button,
+      .pager-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #c8c4ce;
+      }
+
+      .pager-dots .is-active {
+        background: var(--purple);
+      }
+
+      .premium-panel {
+        min-height: 270px;
+        display: grid;
+        align-content: start;
+        gap: 18px;
+        padding: 26px 20px 22px;
+        background:
+          radial-gradient(circle at 88% 18%, rgba(111, 77, 246, 0.16), transparent 28%),
+          linear-gradient(135deg, #fff 0%, #f6f0ff 100%);
+      }
+
+      .premium-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .premium-head > div:first-child {
+        display: grid;
+        gap: 13px;
+      }
+
+      .crown-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+      }
+
+      .check-list {
+        display: grid;
+        gap: 15px;
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .check-row span:first-child {
+        width: 16px;
+        height: 16px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        color: white;
+        background: var(--purple);
+      }
+
+      .check {
+        width: 8px;
+        height: 5px;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(-45deg);
+      }
+
+      .premium-button {
+        width: 100%;
+        min-height: 38px;
+      }
+
+      .transactions-panel {
+        min-height: 322px;
+        padding: 24px 18px 16px;
+      }
+
+      .transaction-stack {
+        display: grid;
+        margin-top: 18px;
+      }
+
+      .transaction-row {
+        min-height: 58px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) 82px 18px;
+        align-items: center;
+        gap: 10px;
+        border-top: 1px solid var(--line);
+        background: transparent;
+        color: #17151d;
+      }
+
+      .transaction-row:first-child {
+        border-top: 0;
+      }
+
+      .app-icon {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 9px;
+      }
+
+      .app-icon::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.86);
+      }
+
+      .app-black {
+        color: white;
+        background: #07070a;
+      }
+
+      .app-green {
+        background: #11c866;
+      }
+
+      .app-cyan {
+        color: #0e9b91;
+        background: var(--cyan-soft);
+      }
+
+      .app-cyan::before {
+        background: currentColor;
+        clip-path: polygon(48% 0, 58% 0, 58% 62%, 84% 38%, 100% 55%, 53% 100%, 6% 55%, 22% 38%, 48% 62%);
+      }
+
+      .transaction-copy,
+      .goal-copy {
+        min-width: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .subline {
+        display: flex;
+        gap: 14px;
+      }
+
+      .goals-panel {
+        min-height: 292px;
+        padding: 24px 20px 18px;
+      }
+
+      .goal-stack {
+        display: grid;
+        gap: 20px;
+        margin-top: 22px;
+      }
+
+      .goal-row {
+        display: grid;
+        grid-template-columns: 50px minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
+      }
+
+      .goal-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .goal-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .progress-track,
+      .budget-track {
+        height: 7px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #ece8f1;
+      }
+
+      .progress-track span,
+      .budget-track span {
+        width: var(--value, 50%);
+        height: 100%;
+        display: block;
+        border-radius: inherit;
+      }
+
+      .security-panel {
+        min-height: 122px;
+        display: grid;
+        grid-template-columns: 58px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .security-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 12px;
+      }
+
+      .security-copy {
+        min-width: 0;
+        display: grid;
+        gap: 9px;
+      }
+
+      .security-copy .bar {
+        width: min(var(--w, 80px), 100%);
+      }
+
+      .quick-panel {
+        min-height: 142px;
+        padding: 24px 20px 18px;
+      }
+
+      .people-row {
+        display: grid;
+        grid-template-columns: repeat(5, 48px);
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 20px;
+      }
+
+      .person,
+      .person-add {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+      }
+
+      .person-add {
+        border: 1px solid var(--line);
+        background: #faf9fc;
+      }
+
+      .person {
+        border: 3px solid white;
+        box-shadow: 0 0 0 1px var(--line);
+      }
+
+      .person.is-active {
+        box-shadow: 0 0 0 3px var(--purple);
+      }
+
+      .person-purple {
+        background: var(--purple-soft);
+      }
+
+      .person-purple .bar {
+        background: var(--purple);
+      }
+
+      .person-pink {
+        background: var(--pink-soft);
+      }
+
+      .person-pink .bar {
+        background: #ce408d;
+      }
+
+      .person-cyan {
+        background: var(--cyan-soft);
+      }
+
+      .person-cyan .bar {
+        background: #0faea7;
+      }
+
+      .person-photo {
+        background:
+          radial-gradient(circle at 50% 35%, #7d604f 0 16%, transparent 17%),
+          linear-gradient(135deg, #a7e2de, #6c5549 58%, #1d1b22);
+      }
+
+      .person-labels {
+        display: grid;
+        grid-template-columns: repeat(5, 48px);
+        justify-content: space-between;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .person-labels .bar {
+        justify-self: center;
+      }
+
+      .budget-panel {
+        min-height: 318px;
+        padding: 24px 20px 18px;
+      }
+
+      .budget-stack {
+        display: grid;
+        gap: 17px;
+        margin-top: 20px;
+      }
+
+      .budget-row {
+        display: grid;
+        grid-template-columns: 28px 88px minmax(82px, 1fr) 84px;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .budget-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .budget-total {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+        padding-top: 14px;
         border-top: 1px solid var(--line);
       }
 
-      .gallery-card footer i:nth-child(1) { width: 70%; }
-      .gallery-card footer i:nth-child(2) { width: 46%; }
-
-      .contact-board {
-        display: grid;
-        grid-template-columns: 1fr 320px;
-        gap: 16px;
+      .tone-purple {
+        color: var(--purple);
+        background: var(--purple-soft);
       }
 
-      .contact-card {
-        min-height: 260px;
-        padding: 28px;
-        display: grid;
-        align-content: space-between;
+      .tone-cyan {
+        color: #12a7a5;
+        background: var(--cyan-soft);
       }
 
-      .qr {
-        aspect-ratio: 1;
-        border: 1px solid rgba(216,255,38,.42);
-        border-radius: 8px;
-        background:
-          linear-gradient(90deg, rgba(216,255,38,.2) 18px, transparent 18px 28px) 0 0 / 46px 46px,
-          linear-gradient(rgba(216,255,38,.2) 18px, transparent 18px 28px) 0 0 / 46px 46px,
-          rgba(216,255,38,.05);
+      .tone-pink {
+        color: var(--pink);
+        background: var(--pink-soft);
       }
 
-      .credit {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        z-index: 30;
-        padding: 12px 14px;
-        border: 1px solid rgba(216,255,38,.54);
-        border-radius: 999px;
-        background: rgba(9,9,9,.62);
-        color: var(--accent);
-        font-size: .78rem;
-        font-weight: 900;
-        -webkit-backdrop-filter: blur(18px) saturate(150%);
-        backdrop-filter: blur(18px) saturate(150%);
+      .tone-blue {
+        color: #247bc0;
+        background: var(--blue-soft);
       }
 
-      @media (max-width: 920px) {
-        .topbar { grid-template-columns: 1fr; height: auto; }
-        .brand { height: 54px; padding-left: 22px; }
-        .nav-skeleton { grid-template-columns: repeat(7, minmax(82px, 1fr)); overflow-x: auto; }
-        .nav-skeleton span { min-height: 48px; }
-        .corner { display: none; }
-        .hero { min-height: 640px; }
-        .hero-title::before { font-size: clamp(5rem, 22vw, 8.4rem); }
-        .section-head,
-        .glass-grid,
-        .deck-grid,
-        .contact-board { grid-template-columns: 1fr; }
-        .project-row { grid-template-columns: 58px 1fr; }
-        .project-row .image-frame { grid-column: 1 / -1; }
-        .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tone-gold {
+        color: #bd7a00;
+        background: var(--gold-soft);
+      }
+
+      .progress-purple {
+        background: var(--purple);
+      }
+
+      .progress-cyan {
+        background: var(--cyan);
+      }
+
+      .progress-pink {
+        background: var(--pink);
+      }
+
+      .progress-blue {
+        background: var(--blue);
+      }
+
+      .progress-gold {
+        background: var(--gold);
+      }
+
+      .mobile-menu {
+        width: 38px;
+        height: 38px;
+        display: none;
+        place-items: center;
+        border-radius: 12px;
+        color: #17151d;
+        background: var(--surface-soft);
+      }
+
+      .hamburger {
+        width: 17px;
+        height: 12px;
+        border-top: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+      }
+
+      .hamburger::before {
+        content: "";
+        display: block;
+        margin-top: 4px;
+        border-top: 2px solid currentColor;
+      }
+
+      @media (max-width: 1240px) {
+        .device-frame {
+          min-height: auto;
+        }
+
+        .app-window {
+          grid-template-columns: 86px minmax(0, 1fr);
+        }
+
+        .brand {
+          font-size: 0;
+        }
+
+        .brand::before {
+          content: "y";
+          width: 38px;
+          height: 38px;
+          display: grid;
+          place-items: center;
+          border-radius: 12px;
+          color: white;
+          background: var(--ink);
+          font-size: 21px;
+          font-weight: 900;
+        }
+
+        .sidebar {
+          align-items: center;
+          padding-inline: 14px;
+        }
+
+        .side-nav-item,
+        .logout-row {
+          width: 48px;
+          justify-content: center;
+          padding: 0;
+        }
+
+        .side-nav-item .bar,
+        .logout-row .bar,
+        .sidebar-promo {
+          display: none;
+        }
+
+        .logout-row {
+          margin-inline: -14px;
+        }
+
+        .dashboard-layout {
+          grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
+        }
+
+        .side-column {
+          grid-column: 1 / -1;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .page-shell {
+          display: block;
+          padding: 12px;
+        }
+
+        .device-frame {
+          padding: 0;
+          border-radius: 28px;
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .app-window {
+          min-height: 100vh;
+          grid-template-columns: 1fr;
+          border-radius: 24px;
+        }
+
+        .sidebar {
+          display: none;
+        }
+
+        .topbar {
+          grid-template-columns: 1fr;
+          padding: 22px 18px 12px;
+        }
+
+        .mobile-brand {
+          display: block;
+        }
+
+        .top-tabs {
+          width: 100%;
+        }
+
+        .top-tab {
+          min-width: 96px;
+        }
+
+        .top-actions {
+          justify-content: stretch;
+        }
+
+        .search-control {
+          flex: 1;
+          width: auto;
+        }
+
+        .profile-button {
+          display: none;
+        }
+
+        .status-strip {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 18px 0;
+        }
+
+        .mobile-menu {
+          display: grid;
+        }
+
+        .dashboard-layout,
+        .side-column {
+          grid-template-columns: 1fr;
+          padding: 18px;
+        }
+
+        .balance-card {
+          min-height: 396px;
+        }
       }
 
       @media (max-width: 560px) {
-        .section { padding: 64px 18px; }
-        .hero { min-height: 560px; }
-        .hero-title::before { font-size: clamp(4.2rem, 24vw, 6.8rem); }
-        .caption-line { display: none; }
-        .chip { width: 92px; }
-        .title-block i { height: 52px; }
-        .number { font-size: 3.4rem; }
-        .gallery-grid { grid-template-columns: 1fr; }
-        .credit { left: 18px; right: auto; }
+        .top-actions {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) 42px;
+          align-items: center;
+        }
+
+        .search-control {
+          width: 100%;
+        }
+
+        .metric-strip,
+        .people-row,
+        .person-labels {
+          grid-template-columns: 1fr;
+        }
+
+        .people-row,
+        .person-labels {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .person,
+        .person-add,
+        .person-labels .bar {
+          justify-self: center;
+        }
+
+        .chart-area {
+          grid-template-columns: 1fr;
+        }
+
+        .axis-bars {
+          display: none;
+        }
+
+        .balance-svg {
+          height: 184px;
+        }
+
+        .chart-popover {
+          right: 20px;
+        }
+
+        .transaction-row {
+          grid-template-columns: 42px minmax(0, 1fr) 18px;
+        }
+
+        .transaction-row > .bar {
+          grid-column: 2;
+        }
+
+        .budget-row {
+          grid-template-columns: 28px 82px minmax(90px, 1fr);
+        }
+
+        .budget-row > .bar:last-child {
+          grid-column: 2 / -1;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="noise" aria-hidden="true"></div>
-    <div class="credit">YUCONG 制作</div>
-    <div class="site-shell">
-      <header class="topbar">
-        <div class="brand">YUCONG</div>
-        <nav class="nav-skeleton" aria-label="UI skeleton navigation">
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-          <span><i class="bar"></i></span>
-        </nav>
-      </header>
+    <main class="page-shell">
+      <div class="device-frame">
+        <div class="app-window">
+          <aside class="sidebar">
+            <div class="brand">yucong</div>
+            <nav class="side-nav" aria-label="Dashboard navigation">
+              <button class="side-nav-item is-active" type="button" aria-label="Dashboard">
+                <span class="icon icon-grid" aria-hidden="true"></span>
+                <span class="bar" style="--w: 86px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Accounts">
+                <span class="icon icon-card" aria-hidden="true"></span>
+                <span class="bar" style="--w: 96px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Transactions">
+                <span class="icon icon-transfer" aria-hidden="true"></span>
+                <span class="bar" style="--w: 96px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Transfers">
+                <span class="icon icon-transfer" aria-hidden="true"></span>
+                <span class="bar" style="--w: 92px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Cards">
+                <span class="icon icon-wallet" aria-hidden="true"></span>
+                <span class="bar" style="--w: 72px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Savings">
+                <span class="icon icon-circle" aria-hidden="true"></span>
+                <span class="bar" style="--w: 78px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Investments">
+                <span class="icon icon-chart" aria-hidden="true"></span>
+                <span class="bar" style="--w: 104px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Budgets">
+                <span class="icon icon-chart" aria-hidden="true"></span>
+                <span class="bar" style="--w: 82px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Analytics">
+                <span class="icon icon-card" aria-hidden="true"></span>
+                <span class="bar" style="--w: 84px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Settings">
+                <span class="icon icon-gear" aria-hidden="true"></span>
+                <span class="bar" style="--w: 72px"></span>
+              </button>
+              <button class="side-nav-item" type="button" aria-label="Support">
+                <span class="icon icon-help" aria-hidden="true"></span>
+                <span class="bar" style="--w: 78px"></span>
+              </button>
+            </nav>
+            <div class="sidebar-promo">
+              <div class="promo-icon"><span class="crown-mark" aria-hidden="true"></span></div>
+              <span class="bar dark" style="--w: 128px; --h: 12px"></span>
+              <span class="bar dark" style="--w: 104px; --h: 12px"></span>
+              <div class="promo-copy">
+                <span class="bar" style="--w: 88%; --h: 9px"></span>
+                <span class="bar" style="--w: 70%; --h: 9px"></span>
+                <span class="bar" style="--w: 54%; --h: 9px"></span>
+              </div>
+              <button class="dark-pill" type="button" aria-label="Upgrade">
+                <span class="bar light" style="--w: 86px; --h: 10px"></span>
+              </button>
+            </div>
+            <button class="logout-row" type="button" aria-label="Log out">
+              <span class="icon icon-logout" aria-hidden="true"></span>
+              <span class="bar" style="--w: 72px"></span>
+            </button>
+          </aside>
 
-      <main>
-        <section class="hero">
-          <aside class="corner corner--lt"><div class="corner-lines"><i></i><i></i><i></i></div></aside>
-          <aside class="corner corner--rt"><div class="corner-lines"><i></i><i></i><i></i></div></aside>
-          <aside class="corner corner--lb"><div class="corner-lines"><i></i><i></i><i></i></div></aside>
-          <aside class="corner corner--rb"><div class="corner-lines"><i></i><i></i><i></i></div></aside>
-          <div class="hero-title" aria-label="YUCONG"></div>
-          <div class="hero-panel">
-            <div class="caption-line"><i></i><i></i><i></i><i></i></div>
-            <div class="chip-row"><span class="chip"></span><span class="chip"></span><span class="chip"></span><span class="chip"></span></div>
-          </div>
-        </section>
+          <section class="content-shell">
+            <header class="topbar">
+              <div class="mobile-brand">yucong</div>
+              <div class="top-tabs" role="tablist" aria-label="Dashboard sections">
+                <button class="top-tab is-active" type="button" role="tab" aria-selected="true" aria-label="Overview">
+                  <span class="bar light" style="--w: 76px"></span>
+                </button>
+                <button class="top-tab" type="button" role="tab" aria-selected="false" aria-label="Money">
+                  <span class="bar dark" style="--w: 86px"></span>
+                </button>
+                <button class="top-tab" type="button" role="tab" aria-selected="false" aria-label="Pay and transfer">
+                  <span class="bar dark" style="--w: 118px"></span>
+                </button>
+                <button class="top-tab" type="button" role="tab" aria-selected="false" aria-label="Insights">
+                  <span class="bar dark" style="--w: 82px"></span>
+                </button>
+                <button class="top-tab" type="button" role="tab" aria-selected="false" aria-label="Activity">
+                  <span class="bar dark" style="--w: 76px"></span>
+                </button>
+              </div>
+              <div class="top-actions">
+                <div class="search-control" role="search" aria-label="Search">
+                  <span class="search-icon" aria-hidden="true"></span>
+                  <span class="bar" style="--w: 108px"></span>
+                  <span class="search-icon" aria-hidden="true"></span>
+                </div>
+                <button class="icon-button bell-button" type="button" aria-label="Notifications">
+                  <span class="bell" aria-hidden="true"></span>
+                  <span class="notify-dot" aria-hidden="true"></span>
+                </button>
+                <button class="profile-button" type="button" aria-label="Profile">
+                  <span class="profile-core"><span class="bar" style="--w: 24px; --h: 10px"></span></span>
+                  <span class="chevron" aria-hidden="true"></span>
+                </button>
+              </div>
+            </header>
 
-        <section class="section">
-          <div class="section-head">
-            <div class="title-block"><i></i><i></i></div>
-            <div class="head-lines"><i></i><i></i><i></i></div>
-          </div>
-          <div class="glass-grid">
-            <article class="glass-card glass-card--main">
-              <div class="display-bars"><i></i><i></i></div>
-              <div class="chip-row"><span class="chip"></span><span class="chip"></span><span class="chip"></span></div>
-            </article>
-            <article class="glass-card"><div class="card-lines"><i></i><i></i><i></i></div></article>
-            <article class="glass-card"><div class="card-lines"><i></i><i></i><i></i></div></article>
-            <article class="glass-card"><div class="card-lines"><i></i><i></i><i></i></div></article>
-          </div>
-        </section>
+            <div class="status-strip">
+              <button class="mobile-menu" type="button" aria-label="Open menu">
+                <span class="hamburger" aria-hidden="true"></span>
+              </button>
+              <span class="bar dark" style="--w: 88px"></span>
+              <span class="bar" style="--w: 58px"></span>
+            </div>
 
-        <section class="section">
-          <div class="section-head">
-            <div class="title-block"><i></i><i></i></div>
-            <div class="number">03</div>
-          </div>
-          <div class="project-stack">
-            <article class="project-row">
-              <div class="project-no">01</div>
-              <div class="project-copy"><i></i><i></i><i></i></div>
-              <div class="image-frame"></div>
-            </article>
-            <article class="project-row">
-              <div class="project-no">02</div>
-              <div class="project-copy"><i></i><i></i><i></i></div>
-              <div class="image-frame"></div>
-            </article>
-            <article class="project-row">
-              <div class="project-no">03</div>
-              <div class="project-copy"><i></i><i></i><i></i></div>
-              <div class="image-frame"></div>
-            </article>
-          </div>
-        </section>
+            <div class="dashboard-layout">
+              <div class="dashboard-column primary-column">
+                <section class="card-shell balance-card" aria-label="Balance panel">
+                  <div class="balance-head">
+                    <div>
+                      <div class="label-row">
+                        <span class="bar dark" style="--w: 118px; --h: 13px"></span>
+                        <span class="eye" aria-hidden="true"></span>
+                      </div>
+                      <span class="bar amount-block" style="--w: 174px; --h: 32px"></span>
+                      <div class="trend-row">
+                        <span class="trend-pill">
+                          <span class="down-arrow" aria-hidden="true"></span>
+                          <span class="bar" style="--w: 34px; --h: 8px"></span>
+                        </span>
+                        <span class="bar" style="--w: 82px; --h: 9px"></span>
+                      </div>
+                    </div>
+                    <button class="select-pill" type="button" aria-label="Date range">
+                      <span class="bar dark" style="--w: 76px; --h: 10px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="chart-area">
+                    <div class="axis-bars" aria-hidden="true">
+                      <span class="bar" style="--w: 88px; --h: 8px"></span>
+                      <span class="bar" style="--w: 72px; --h: 8px"></span>
+                      <span class="bar" style="--w: 58px; --h: 8px"></span>
+                      <span class="bar" style="--w: 42px; --h: 8px"></span>
+                    </div>
+                    <svg class="balance-svg" viewBox="0 0 510 180" role="img" aria-label="Balance chart">
+                      <defs>
+                        <linearGradient id="chartFade" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stop-color="#704dff" stop-opacity="0.24" />
+                          <stop offset="100%" stop-color="#704dff" stop-opacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <line x1="0" y1="36" x2="510" y2="36" stroke="#e9e5f1" stroke-width="1" />
+                      <line x1="0" y1="72" x2="510" y2="72" stroke="#e9e5f1" stroke-width="1" />
+                      <line x1="0" y1="108" x2="510" y2="108" stroke="#e9e5f1" stroke-width="1" />
+                      <line x1="0" y1="144" x2="510" y2="144" stroke="#e9e5f1" stroke-width="1" />
+                      <path d="M0 124.2 L39.2 108 L78.5 115.2 L117.7 95.4 L156.9 81 L196.2 95.4 L235.4 77.4 L274.6 64.8 L313.8 75.6 L353.1 57.6 L392.3 66.6 L431.5 43.2 L470.8 48.6 L510 19.8 L510 180 L0 180 Z" fill="url(#chartFade)" />
+                      <path d="M0 124.2 L39.2 108 L78.5 115.2 L117.7 95.4 L156.9 81 L196.2 95.4 L235.4 77.4 L274.6 64.8 L313.8 75.6 L353.1 57.6 L392.3 66.6 L431.5 43.2 L470.8 48.6 L510 19.8" fill="none" stroke="#704dff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" />
+                      <circle cx="431.5" cy="43.2" r="5" fill="#704dff" />
+                      <line x1="431.5" y1="43.2" x2="431.5" y2="180" stroke="#e0d8f5" stroke-width="1" />
+                    </svg>
+                    <div class="chart-popover">
+                      <span class="bar dark" style="--w: 70px; --h: 12px"></span>
+                      <span class="bar" style="--w: 46px; --h: 9px"></span>
+                    </div>
+                  </div>
+                  <div class="metric-strip">
+                    <div class="metric-card">
+                      <span class="metric-icon tone-cyan"><span class="briefcase-mark" aria-hidden="true"></span></span>
+                      <div>
+                        <span class="bar" style="--w: 70px; --h: 9px"></span>
+                        <span class="bar dark" style="--w: 88px; --h: 13px"></span>
+                      </div>
+                    </div>
+                    <div class="metric-card">
+                      <span class="metric-icon tone-pink"><span class="bag-mark" aria-hidden="true"></span></span>
+                      <div>
+                        <span class="bar" style="--w: 70px; --h: 9px"></span>
+                        <span class="bar dark" style="--w: 88px; --h: 13px"></span>
+                      </div>
+                    </div>
+                    <div class="metric-card">
+                      <span class="metric-icon tone-purple"><span class="bank-mark" aria-hidden="true"></span></span>
+                      <div>
+                        <span class="bar" style="--w: 70px; --h: 9px"></span>
+                        <span class="bar dark" style="--w: 88px; --h: 13px"></span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
 
-        <section class="section">
-          <div class="section-head">
-            <div class="title-block"><i></i><i></i></div>
-            <div class="head-lines"><i></i><i></i><i></i></div>
-          </div>
-          <div class="deck-grid">
-            <article class="deck-card"><div class="deck-head"><i></i><i></i><i></i></div><div class="deck-screen"></div></article>
-            <article class="deck-card"><div class="deck-head"><i></i><i></i><i></i></div><div class="deck-screen"></div></article>
-          </div>
-        </section>
+                <section class="card-shell transactions-panel" aria-label="Recent transactions">
+                  <div class="section-head">
+                    <span class="bar dark" style="--w: 164px; --h: 15px"></span>
+                    <span class="bar purple" style="--w: 58px; --h: 9px"></span>
+                  </div>
+                  <div class="transaction-stack">
+                    <button class="transaction-row" type="button" aria-label="Transaction one">
+                      <span class="app-icon app-black" aria-hidden="true"></span>
+                      <span class="transaction-copy">
+                        <span class="bar dark" style="--w: 76px; --h: 12px"></span>
+                        <span class="subline">
+                          <span class="bar" style="--w: 86px; --h: 8px"></span>
+                          <span class="bar" style="--w: 62px; --h: 8px"></span>
+                        </span>
+                      </span>
+                      <span class="bar dark" style="--w: 74px; --h: 12px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <button class="transaction-row" type="button" aria-label="Transaction two">
+                      <span class="app-icon app-green" aria-hidden="true"></span>
+                      <span class="transaction-copy">
+                        <span class="bar dark" style="--w: 72px; --h: 12px"></span>
+                        <span class="subline">
+                          <span class="bar" style="--w: 86px; --h: 8px"></span>
+                          <span class="bar" style="--w: 62px; --h: 8px"></span>
+                        </span>
+                      </span>
+                      <span class="bar dark" style="--w: 74px; --h: 12px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <button class="transaction-row" type="button" aria-label="Transaction three">
+                      <span class="app-icon app-black" aria-hidden="true"></span>
+                      <span class="transaction-copy">
+                        <span class="bar dark" style="--w: 54px; --h: 12px"></span>
+                        <span class="subline">
+                          <span class="bar" style="--w: 86px; --h: 8px"></span>
+                          <span class="bar" style="--w: 62px; --h: 8px"></span>
+                        </span>
+                      </span>
+                      <span class="bar dark" style="--w: 74px; --h: 12px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                    <button class="transaction-row" type="button" aria-label="Transaction four">
+                      <span class="app-icon app-cyan" aria-hidden="true"></span>
+                      <span class="transaction-copy">
+                        <span class="bar dark" style="--w: 62px; --h: 12px"></span>
+                        <span class="subline">
+                          <span class="bar" style="--w: 86px; --h: 8px"></span>
+                          <span class="bar" style="--w: 62px; --h: 8px"></span>
+                        </span>
+                      </span>
+                      <span class="bar success" style="--w: 74px; --h: 12px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </section>
+              </div>
 
-        <section class="section">
-          <div class="section-head">
-            <div class="title-block"><i></i><i></i></div>
-            <div class="number">12</div>
-          </div>
-          <div class="gallery-grid">
-            <article class="gallery-card"><div class="image-frame"></div><footer><i></i><i></i></footer></article>
-            <article class="gallery-card"><div class="image-frame"></div><footer><i></i><i></i></footer></article>
-            <article class="gallery-card"><div class="image-frame"></div><footer><i></i><i></i></footer></article>
-            <article class="gallery-card"><div class="image-frame"></div><footer><i></i><i></i></footer></article>
-          </div>
-        </section>
+              <div class="dashboard-column middle-column">
+                <section class="card-shell cards-panel" aria-label="Cards">
+                  <div class="section-head">
+                    <span class="bar dark" style="--w: 88px; --h: 15px"></span>
+                    <button class="icon-button small-outline" type="button" aria-label="Add card">
+                      <span class="plus" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="credit-preview">
+                    <span class="bar light" style="--w: 92px; --h: 17px"></span>
+                    <span class="contactless" aria-hidden="true"></span>
+                    <span class="chip" aria-hidden="true"></span>
+                    <span class="bar light" style="--w: 206px; --h: 12px"></span>
+                    <span class="bar light" style="--w: 54px; --h: 22px; justify-self: end; align-self: end"></span>
+                  </div>
+                  <div class="card-caption">
+                    <div>
+                      <span class="bar dark" style="--w: 94px; --h: 11px"></span>
+                      <span class="bar" style="--w: 112px; --h: 9px"></span>
+                    </div>
+                    <span class="more-dots" aria-hidden="true"></span>
+                  </div>
+                  <div class="pager-dots" aria-label="Card pages">
+                    <button class="is-active" type="button" aria-label="Card page one"></button>
+                    <button type="button" aria-label="Card page two"></button>
+                    <button type="button" aria-label="Card page three"></button>
+                  </div>
+                </section>
 
-        <section class="section">
-          <div class="section-head">
-            <div class="title-block"><i></i><i></i></div>
-            <div class="head-lines"><i></i><i></i><i></i></div>
-          </div>
-          <div class="contact-board">
-            <article class="contact-card">
-              <div class="display-bars"><i></i><i></i></div>
-              <div class="caption-line"><i></i><i></i><i></i></div>
-            </article>
-            <article class="contact-card"><div class="qr"></div></article>
-          </div>
-        </section>
-      </main>
-    </div>
+                <section class="card-shell goals-panel" aria-label="Savings goals">
+                  <div class="section-head">
+                    <span class="bar dark" style="--w: 118px; --h: 15px"></span>
+                    <span class="bar purple" style="--w: 58px; --h: 9px"></span>
+                  </div>
+                  <div class="goal-stack">
+                    <div class="goal-row">
+                      <span class="goal-icon tone-purple"><span class="plane-mark" aria-hidden="true"></span></span>
+                      <div class="goal-copy">
+                        <div class="goal-line">
+                          <span class="bar dark" style="--w: 78px; --h: 11px"></span>
+                          <span class="bar dark" style="--w: 38px; --h: 10px"></span>
+                        </div>
+                        <span class="bar" style="--w: 116px; --h: 9px"></span>
+                        <div class="progress-track"><span class="progress-purple" style="--value: 58%"></span></div>
+                      </div>
+                    </div>
+                    <div class="goal-row">
+                      <span class="goal-icon tone-cyan"><span class="home-mark" aria-hidden="true"></span></span>
+                      <div class="goal-copy">
+                        <div class="goal-line">
+                          <span class="bar dark" style="--w: 96px; --h: 11px"></span>
+                          <span class="bar dark" style="--w: 38px; --h: 10px"></span>
+                        </div>
+                        <span class="bar" style="--w: 104px; --h: 9px"></span>
+                        <div class="progress-track"><span class="progress-cyan" style="--value: 54%"></span></div>
+                      </div>
+                    </div>
+                    <div class="goal-row">
+                      <span class="goal-icon tone-pink"><span class="spark-mark" aria-hidden="true"></span></span>
+                      <div class="goal-copy">
+                        <div class="goal-line">
+                          <span class="bar dark" style="--w: 120px; --h: 11px"></span>
+                          <span class="bar dark" style="--w: 38px; --h: 10px"></span>
+                        </div>
+                        <span class="bar" style="--w: 136px; --h: 9px"></span>
+                        <div class="progress-track"><span class="progress-pink" style="--value: 48%"></span></div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="card-shell security-panel" aria-label="Security">
+                  <div class="security-icon"><span class="shield-mark" aria-hidden="true"></span></div>
+                  <div class="security-copy">
+                    <span class="bar dark" style="--w: 184px; --h: 12px"></span>
+                    <span class="bar" style="--w: 220px; --h: 9px"></span>
+                    <span class="bar" style="--w: 126px; --h: 9px"></span>
+                  </div>
+                  <span class="chevron" aria-hidden="true"></span>
+                </section>
+              </div>
+
+              <div class="dashboard-column side-column">
+                <section class="card-shell premium-panel" aria-label="Premium subscription">
+                  <div class="premium-head">
+                    <div>
+                      <span class="bar dark" style="--w: 170px; --h: 16px"></span>
+                      <span class="bar" style="--w: 224px; --h: 10px"></span>
+                    </div>
+                    <div class="crown-badge"><span class="crown-mark" aria-hidden="true"></span></div>
+                  </div>
+                  <div class="check-list">
+                    <div class="check-row">
+                      <span><span class="check" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 176px; --h: 10px"></span>
+                    </div>
+                    <div class="check-row">
+                      <span><span class="check" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 190px; --h: 10px"></span>
+                    </div>
+                    <div class="check-row">
+                      <span><span class="check" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 176px; --h: 10px"></span>
+                    </div>
+                    <div class="check-row">
+                      <span><span class="check" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 150px; --h: 10px"></span>
+                    </div>
+                  </div>
+                  <button class="premium-button" type="button" aria-label="Premium action">
+                    <span class="bar light" style="--w: 116px; --h: 10px"></span>
+                  </button>
+                </section>
+
+                <section class="card-shell quick-panel" aria-label="Quick transfer">
+                  <div class="section-head">
+                    <span class="bar dark" style="--w: 116px; --h: 15px"></span>
+                    <span class="bar purple" style="--w: 58px; --h: 9px"></span>
+                  </div>
+                  <div class="people-row">
+                    <button class="person-add" type="button" aria-label="Add recipient">
+                      <span class="plus" aria-hidden="true"></span>
+                    </button>
+                    <button class="person person-purple is-active" type="button" aria-label="Recipient one">
+                      <span class="bar" style="--w: 24px; --h: 10px"></span>
+                    </button>
+                    <button class="person person-pink" type="button" aria-label="Recipient two">
+                      <span class="bar" style="--w: 24px; --h: 10px"></span>
+                    </button>
+                    <button class="person person-cyan" type="button" aria-label="Recipient three">
+                      <span class="bar" style="--w: 24px; --h: 10px"></span>
+                    </button>
+                    <button class="person person-photo" type="button" aria-label="Recipient four"></button>
+                  </div>
+                  <div class="person-labels">
+                    <span class="bar" style="--w: 36px; --h: 8px"></span>
+                    <span class="bar" style="--w: 48px; --h: 8px"></span>
+                    <span class="bar" style="--w: 42px; --h: 8px"></span>
+                    <span class="bar" style="--w: 46px; --h: 8px"></span>
+                    <span class="bar" style="--w: 52px; --h: 8px"></span>
+                  </div>
+                </section>
+
+                <section class="card-shell budget-panel" aria-label="Budget overview">
+                  <div class="section-head">
+                    <span class="bar dark" style="--w: 136px; --h: 15px"></span>
+                    <button class="select-pill compact" type="button" aria-label="Budget date">
+                      <span class="bar dark" style="--w: 64px; --h: 9px"></span>
+                      <span class="chevron" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                  <div class="budget-stack">
+                    <div class="budget-row">
+                      <span class="budget-icon tone-purple"><span class="home-mark" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 80px; --h: 10px"></span>
+                      <div class="budget-track"><span class="progress-purple" style="--value: 78%"></span></div>
+                      <span class="bar" style="--w: 88px; --h: 10px"></span>
+                    </div>
+                    <div class="budget-row">
+                      <span class="budget-icon tone-cyan"><span class="briefcase-mark" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 64px; --h: 10px"></span>
+                      <div class="budget-track"><span class="progress-cyan" style="--value: 58%"></span></div>
+                      <span class="bar" style="--w: 88px; --h: 10px"></span>
+                    </div>
+                    <div class="budget-row">
+                      <span class="budget-icon tone-pink"><span class="icon icon-transfer" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 86px; --h: 10px"></span>
+                      <div class="budget-track"><span class="progress-pink" style="--value: 48%"></span></div>
+                      <span class="bar" style="--w: 88px; --h: 10px"></span>
+                    </div>
+                    <div class="budget-row">
+                      <span class="budget-icon tone-blue"><span class="icon icon-wallet" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 102px; --h: 10px"></span>
+                      <div class="budget-track"><span class="progress-blue" style="--value: 36%"></span></div>
+                      <span class="bar" style="--w: 88px; --h: 10px"></span>
+                    </div>
+                    <div class="budget-row">
+                      <span class="budget-icon tone-gold"><span class="lock-mark" aria-hidden="true"></span></span>
+                      <span class="bar dark" style="--w: 88px; --h: 10px"></span>
+                      <div class="budget-track"><span class="progress-gold" style="--value: 44%"></span></div>
+                      <span class="bar" style="--w: 88px; --h: 10px"></span>
+                    </div>
+                  </div>
+                  <div class="budget-total">
+                    <span class="bar dark" style="--w: 56px; --h: 11px"></span>
+                    <span class="bar dark" style="--w: 152px; --h: 12px"></span>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
     <script>
-      const cards = document.querySelectorAll(".glass-card, .project-row, .deck-card, .gallery-card");
-      cards.forEach((card) => {
-        card.addEventListener("pointermove", (event) => {
-          const rect = card.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width;
-          const y = (event.clientY - rect.top) / rect.height;
-          card.style.setProperty("--spot-x", `${Math.round(x * 100)}%`);
-          card.style.setProperty("--spot-y", `${Math.round(y * 100)}%`);
-          card.style.setProperty("--tilt-x", `${((x - 0.5) * 3).toFixed(2)}deg`);
-          card.style.setProperty("--tilt-y", `${((0.5 - y) * 3).toFixed(2)}deg`);
+      const activateWithin = (buttons, activeClass) => {
+        buttons.forEach((button) => {
+          button.addEventListener("click", () => {
+            buttons.forEach((item) => {
+              item.classList.remove(activeClass);
+              if (item.hasAttribute("aria-selected")) item.setAttribute("aria-selected", "false");
+            });
+            button.classList.add(activeClass);
+            if (button.hasAttribute("aria-selected")) button.setAttribute("aria-selected", "true");
+          });
         });
-        card.addEventListener("pointerleave", () => {
-          card.style.removeProperty("--spot-x");
-          card.style.removeProperty("--spot-y");
-          card.style.removeProperty("--tilt-x");
-          card.style.removeProperty("--tilt-y");
-        });
-      });
+      };
+
+      activateWithin(document.querySelectorAll(".side-nav-item"), "is-active");
+      activateWithin(document.querySelectorAll(".top-tab"), "is-active");
+      activateWithin(document.querySelectorAll(".person"), "is-active");
+      activateWithin(document.querySelectorAll(".pager-dots button"), "is-active");
     </script>
   </body>
 </html>
