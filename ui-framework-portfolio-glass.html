@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YUCONG Glass Portfolio UI</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #070808;
+        --panel: rgba(255, 255, 255, .07);
+        --panel-strong: rgba(255, 255, 255, .13);
+        --line: rgba(255, 255, 255, .16);
+        --text: #f5f1e8;
+        --muted: rgba(245, 241, 232, .62);
+        --acid: #d8ff26;
+        --blue: #87a9ff;
+        --red: #ff3b1f;
+        --shadow: 0 28px 80px rgba(0, 0, 0, .45);
+        font-family: Inter, "Arial", "Microsoft YaHei", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px),
+          radial-gradient(520px circle at 20% 22%, rgba(216, 255, 38, .12), transparent 42%),
+          radial-gradient(620px circle at 78% 18%, rgba(135, 169, 255, .14), transparent 44%),
+          var(--bg);
+        background-size: 56px 56px, 56px 56px, auto, auto, auto;
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      button, a { font: inherit; }
+      a { color: inherit; text-decoration: none; }
+
+      .shell {
+        width: min(1160px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 24px 0 32px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 14px;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(8, 9, 10, .58);
+        backdrop-filter: blur(20px) saturate(1.45);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, .26);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-left: 12px;
+        font-weight: 950;
+        letter-spacing: .02em;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--acid);
+        color: #090909;
+      }
+
+      .nav {
+        display: flex;
+        gap: 6px;
+        padding: 4px;
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .055);
+      }
+
+      .nav button {
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 14px;
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+        font-size: .78rem;
+        font-weight: 900;
+      }
+
+      .nav button.is-active {
+        color: #10110f;
+        background: var(--acid);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 640px;
+        display: grid;
+        place-items: center;
+        padding: 86px 0 38px;
+      }
+
+      .hero-title {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        font-size: clamp(5.4rem, 18vw, 15rem);
+        line-height: .78;
+        letter-spacing: 0;
+        font-weight: 1000;
+        text-align: center;
+        text-transform: uppercase;
+        filter: drop-shadow(0 20px 44px rgba(0, 0, 0, .55));
+      }
+
+      .hero-title span {
+        color: transparent;
+        -webkit-text-stroke: 2px rgba(245, 241, 232, .9);
+      }
+
+      .glass-card {
+        position: absolute;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .035)),
+          rgba(255, 255, 255, .045);
+        backdrop-filter: blur(18px) saturate(1.35);
+        box-shadow: var(--shadow);
+      }
+
+      .meta-card {
+        left: 0;
+        top: 116px;
+        width: 260px;
+        padding: 24px;
+      }
+
+      .year-card {
+        right: 0;
+        bottom: 78px;
+        width: 230px;
+        padding: 24px;
+      }
+
+      .preview-card {
+        right: 80px;
+        top: 170px;
+        width: 300px;
+        padding: 14px;
+        transform: rotate(3deg);
+      }
+
+      .stack-card {
+        left: 58px;
+        bottom: 82px;
+        width: 270px;
+        padding: 14px;
+        transform: rotate(-4deg);
+      }
+
+      .card-window {
+        min-height: 178px;
+        border-radius: 20px;
+        background:
+          linear-gradient(135deg, rgba(216, 255, 38, .2), transparent 42%),
+          linear-gradient(160deg, rgba(135, 169, 255, .2), rgba(255, 255, 255, .055)),
+          rgba(0, 0, 0, .25);
+        border: 1px solid rgba(255, 255, 255, .13);
+        overflow: hidden;
+      }
+
+      .card-window::before,
+      .card-window::after {
+        content: "";
+        display: block;
+        width: 72%;
+        height: 18px;
+        margin: 22px;
+        border-radius: 999px;
+        background: rgba(245, 241, 232, .72);
+      }
+
+      .card-window::after {
+        width: 48%;
+        height: 82px;
+        background: rgba(216, 255, 38, .24);
+        border: 1px solid rgba(216, 255, 38, .25);
+      }
+
+      .small-title {
+        margin: 0 0 12px;
+        color: var(--acid);
+        font-size: .72rem;
+        font-weight: 950;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+
+      .meta-card strong,
+      .year-card strong {
+        display: block;
+        margin-top: 16px;
+        font-size: 1.35rem;
+        line-height: 1.05;
+      }
+
+      .muted {
+        margin: 0;
+        color: var(--muted);
+        font-size: .9rem;
+        line-height: 1.7;
+      }
+
+      .action-row {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: -46px;
+      }
+
+      .chip {
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: 999px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, .06);
+        color: var(--text);
+        backdrop-filter: blur(14px);
+        font-size: .78rem;
+        font-weight: 950;
+        cursor: pointer;
+      }
+
+      .chip.is-hot {
+        color: #090909;
+        background: var(--acid);
+      }
+
+      .modules {
+        display: grid;
+        grid-template-columns: 1.15fr .85fr;
+        gap: 16px;
+        margin-top: 58px;
+      }
+
+      .module {
+        min-height: 260px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .035)),
+          rgba(255, 255, 255, .045);
+        backdrop-filter: blur(18px) saturate(1.25);
+        box-shadow: 0 24px 58px rgba(0, 0, 0, .28);
+      }
+
+      .module h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2.1rem, 5vw, 4.6rem);
+        line-height: .9;
+        letter-spacing: 0;
+      }
+
+      .wire-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .wire {
+        min-height: 130px;
+        border: 1px solid rgba(255, 255, 255, .14);
+        border-radius: 20px;
+        background:
+          linear-gradient(rgba(255, 255, 255, .12), rgba(255, 255, 255, .02)),
+          rgba(255, 255, 255, .04);
+        padding: 14px;
+      }
+
+      .wire i {
+        display: block;
+        width: 72%;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(245, 241, 232, .52);
+      }
+
+      .wire b {
+        display: block;
+        width: 46%;
+        height: 42px;
+        margin-top: 36px;
+        border-radius: 14px;
+        background: rgba(216, 255, 38, .2);
+      }
+
+      .mobile-frame {
+        width: min(280px, 100%);
+        min-height: 520px;
+        margin-left: auto;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 42px;
+        background: rgba(245, 241, 232, .08);
+        box-shadow: inset 0 0 0 8px rgba(255, 255, 255, .035);
+      }
+
+      .phone-screen {
+        height: 488px;
+        border-radius: 30px;
+        padding: 18px;
+        background:
+          radial-gradient(190px circle at 64% 18%, rgba(216, 255, 38, .2), transparent 50%),
+          rgba(6, 8, 9, .88);
+        border: 1px solid rgba(255, 255, 255, .14);
+      }
+
+      .phone-top,
+      .phone-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .phone-top span,
+      .phone-nav span {
+        width: 48px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(245, 241, 232, .58);
+      }
+
+      .phone-panel {
+        margin: 28px 0 14px;
+        height: 170px;
+        border-radius: 24px;
+        background: linear-gradient(145deg, rgba(216, 255, 38, .28), rgba(135, 169, 255, .12));
+        border: 1px solid rgba(255, 255, 255, .16);
+      }
+
+      .phone-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .phone-list span {
+        height: 58px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, .08);
+        border: 1px solid rgba(255, 255, 255, .12);
+      }
+
+      .phone-nav {
+        margin-top: 28px;
+        padding: 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .08);
+      }
+
+      .phone-nav span {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+      }
+
+      .phone-nav span:first-child { background: var(--acid); }
+
+      .credit {
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: .82rem;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      @media (max-width: 860px) {
+        .topbar { grid-template-columns: 1fr; border-radius: 28px; }
+        .nav { overflow-x: auto; }
+        .hero { min-height: 620px; }
+        .glass-card { position: relative; inset: auto; transform: none; }
+        .hero {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          align-items: stretch;
+        }
+        .hero-title { order: -1; margin-top: 18px; }
+        .meta-card,
+        .year-card,
+        .preview-card,
+        .stack-card { width: 100%; }
+        .action-row { margin-top: 20px; }
+        .modules { grid-template-columns: 1fr; }
+        .wire-grid { grid-template-columns: 1fr; }
+        .mobile-frame { margin: 0 auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="YUCONG Glass Portfolio UI">
+          <span class="brand-mark">YC</span>
+          <span>YUCONG 制作</span>
+        </a>
+        <nav class="nav" aria-label="UI preview controls">
+          <button class="is-active" type="button" data-mode="showcase">Showcase</button>
+          <button type="button" data-mode="cards">Cards</button>
+          <button type="button" data-mode="mobile">Mobile</button>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-label="glass portfolio interface framework">
+          <article class="glass-card meta-card">
+            <p class="small-title">Designer</p>
+            <p class="muted">Portfolio UI system / glass navigation / project entry / responsive framework.</p>
+            <strong>Albert Lush<br />YUCONG</strong>
+          </article>
+
+          <article class="glass-card preview-card" aria-label="featured project placeholder">
+            <div class="card-window"></div>
+            <p class="small-title" style="margin-top: 14px;">Featured project frame</p>
+          </article>
+
+          <h1 class="hero-title">Glass<br /><span>UI</span></h1>
+
+          <article class="glass-card stack-card" aria-label="stacked card placeholder">
+            <div class="card-window"></div>
+            <p class="small-title" style="margin-top: 14px;">Visual system module</p>
+          </article>
+
+          <article class="glass-card year-card">
+            <p class="small-title">Year</p>
+            <p class="muted">Clean background, high contrast hierarchy, iOS-like translucent surfaces.</p>
+            <strong>2026</strong>
+          </article>
+        </section>
+
+        <div class="action-row" aria-label="prototype chips">
+          <button class="chip is-hot" type="button">Glass Nav</button>
+          <button class="chip" type="button">Project Modal</button>
+          <button class="chip" type="button">Responsive Grid</button>
+          <button class="chip" type="button">Portfolio System</button>
+        </div>
+
+        <section class="modules" aria-label="interface modules">
+          <article class="module">
+            <p class="small-title">Desktop wireframe</p>
+            <h2>Clean project browsing system</h2>
+            <p class="muted">Text is intentionally reduced to structural placeholders. The page focuses on layout, interaction states and visual hierarchy.</p>
+            <div class="wire-grid">
+              <div class="wire"><i></i><b></b></div>
+              <div class="wire"><i></i><b></b></div>
+              <div class="wire"><i></i><b></b></div>
+            </div>
+          </article>
+
+          <article class="module">
+            <p class="small-title">Mobile adaptation</p>
+            <div class="mobile-frame">
+              <div class="phone-screen">
+                <div class="phone-top"><span></span><span></span></div>
+                <div class="phone-panel"></div>
+                <div class="phone-list">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="phone-nav"><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <p class="credit">YUCONG 制作 · UI framework code sample</p>
+      </main>
+    </div>
+
+    <script>
+      const buttons = document.querySelectorAll(".nav button");
+      const chips = document.querySelectorAll(".chip");
+      const root = document.documentElement;
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          buttons.forEach((item) => item.classList.remove("is-active"));
+          button.classList.add("is-active");
+          root.dataset.mode = button.dataset.mode;
+        });
+      });
+
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          chips.forEach((item) => item.classList.remove("is-hot"));
+          chip.classList.add("is-hot");
+        });
+      });
+    </script>
+  </body>
+</html>
