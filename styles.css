@@ -764,6 +764,9 @@ img { max-width: 100%; }
   gap: 18px;
   align-items: stretch;
 }
+.video-layout + .video-layout {
+  margin-top: 24px;
+}
 .video-player {
   margin: 0;
   overflow: hidden;
