@@ -775,12 +775,19 @@ img { max-width: 100%; }
   background: #050605;
   box-shadow: 0 28px 90px rgba(0,0,0,.32);
 }
+.video-player--portrait {
+  width: min(100%, 440px);
+  justify-self: center;
+}
 .video-player video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   background: #050605;
+}
+.video-player--portrait video {
+  aspect-ratio: 9 / 16;
 }
 .video-player figcaption {
   padding: 14px 18px;
