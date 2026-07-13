@@ -2444,3 +2444,7 @@ img { max-width: 100%; }
   .software-stack { padding: 16px; }
   .software-stack-heading { align-items: flex-start; flex-direction: column; }
 }
+.work .project-copy h2 {
+  color: var(--paper);
+  text-shadow: 0 3px 24px rgba(0,0,0,.48);
+}
