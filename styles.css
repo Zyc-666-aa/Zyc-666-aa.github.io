@@ -2356,3 +2356,91 @@ img { max-width: 100%; }
 .project-viewer-top span {
   color: var(--accent);
 }
+.software-stack {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max);
+  margin: 18px auto 0;
+  padding: 22px;
+  border: 1px solid rgba(216,255,38,.28);
+  border-radius: 8px;
+  background:
+    radial-gradient(520px circle at 12% 0, rgba(216,255,38,.1), transparent 52%),
+    linear-gradient(135deg, rgba(255,255,255,.065), rgba(255,255,255,.018)),
+    rgba(11,11,10,.58);
+  box-shadow: 0 22px 70px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
+  overflow: hidden;
+}
+.software-stack-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(216,255,38,.28);
+}
+.software-stack-heading span {
+  color: var(--accent);
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+.software-stack-heading h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.2vw, 2.2rem);
+}
+.software-row {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(96px, 1fr));
+  gap: 10px;
+}
+.software-item {
+  min-width: 0;
+  min-height: 118px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  padding: 16px 8px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 7px;
+  background: rgba(255,255,255,.035);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+.software-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(216,255,38,.58);
+  background: rgba(216,255,38,.07);
+}
+.software-item img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+}
+.software-item img.software-item-app-icon {
+  border-radius: 11px;
+}
+.software-item span {
+  color: rgba(241,237,228,.82);
+  font-size: .72rem;
+  font-weight: 900;
+  text-align: center;
+  white-space: nowrap;
+}
+@media (max-width: 980px) {
+  .software-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+  }
+  .software-item {
+    flex: 0 0 112px;
+    scroll-snap-align: start;
+  }
+}
+@media (max-width: 560px) {
+  .software-stack { padding: 16px; }
+  .software-stack-heading { align-items: flex-start; flex-direction: column; }
+}
