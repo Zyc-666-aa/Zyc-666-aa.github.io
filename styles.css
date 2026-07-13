@@ -2283,3 +2283,76 @@ img { max-width: 100%; }
     transform: none;
   }
 }
+/* Project showcase: unified black and fluorescent-green theme. */
+.work {
+  background:
+    linear-gradient(rgba(241,237,228,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(241,237,228,.055) 1px, transparent 1px),
+    radial-gradient(circle at 72% 12%, rgba(216,255,38,.09), transparent 30%),
+    #0b0b0a;
+  background-size: 84px 84px, 84px 84px, auto, auto;
+  color: var(--paper);
+  border-top: 1px solid rgba(216,255,38,.22);
+}
+.work .section-heading {
+  border-color: rgba(216,255,38,.72);
+}
+.work .section-heading p,
+.work .project-number,
+.work .project-copy em {
+  color: var(--accent);
+}
+.work .section-heading span {
+  color: rgba(241,237,228,.68);
+}
+.work .project-row {
+  border-color: rgba(216,255,38,.2);
+  background:
+    radial-gradient(520px circle at var(--spot-x) var(--spot-y), rgba(216,255,38,.12), transparent 46%),
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.018)),
+    rgba(11,11,10,.72);
+  box-shadow: 0 22px 76px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.09);
+}
+.work .project-row::before {
+  color: rgba(216,255,38,.045);
+}
+.work .project-row::after {
+  border-color: rgba(216,255,38,.48);
+  background: rgba(11,11,10,.78);
+  color: var(--accent);
+}
+.work .project-row:hover,
+.work .project-row:focus-visible {
+  border-color: rgba(216,255,38,.62);
+  background:
+    radial-gradient(560px circle at var(--spot-x) var(--spot-y), rgba(216,255,38,.18), transparent 48%),
+    linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.025)),
+    rgba(11,11,10,.82);
+  box-shadow: 0 28px 90px rgba(0,0,0,.44), 0 0 0 1px rgba(216,255,38,.08), inset 0 1px 0 rgba(255,255,255,.11);
+}
+.work .project-tag {
+  border-color: rgba(216,255,38,.62);
+  background: var(--accent);
+  color: var(--ink);
+}
+.work .project-copy p {
+  color: rgba(241,237,228,.58);
+}
+.work .project-thumb {
+  border-color: rgba(216,255,38,.22);
+  background:
+    radial-gradient(circle at 50% 10%, rgba(216,255,38,.07), transparent 42%),
+    #080808;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07);
+}
+.work .project-row:hover .project-thumb,
+.work .project-row:focus-visible .project-thumb {
+  box-shadow: 0 24px 72px rgba(0,0,0,.48), 0 0 0 1px rgba(216,255,38,.12);
+}
+.work .project-preview-strip {
+  border-color: rgba(216,255,38,.2);
+  background: rgba(216,255,38,.2);
+}
+.project-viewer-top span {
+  color: var(--accent);
+}
