@@ -2448,3 +2448,40 @@ img { max-width: 100%; }
   color: var(--paper);
   text-shadow: 0 3px 24px rgba(0,0,0,.48);
 }
+/* Compact resume timeline: date left, content stacked right. */
+.timeline {
+  margin-top: 28px;
+}
+.timeline article {
+  grid-template-columns: 132px minmax(0, 1fr);
+  grid-template-areas:
+    "date title"
+    "date copy";
+  gap: 6px 22px;
+  align-items: start;
+  padding: 16px 0;
+}
+.timeline article > span {
+  grid-area: date;
+  padding-top: 2px;
+}
+.timeline article > h3 {
+  grid-area: title;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.timeline article > p {
+  grid-area: copy;
+  max-width: 920px;
+  font-size: .86rem;
+  line-height: 1.58;
+}
+@media (max-width: 680px) {
+  .timeline article {
+    grid-template-columns: 1fr;
+    grid-template-areas: "date" "title" "copy";
+    gap: 7px;
+    padding: 15px 0;
+  }
+}
