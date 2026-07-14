@@ -10,7 +10,7 @@
     <title>YUCONG | 张誉聪作品集</title>
     <link rel="canonical" href="https://4zyc.cn/" />
     <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%23070707"/><text x="8" y="42" font-family="Arial,sans-serif" font-size="18" font-weight="900" fill="%23d8ff31">YC</text></svg>' />
-    <link rel="stylesheet" href="./styles.css?v=compact-timeline-20260714" />
+    <link rel="stylesheet" href="./styles.css?v=featured-projects-20260714" />
   </head>
   <body>
     <header class="site-header" aria-label="Primary navigation">
@@ -18,10 +18,10 @@
       <nav class="nav-links" aria-label="Portfolio sections">
         <a class="is-active" href="#top">PORTFOLIO</a>
         <a href="#resume">个人介绍</a>
+        <a href="#work">精选项目</a>
         <a href="#career">竞争力</a>
         <a href="#ui">UI展示</a>
         <a href="#video">视频展示</a>
-        <a href="#work">项目展示</a>
         <a href="#ppt">PPT案例</a>
         <a href="#gallery">作品图库</a>
         <a href="#awards">获奖</a>
@@ -70,7 +70,10 @@
           <p>RESUME / PROFILE</p>
           <h2 id="resume-title">张誉聪</h2>
           <span>Albert Lush · 华南师范大学服装与服饰设计本科在读 · 视觉设计 / 非遗文创 / 商业表达</span>
-        </div>
+          <div class="resume-actions">
+            <a href="./Albert-Lush-Resume.pdf" download>下载 PDF 简历</a>
+            <a href="mailto:yucongalbert@gmail.com">邮件联系</a>
+          </div>        </div>
         <div class="resume-grid">
           <article class="resume-card resume-card--intro">
             <h3>个人简介</h3>
@@ -136,6 +139,15 @@
             <p>协助学院完成行政资料整理、信息提取、PPT 演示文稿、Word 文档与 Excel 表格制作，使用 Gemini/NotebookLM 建立信息整理流程。</p>
           </article>
         </div>
+      </section>
+
+      <section class="work" id="work" aria-labelledby="work-title">
+        <div class="section-heading">
+          <p>CASE STUDY PREVIEW / CLICK TO VIEW</p>
+          <h1 id="work-title">项目展示</h1>
+          <span>优先展示能说明方法、审美和交付能力的项目。点击任意项目进入独立展览视图，按页面顺序查看完整图像、过程稿和最终呈现。</span>
+        </div>
+        <div class="project-list" data-project-list aria-label="Project index"></div>
       </section>
 
       <section class="career-fit" id="career" aria-labelledby="career-title">
@@ -371,15 +383,6 @@
         </div>
       </section>
 
-      <section class="work" id="work" aria-labelledby="work-title">
-        <div class="section-heading">
-          <p>CASE STUDY PREVIEW / CLICK TO VIEW</p>
-          <h1 id="work-title">项目展示</h1>
-          <span>优先展示能说明方法、审美和交付能力的项目。点击任意项目进入独立展览视图，按页面顺序查看完整图像、过程稿和最终呈现。</span>
-        </div>
-        <div class="project-list" data-project-list aria-label="Project index"></div>
-      </section>
-
       <section class="ppt-showcase" id="ppt" aria-labelledby="ppt-title">
         <div class="section-heading">
           <p>PPT / CLIENT PRESENTATION DESIGN</p>
@@ -446,6 +449,7 @@
             <p data-project-viewer-label></p>
             <h2 id="project-viewer-title" data-project-viewer-title></h2>
             <p data-project-viewer-summary></p>
+            <dl class="project-viewer-details" data-project-viewer-details hidden></dl>
             <div class="project-viewer-actions">
               <button type="button" data-project-viewer-prev>上一项目</button>
               <button type="button" data-project-viewer-next>下一项目</button>
@@ -474,7 +478,7 @@
       </figure>
     </div>
 
-    <script src="./script.js?v=ui-showcase-heritage-20260620"></script>
+    <script src="./script.js?v=featured-projects-20260714"></script>
   </body>
 </html>
 
