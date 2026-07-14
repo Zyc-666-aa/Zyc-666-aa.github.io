@@ -2523,3 +2523,41 @@ img { max-width: 100%; }
 }
 .project-viewer-details dt { color: var(--accent); font-size: .7rem; font-weight: 900; }
 .project-viewer-details dd { margin: 0; color: rgba(241,237,228,.72); font-size: .78rem; line-height: 1.5; }
+.ui-preview-card { position: relative; }
+.ui-preview-card iframe[data-src] { background: #080808; }
+.ui-preview-load {
+  position: absolute;
+  inset: 42px 0 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  border: 0;
+  background: radial-gradient(circle at 50% 42%, rgba(216,255,38,.12), transparent 38%), rgba(8,8,8,.92);
+  color: var(--accent);
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  cursor: pointer;
+}
+.gallery-load-more {
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px;
+  border: 1px solid rgba(216,255,38,.35);
+  border-radius: 8px;
+  background: rgba(216,255,38,.05);
+  color: var(--accent);
+  font-weight: 900;
+  cursor: pointer;
+}
+.gallery-load-more:hover { background: rgba(216,255,38,.1); }
+.ui-showcase,
+.video-showcase,
+.ppt-showcase,
+.gallery-section,
+.awards,
+.contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
