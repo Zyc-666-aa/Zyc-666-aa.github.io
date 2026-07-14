@@ -370,6 +370,24 @@ function renderPptProjects() {
   });
 }
 
+
+function canPrefetchMedia() {
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  return !connection?.saveData && !["slow-2g", "2g"].includes(connection?.effectiveType);
+}
+
+function prefetchImage(src) {
+  if (!src || !canPrefetchMedia()) return;
+  const image = new Image();
+  image.decoding = "async";
+  image.src = src;
+}
+
+function prefetchNextProjectImage(project, index) {
+  if (!project?.images.length) return;
+  const next = project.images[(index + 1) % project.images.length];
+  prefetchImage(optimizedSrc(next[0]));
+}
 function setProjectViewerImage(imageIndex) {
   const project = ALL_PROJECTS[activeProjectIndex];
   if (!project || !projectViewerImage) return;
@@ -389,6 +407,7 @@ function setProjectViewerImage(imageIndex) {
       // Some browsers reject decode() for cached images even though they can paint.
     }
     releaseImageLoading();
+    prefetchNextProjectImage(project, activeProjectImageIndex);
   };
   projectViewerImage.onerror = releaseImageLoading;
   projectViewerImage.loading = "eager";
@@ -487,20 +506,38 @@ function renderGallery() {
       <div class="gallery-grid"></div>
     `;
     const grid = article.querySelector(".gallery-grid");
-    project.images.forEach(([src, caption]) => {
-      const item = { src: optimizedSrc(src), thumbSrc: thumbSrc(src), caption, projectTitle: project.title };
-      flatGalleryItems.push(item);
+    const items = project.images.map(([src, caption]) => ({
+      src: optimizedSrc(src),
+      thumbSrc: thumbSrc(src),
+      caption,
+      projectTitle: project.title,
+    }));
+    flatGalleryItems.push(...items);
+
+    const appendCard = (item) => {
       const card = document.createElement("button");
       card.className = "gallery-card glass-tilt";
       card.type = "button";
-      card.innerHTML = `<span><img src="${item.thumbSrc}" alt="${project.title} ${caption}" loading="lazy" decoding="async" /></span><figcaption>${caption}</figcaption>`;
+      card.innerHTML = `<span><img src="${item.thumbSrc}" alt="${project.title} ${item.caption}" loading="lazy" decoding="async" fetchpriority="low" /></span><figcaption>${item.caption}</figcaption>`;
       card.addEventListener("click", () => openLightbox(flatGalleryItems.indexOf(item)));
       grid.append(card);
-    });
+    };
+
+    items.slice(0, 3).forEach(appendCard);
+    if (items.length > 3) {
+      const more = document.createElement("button");
+      more.className = "gallery-load-more";
+      more.type = "button";
+      more.textContent = `加载其余 ${items.length - 3} 张`;
+      more.addEventListener("click", () => {
+        more.remove();
+        items.slice(3).forEach(appendCard);
+      }, { once: true });
+      article.append(more);
+    }
     galleryRoot.append(article);
   });
 }
-
 const lightbox = document.querySelector("[data-lightbox]");
 const lightboxImage = document.querySelector("[data-lightbox-image]");
 const lightboxTitle = document.querySelector("[data-lightbox-title]");
@@ -510,6 +547,10 @@ function openLightbox(index) {
   if (!lightbox || !flatGalleryItems[index]) return;
   activeGalleryIndex = index;
   const item = flatGalleryItems[index];
+  lightboxImage.onload = () => {
+    const next = flatGalleryItems[(index + 1) % flatGalleryItems.length];
+    prefetchImage(next?.src);
+  };
   lightboxImage.src = item.src;
   lightboxImage.alt = `${item.projectTitle} ${item.caption}`;
   lightboxTitle.textContent = item.caption;
@@ -641,6 +682,21 @@ function initRevealOnScroll() {
   targets.forEach((target) => observer.observe(target));
 }
 
+
+function initDeferredIframes() {
+  document.querySelectorAll(".ui-preview-card iframe[data-src]").forEach((frame) => {
+    const button = document.createElement("button");
+    button.className = "ui-preview-load";
+    button.type = "button";
+    button.textContent = "点击加载交互预览";
+    button.addEventListener("click", () => {
+      frame.src = frame.dataset.src;
+      frame.removeAttribute("data-src");
+      button.remove();
+    }, { once: true });
+    frame.after(button);
+  });
+}
 function restoreInitialHashPosition() {
   if (!window.location.hash) return;
   const target = document.querySelector(window.location.hash);
@@ -652,6 +708,7 @@ function restoreInitialHashPosition() {
 
 renderProjects();
 renderPptProjects();
+initDeferredIframes();
 renderGallery();
 initPointerGlow();
 initGlassInteractions();
