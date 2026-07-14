@@ -697,6 +697,13 @@ function initDeferredIframes() {
     frame.after(button);
   });
 }
+
+function initServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js").catch(() => {});
+  }, { once: true });
+}
 function restoreInitialHashPosition() {
   if (!window.location.hash) return;
   const target = document.querySelector(window.location.hash);
@@ -706,6 +713,7 @@ function restoreInitialHashPosition() {
   }, 160);
 }
 
+initServiceWorker();
 renderProjects();
 renderPptProjects();
 initDeferredIframes();
