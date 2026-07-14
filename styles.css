@@ -2485,3 +2485,41 @@ img { max-width: 100%; }
     padding: 15px 0;
   }
 }
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.resume-actions a {
+  padding: 10px 14px;
+  border: 1px solid rgba(216,255,38,.5);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: .72rem;
+  font-weight: 900;
+}
+.resume-actions a:first-child { background: var(--accent); color: var(--ink); }
+.project-proof {
+  display: block;
+  margin-top: 12px;
+  color: rgba(241,237,228,.78);
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+.project-viewer-details {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0;
+}
+.project-viewer-details[hidden] { display: none; }
+.project-viewer-details div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(241,237,228,.14);
+}
+.project-viewer-details dt { color: var(--accent); font-size: .7rem; font-weight: 900; }
+.project-viewer-details dd { margin: 0; color: rgba(241,237,228,.72); font-size: .78rem; line-height: 1.5; }
