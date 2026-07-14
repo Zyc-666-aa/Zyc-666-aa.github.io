@@ -5,6 +5,7 @@ const PROJECTS = [
     title: "濠鏡新紋",
     label: "CULTURAL PRODUCT / MACAU VISUAL SYSTEM",
     summary: "以澳门城市意象、莲花、海浪和装饰纹样为视觉核心，建立一套偏东方装饰感的文创视觉系统，并延展到海报、书签、徽章、包装和产品应用。",
+    details: { "项目属性": "文化视觉系统 / 作品集案例", "我的工作": "城市意象梳理、符号提炼、视觉系统与延展设计", "交付内容": "海报、书签、徽章、包装及产品应用", "结果": "形成 9 项视觉与产品应用展示" },
     kind: "design",
     images: [
       ["./haojing-01.jpg", "主视觉海报"],
@@ -51,6 +52,7 @@ const PROJECTS = [
     title: "一枚荔枝里的岭南",
     label: "CULTURAL POSTER SERIES / LINGNAN STORYTELLING",
     summary: "以苏轼诗句、荔枝、岭南城市记忆和粤港澳大湾区意象为线索，将传统诗意、地方风物和当代城市连接起来，形成一组偏文旅叙事的竖版海报。",
+    details: { "项目属性": "岭南文化海报系列", "我的工作": "文化线索梳理、视觉叙事与海报设计", "交付内容": "6 张竖版主题海报", "结果": "建立传统诗意与湾区城市意象的统一叙事" },
     kind: "design",
     images: Array.from({ length: 6 }, (_, index) => [
       `./lychee-${String(index + 1).padStart(2, "0")}.png`,
@@ -106,6 +108,7 @@ const PPT_PROJECTS = [
     title: "Strata 结课汇报PPT",
     label: "PPT DECK / FASHION FINAL PRESENTATION",
     summary: "城市街头机能风格男装系列结课汇报，展示从风格定位、视觉系统、面料工艺到成衣方案的完整汇报版式，强化 Strata 系列的品牌化表达。",
+    details: { "项目属性": "服装设计课程结课汇报", "我的工作": "风格定位、视觉系统与汇报版式", "交付内容": "7 页结课汇报", "结果": "完成从面料工艺到成衣方案的系统表达" },
     kind: "ppt",
     images: Array.from({ length: 7 }, (_, index) => [
       `./strata-ppt-${String(index + 1).padStart(2, "0")}.jpg`,
@@ -196,6 +199,7 @@ const PPT_PROJECTS = [
   },
 ];
 
+const FEATURED_PROJECTS = [PROJECTS[0], PPT_PROJECTS[1], PROJECTS[3]];
 const ALL_PROJECTS = [...PROJECTS, ...PPT_PROJECTS];
 
 function assetStem(src) {
@@ -290,6 +294,7 @@ const projectViewerIndex = document.querySelector("[data-project-viewer-index]")
 const projectViewerLabel = document.querySelector("[data-project-viewer-label]");
 const projectViewerTitle = document.querySelector("[data-project-viewer-title]");
 const projectViewerSummary = document.querySelector("[data-project-viewer-summary]");
+const projectViewerDetails = document.querySelector("[data-project-viewer-details]");
 const projectViewerImage = document.querySelector("[data-project-viewer-image]");
 const projectViewerCaption = document.querySelector("[data-project-viewer-caption]");
 const projectViewerCount = document.querySelector("[data-project-viewer-count]");
@@ -301,7 +306,7 @@ let activeProjectImageIndex = 0;
 function renderProjects() {
   if (!projectList) return;
   projectList.textContent = "";
-  PROJECTS.forEach((project, index) => {
+  FEATURED_PROJECTS.forEach((project) => {
     const row = document.createElement("button");
     row.className = "project-row glass-tilt";
     row.type = "button";
@@ -314,12 +319,14 @@ function renderProjects() {
       .slice(0, 3)
       .map(([src, caption]) => `<img src="${thumbSrc(src)}" alt="${project.title} ${caption}" loading="lazy" decoding="async" />`)
       .join("");
+    const proofLine = project.details ? project.details["项目属性"] + " / " + project.details["交付内容"] : "";
     row.innerHTML = `
       <span class="project-number">${project.index}</span>
       <span class="project-copy">
         <span class="project-tag">OPEN PROJECT</span>
         <h2>${project.title}</h2>
         <p>${project.label}</p>
+        <span class="project-proof">${proofLine}</span>
         <em>${String(project.images.length).padStart(2, "0")} IMAGES / CLICK TO VIEW</em>
       </span>
       <figure class="project-thumb">
@@ -327,7 +334,7 @@ function renderProjects() {
         <span class="project-preview-strip" aria-hidden="true">${previewImages}</span>
       </figure>
     `;
-    row.addEventListener("click", () => openProjectViewer(index));
+    row.addEventListener("click", () => openProjectViewer(ALL_PROJECTS.indexOf(project)));
     projectList.append(row);
   });
 }
@@ -423,6 +430,12 @@ function openProjectViewer(projectIndex) {
   projectViewerLabel.textContent = project.label;
   projectViewerTitle.textContent = project.title;
   projectViewerSummary.textContent = project.summary;
+  if (projectViewerDetails) {
+    projectViewerDetails.innerHTML = project.details
+      ? Object.entries(project.details).map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")
+      : "";
+    projectViewerDetails.hidden = !project.details;
+  }
   renderProjectThumbs(project);
   setProjectViewerImage(0);
   projectViewer.hidden = false;
