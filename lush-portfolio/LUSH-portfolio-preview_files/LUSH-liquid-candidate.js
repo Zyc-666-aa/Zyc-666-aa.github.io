@@ -43,6 +43,7 @@
   dockOrbButton?.addEventListener('pointerup',resetVoiceOrb); dockOrbButton?.addEventListener('pointercancel',resetVoiceOrb); dockOrbButton?.addEventListener('lostpointercapture',()=>{if(voiceOrbPointerId!==null)resetVoiceOrb();});
   // Shared source files are also required directly by the WeChat adapter.
   const welcomeConfig=LushLiquid.welcome;
+  const desktopShowcase=window.matchMedia('(min-width:768px)');
   const motion=new LushLiquid.Motion(false);
   motion.geometry=(w,h)=>welcomeConfig.geometry(w,h,motion.p,motion.side);
   const renderMotion=Object.create(motion);
@@ -52,7 +53,9 @@
   const forceCssFallback=new URLSearchParams(window.location.search).get('qaRenderer')==='css';
   const qaNativeGlass=new URLSearchParams(window.location.search).get('qaNativeGlass')!=='0';
   const fallbackStickerNodes=[];
-  $('.welcome-portfolio-label').textContent=welcomeConfig.label;$('.welcome-idle-hint').textContent=welcomeConfig.hint;
+  $('.welcome-portfolio-label').textContent=welcomeConfig.label;
+  const updateWelcomeHint=()=>{$('.welcome-idle-hint').textContent=desktopShowcase.matches?'拖动或点击玻璃球，展开作品集入口':welcomeConfig.hint;};
+  updateWelcomeHint();if(desktopShowcase.addEventListener)desktopShowcase.addEventListener('change',updateWelcomeHint);else desktopShowcase.addListener?.(updateWelcomeHint);
   $('#welcomeCopy h1').textContent=welcomeConfig.title;enterButton.textContent=welcomeConfig.enterLabel;
   const canvas=document.createElement('canvas');canvas.className='liquid-canvas';canvas.setAttribute('aria-hidden','true');welcomeLayer.prepend(canvas);
   let renderer=null,raf=0,last=0,failed=false,viewport={width:0,height:0};
@@ -75,17 +78,19 @@
     welcomeLayer.dataset.state=motion.state;welcomeLayer.style.setProperty('--liquid-p',g.p);
     Object.assign(welcomeDome.style,{left:g.cx+'px',top:g.cy+'px',width:g.r*2+'px',height:g.r*2+'px'});
     updateFallbackStickers(g);
-    const ready=motion.state==='revealed'||(motion.target===1&&g.p>.985),copyOpacity=Math.max(0,Math.min(1,(g.p-welcomeConfig.copyRevealStart)/(1-welcomeConfig.copyRevealStart)));welcomeCopy.style.opacity=String(copyOpacity);welcomeCopy.classList.toggle('liquid-visible',copyOpacity>0);welcomeCopy.classList.toggle('liquid-ready',ready);welcomeCopy.inert=!ready;enterButton.disabled=!ready;welcomeDome.setAttribute('aria-label',ready?'收起作品集入口':'上滑展开作品集入口');
+    const ready=motion.state==='revealed'||(motion.target===1&&g.p>.985),copyOpacity=Math.max(0,Math.min(1,(g.p-welcomeConfig.copyRevealStart)/(1-welcomeConfig.copyRevealStart)));welcomeCopy.style.opacity=String(copyOpacity);welcomeCopy.classList.toggle('liquid-visible',copyOpacity>0);welcomeCopy.classList.toggle('liquid-ready',ready);welcomeCopy.inert=!ready;enterButton.disabled=!ready;welcomeDome.setAttribute('aria-label',ready?'收起作品集入口':desktopShowcase.matches?'拖动或点击玻璃球，展开作品集入口':'上滑展开作品集入口');
     const samples=window.__lushLiquid.samples;samples.push({t:now,p:motion.p,state:motion.state});if(samples.length>900)samples.shift();
     raf=requestAnimationFrame(liquidFrame);
   }
   function startLiquid(){last=0;if(!raf&&!document.hidden)raf=requestAnimationFrame(liquidFrame);}
   function point(e){const b=welcomeLayer.getBoundingClientRect();return {x:e.clientX-b.left,y:e.clientY-b.top,h:b.height};}
+  let welcomePointerReleased=false;
   welcomeDome.addEventListener('pointerdown',e=>{if(e.button!==0||motion.drag)return;const p=point(e),g=motion.geometry(viewport.width,viewport.height);if(Math.hypot(p.x-g.cx,p.y-g.cy)>g.r)return;motion.down(p.x,p.y,performance.now(),e.pointerId,p.h,viewport.width);welcomeDome.setPointerCapture(e.pointerId);});
   welcomeDome.addEventListener('pointermove',e=>{const p=point(e);motion.move(p.x,p.y,performance.now(),e.pointerId);});
-  welcomeDome.addEventListener('pointerup',()=>motion.release(performance.now()));
-  welcomeDome.addEventListener('pointercancel',()=>motion.release(performance.now(),true));
+  welcomeDome.addEventListener('pointerup',()=>{welcomePointerReleased=!!motion.drag;motion.release(performance.now());});
+  welcomeDome.addEventListener('pointercancel',()=>{welcomePointerReleased=false;motion.release(performance.now(),true);});
   welcomeDome.addEventListener('lostpointercapture',()=>{if(motion.drag)motion.release(performance.now(),true);});
+  welcomeDome.addEventListener('click',e=>{const pointerHandled=welcomePointerReleased;welcomePointerReleased=false;if(e.detail===0||pointerHandled)return;if(['idle','revealed','reduced'].includes(motion.state))motion.setTarget(motion.target?0:1);});
   welcomeDome.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();motion.setTarget(motion.target?0:1);}});
   enterButton.addEventListener('click',e=>{e.stopPropagation();if(enterButton.disabled||!(motion.state==='revealed'||(motion.target===1&&motion.p>.985)))return;motion.enter();welcomeLayer.classList.add('liquid-exit');setTimeout(()=>{portfolioLayer.hidden=false;welcomeLayer.hidden=true;$('#previewFrame').classList.remove('liquid-welcome-active');welcomeLayer.classList.remove('liquid-exit');cancelAnimationFrame(raf);raf=0;render();$('#worksButton').focus();},180);});
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();failLiquid();});
