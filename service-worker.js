@@ -1,5 +1,5 @@
-const CACHE_NAME = "yucong-media-v1";
-const SHELL = ["./", "./styles.css?v=cache-media-20260714", "./script.js?v=cache-media-20260714"];
+const CACHE_NAME = "yucong-media-v2";
+const SHELL = ["./", "./styles.css?v=cache-media-20260714", "./script.js?v=cache-media-20261011"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL)));

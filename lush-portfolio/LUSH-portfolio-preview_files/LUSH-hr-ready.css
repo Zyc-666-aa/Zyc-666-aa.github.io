@@ -1,0 +1,31 @@
+.liquid-candidate details.case-more {
+  margin: 28px 0 12px;
+  border-top: 1px solid rgba(188, 207, 225, .2);
+  border-bottom: 1px solid rgba(188, 207, 225, .2);
+}
+
+.liquid-candidate details.case-more > summary {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #b9c7d4;
+  font-size: 14px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.liquid-candidate details.case-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+.liquid-candidate details.case-more > summary::after {
+  content: "+";
+  color: #d8e3ed;
+  font-size: 20px;
+}
+
+.liquid-candidate details.case-more[open] > summary::after {
+  content: "−";
+}

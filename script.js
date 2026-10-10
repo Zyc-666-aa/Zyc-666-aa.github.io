@@ -223,10 +223,11 @@ function thumbSrc(src) {
 }
 
 const navLinks = [...document.querySelectorAll(".nav-links a")];
-const sectionTargets = navLinks
+const sectionLinks = navLinks.filter((link) => link.getAttribute("href")?.startsWith("#"));
+const sectionTargets = sectionLinks
   .map((link) => [link.getAttribute("href"), document.querySelector(link.getAttribute("href"))])
   .filter(([, section]) => section);
-const sectionByHref = new Map(navLinks.map((link) => [link.getAttribute("href"), link]));
+const sectionByHref = new Map(sectionLinks.map((link) => [link.getAttribute("href"), link]));
 let currentActiveHref = "";
 
 function updateActiveLink() {

@@ -1,0 +1,278 @@
+/* UIUX corrections scoped to the current candidate. */
+.liquid-candidate .portfolio-layer{--dock-height:calc(88px + env(safe-area-inset-bottom))}
+.liquid-candidate .portfolio-layer>.page-scroll{position:absolute;inset:0 0 var(--dock-height);height:auto}
+.liquid-candidate .dock{height:var(--dock-height);box-sizing:border-box}
+.liquid-candidate .page-content{padding-bottom:32px}
+.liquid-candidate .page-content.section-about{padding-top:68px}
+.liquid-candidate .section-about .about-heading{padding-top:22px}
+.liquid-candidate .section-about .about-orb{position:absolute;right:0;top:20px;margin:0;width:56px;height:56px}
+.liquid-candidate .section-about .about-name{margin-top:20px;padding-right:64px}
+.liquid-candidate .section-about .about-role{margin-top:10px}
+.liquid-candidate .section-about .about-facts{margin-top:12px}
+.liquid-candidate .section-about .about-fact{padding:7px 0}
+.liquid-candidate .section-about .about-links{margin-top:14px;gap:8px}
+.liquid-candidate .filter,.liquid-candidate .filter.selected{height:44px;min-height:44px;margin:0}
+.liquid-candidate .dock-plus{width:64px;height:64px}
+.liquid-candidate .dock-star{width:26px;height:26px;background:url('assets/native/nav-explore.svg') center/contain no-repeat;transform:none}
+.liquid-candidate .dock-star:before,.liquid-candidate .dock-star:after{display:none}
+.liquid-candidate .detail-header{top:0;left:0;right:0;height:calc(64px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 12px 0;gap:8px;background:#080d13;border-bottom:1px solid #bdd0e529;pointer-events:auto;box-sizing:border-box}
+.liquid-candidate .detail-header .detail-back{order:0;min-width:62px;padding:0 4px;font-size:13px}
+.liquid-candidate .detail-index{order:1;display:flex;justify-content:flex-end;flex:1;gap:0}
+.liquid-candidate .detail-index button{min-width:44px;min-height:44px;justify-content:center;padding:0 8px;font-size:12px;color:#94a5b8;border-radius:8px}
+.liquid-candidate .detail-index button[aria-current="location"]{color:#eff5fb;background:#c5d9f014}
+.liquid-candidate .detail-scroll{position:absolute;top:calc(64px + env(safe-area-inset-top));left:0;right:0;bottom:0;height:auto;padding-top:20px}
+.liquid-candidate .detail-scroll-wordmark{margin-bottom:24px}
+.liquid-candidate .detail-evidence-link{display:block;min-height:44px;margin:-12px 0 16px;padding:0;color:#dceafa;background:transparent;border-bottom:1px solid #bdd0e53a;font-size:14px;text-align:left}
+.liquid-candidate .document-viewer-header{position:sticky;top:0;z-index:3;flex-shrink:0;background:#0c121a}
+.liquid-candidate .document-viewer-panel{scroll-padding-top:80px}
+.liquid-candidate .detail-scroll [tabindex="-1"]:focus-visible{outline:1px solid #9fb9ce;outline-offset:4px}
+@media(max-width:360px){.liquid-candidate .section-about .about-heading{padding-top:10px}.liquid-candidate .section-about .about-orb{top:8px;width:50px;height:50px}.liquid-candidate .section-about .about-name{margin-top:16px}.liquid-candidate .about-fact p{font-size:12px;line-height:1.5}.liquid-candidate .detail-index button{padding:0 5px}}
+
+/* About orb reference pass: the small identity marker borrows the colorful
+   refractive sphere language from the welcome orb, with lower motion energy.
+   The label remains available to assistive technology while the visual mark
+   stays quiet beside the identity block. */
+.liquid-candidate .section-about .about-orb{
+  --orb-drag-x:0px;--orb-drag-y:0px;--orb-shift-x:0px;--orb-shift-y:0px;--orb-tilt:0deg;
+  display:grid;place-items:center;overflow:hidden;isolation:isolate;
+  width:64px;height:64px;margin:0;
+  cursor:grab;touch-action:none;user-select:none;
+  border:1px solid rgba(226,239,255,.88);
+  background:radial-gradient(circle at calc(24% + var(--orb-drag-x)) calc(16% + var(--orb-drag-y)),rgba(255,255,255,.7) 0,rgba(232,250,255,.18) 22%,transparent 42%),radial-gradient(circle at calc(78% + var(--orb-drag-x)) calc(68% + var(--orb-drag-y)),rgba(240,88,184,.72) 0,rgba(89,204,255,.28) 38%,transparent 67%),linear-gradient(145deg,#54e4ff 0%,#8e85ff 32%,#f477c8 51%,#ffd16e 70%,#5de1e3 100%);
+  background:
+    radial-gradient(circle at calc(24% + var(--orb-drag-x)) calc(16% + var(--orb-drag-y)),rgba(255,255,255,.7) 0,rgba(232,250,255,.18) 22%,transparent 42%),
+    radial-gradient(circle at calc(78% + var(--orb-drag-x)) calc(68% + var(--orb-drag-y)),rgba(240,88,184,.72) 0,rgba(89,204,255,.28) 38%,transparent 67%),
+    conic-gradient(from calc(210deg + var(--orb-tilt)) at calc(50% + var(--orb-drag-x)) calc(50% + var(--orb-drag-y)),#52e4ff 0deg,#8f85ff 62deg,#f477c8 128deg,#ffd16e 190deg,#5de1e3 255deg,#596eff 315deg,#52e4ff 360deg),
+    radial-gradient(circle at 50% 50%,rgba(20,24,36,.72),rgba(3,6,11,.96) 73%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.48),inset 0 -10px 16px rgba(4,12,24,.46),inset 0 0 13px rgba(206,235,255,.24),0 0 0 1px rgba(131,187,225,.26),0 0 18px rgba(90,177,231,.22),0 8px 20px rgba(0,0,0,.3);
+  transform:translate3d(var(--orb-shift-x),var(--orb-shift-y),0) rotate(var(--orb-tilt));
+  transition:transform 220ms var(--ui-ease-out),box-shadow 220ms ease-out;
+  animation-duration:16s;
+}
+.liquid-candidate .section-about .about-orb:before{
+  content:"";position:absolute;inset:-16%;z-index:1;border-radius:50%;pointer-events:none;
+  background:
+    radial-gradient(ellipse at calc(20% + var(--orb-drag-x)) calc(14% + var(--orb-drag-y)),rgba(255,255,255,.62) 0,rgba(220,248,255,.2) 14%,transparent 32%),
+    linear-gradient(118deg,transparent 29%,rgba(255,255,255,.42) 43%,rgba(115,229,255,.2) 49%,transparent 63%),
+    repeating-linear-gradient(164deg,rgba(255,255,255,.06) 0 1px,transparent 1px 8px);
+  mix-blend-mode:screen;opacity:.62;transform:translate3d(-2px,-1px,0) rotate(-10deg);
+  animation:about-orb-color-roll 13s ease-in-out infinite;
+}
+.liquid-candidate .section-about .about-orb:after{
+  content:"";position:absolute;inset:2px;z-index:2;border:1px solid rgba(231,246,255,.46);border-radius:50%;pointer-events:none;box-shadow:inset 0 0 8px rgba(226,242,255,.16);
+}
+.liquid-candidate .section-about .about-orb-plus{position:relative;z-index:3;width:20px;height:20px;display:block;filter:drop-shadow(0 1px 4px rgba(0,0,0,.35))}
+.liquid-candidate .section-about .about-orb-plus:before,.liquid-candidate .section-about .about-orb-plus:after{content:"";position:absolute;left:50%;top:50%;width:20px;height:2px;border-radius:999px;background:rgba(255,255,255,.94);transform:translate(-50%,-50%)}
+.liquid-candidate .section-about .about-orb-plus:after{width:2px;height:20px}
+.liquid-candidate .section-about .about-orb.is-dragging{cursor:grabbing;transition:none;box-shadow:inset 0 2px 0 rgba(255,255,255,.56),inset 0 -10px 16px rgba(4,12,24,.42),inset 0 0 16px rgba(206,235,255,.32),0 0 0 1px rgba(131,187,225,.34),0 0 22px rgba(90,177,231,.3),0 10px 24px rgba(0,0,0,.34)}
+.liquid-candidate .section-about .about-orb:focus-visible{outline:2px solid #d9eaff;outline-offset:5px}
+@keyframes about-orb-color-roll{0%,100%{opacity:.48;transform:translate3d(-2px,-1px,0) rotate(-10deg)}50%{opacity:.68;transform:translate3d(2px,1px,0) rotate(-5deg)}}
+@media(prefers-reduced-motion:reduce){.liquid-candidate .section-about .about-orb:before{animation-duration:20s}.liquid-candidate .section-about .about-orb{transition:transform 220ms ease-out}}
+
+/* LUSH process evidence: the native tool record leads, adapters stay labelled. */
+.liquid-candidate .native-evidence,
+.liquid-candidate .detail-framework,
+.liquid-candidate .figma-structure{margin:28px 0 0;padding:24px 0 10px;border-top:1px solid rgba(194,218,237,.17);border-bottom:1px solid rgba(194,218,237,.10)}
+.liquid-candidate .native-evidence-head span,
+.liquid-candidate .framework-head span,
+.liquid-candidate .figma-head span{display:block;color:#8194a8;font-size:11px;letter-spacing:2.5px}
+.liquid-candidate .native-evidence-head h3,
+.liquid-candidate .framework-head h3,
+.liquid-candidate .figma-head h3{margin:7px 0 0;color:#e8eef4;font-size:23px;font-weight:350;letter-spacing:.02em}
+.liquid-candidate .native-evidence-head p,
+.liquid-candidate .framework-head p,
+.liquid-candidate .figma-head p{margin:9px 0 0;color:#8c9cad;font-size:14px;line-height:1.7}
+.liquid-candidate .native-evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}
+.liquid-candidate .native-evidence-card{margin:0;min-width:0;border:1px solid rgba(197,216,237,.14);border-radius:12px;background:#0b1016;overflow:hidden;box-shadow:inset 0 1px rgba(255,255,255,.03)}
+.liquid-candidate .native-evidence-image{position:relative;height:244px;display:flex;align-items:center;justify-content:center;background:#06090d;overflow:hidden}
+.liquid-candidate .native-evidence-image img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#06090d}
+.liquid-candidate .native-evidence-image>span{position:absolute;left:10px;top:10px;min-width:26px;padding:4px 7px;border:1px solid rgba(220,232,243,.34);border-radius:999px;background:rgba(5,7,12,.82);color:#e3ebf3;font:11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center;letter-spacing:1px}
+.liquid-candidate .native-evidence-card figcaption{padding:12px 13px 14px}
+.liquid-candidate .native-evidence-card figcaption strong{display:block;color:#e3e9ef;font-size:15px;font-weight:450}
+.liquid-candidate .native-evidence-card figcaption small{display:block;margin-top:5px;color:#9aafc1;font-size:11px;line-height:1.45;letter-spacing:.3px}
+.liquid-candidate .native-evidence-card figcaption p{margin:7px 0 0;color:#718294;font-size:12px;line-height:1.6}
+.liquid-candidate .evidence-boundary,
+.liquid-candidate .framework-footer,
+.liquid-candidate .figma-note{display:block;margin:16px 0 0;padding:11px 13px;border-left:1px solid rgba(169,198,224,.42);background:rgba(169,198,224,.04);color:#8799aa;font-size:12px;line-height:1.7}
+.liquid-candidate .framework-flow{display:flex;align-items:stretch;gap:10px;margin-top:18px;overflow-x:auto;padding-bottom:4px}
+.liquid-candidate .framework-node{position:relative;min-width:140px;flex:1;padding:14px 13px 15px;border:1px solid rgba(197,216,237,.16);border-radius:10px;background:linear-gradient(145deg,rgba(17,27,37,.9),rgba(7,11,16,.92))}
+.liquid-candidate .framework-index{display:block;color:#8fa9c0;font:11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:1px}
+.liquid-candidate .framework-node strong{display:block;margin-top:12px;color:#e3e9ef;font-size:15px;font-weight:450}
+.liquid-candidate .framework-node small{display:block;margin-top:7px;color:#8192a2;font-size:12px;line-height:1.55}
+.liquid-candidate .framework-arrow{align-self:center;flex:0 0 auto;color:#8ea1b3;font-size:18px}
+.liquid-candidate .figma-frame{margin-top:18px;padding:12px;border:1px solid rgba(197,216,237,.16);border-radius:12px;background:#0b1016}
+.liquid-candidate .figma-toolbar{height:26px;display:flex;align-items:center;gap:6px;color:#9eb2c5;font-size:11px;letter-spacing:.5px}
+.liquid-candidate .figma-toolbar i{display:block;width:7px;height:7px;border-radius:50%;background:#405263}
+.liquid-candidate .figma-toolbar i:first-child{background:#9eb2c5}
+.liquid-candidate .figma-frame-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.liquid-candidate .figma-frame-card{min-height:102px;padding:12px;border:1px solid rgba(197,216,237,.12);border-radius:8px;background:linear-gradient(155deg,rgba(19,31,43,.82),rgba(8,12,17,.9))}
+.liquid-candidate .figma-frame-card>span{display:block;color:#8fa9c0;font:10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:1px}
+.liquid-candidate .figma-frame-card strong{display:block;margin-top:14px;color:#e3e9ef;font-size:13px;font-weight:450}
+.liquid-candidate .figma-frame-card small{display:block;margin-top:6px;color:#8192a2;font-size:11px;line-height:1.5}
+@media(max-width:620px){
+  .liquid-candidate .native-evidence-grid{grid-template-columns:1fr}
+  .liquid-candidate .native-evidence-image{height:260px}
+  .liquid-candidate .figma-frame-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .liquid-candidate .framework-flow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible}
+.liquid-candidate .framework-arrow{display:none}
+}
+
+/* Remove the colorful About marker while keeping the identity block intact. */
+.liquid-candidate .section-about .about-orb{display:none!important}
+.liquid-candidate .section-about .about-name{margin-top:20px;padding-right:0}
+
+/* Keep the shared visual layer inexpensive on phones and tablets. */
+@media(max-width:767px){
+  .liquid-candidate .dock-plus:before,.liquid-candidate .dock-plus:after{animation:none;will-change:auto}
+  .liquid-candidate .dock,.liquid-candidate .sheet,.liquid-candidate .knowledge-header,.liquid-candidate .document-viewer-header{backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+
+
+/* Design value pass 2026-09-15: identity and evidence precede the visual catalog. */
+.liquid-candidate .portfolio-value{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 0 18px;padding:16px 16px 15px;border:1px solid rgba(190,213,233,.18);border-radius:16px;background:linear-gradient(145deg,rgba(16,23,31,.94),rgba(5,8,11,.96));box-shadow:inset 0 1px rgba(240,248,255,.07),0 12px 26px rgba(0,0,0,.18)}
+.liquid-candidate .portfolio-value-copy{min-width:0}.liquid-candidate .portfolio-value-copy>strong{display:block;margin-top:8px;color:#edf2f7;font-size:17px;line-height:1.3;font-weight:500;letter-spacing:-.01em}.liquid-candidate .portfolio-value-copy>p{margin:7px 0 0;color:#c1cedb;font-size:13px;line-height:1.45}.liquid-candidate .portfolio-value-actions{display:flex;flex:0 0 auto;gap:7px}.liquid-candidate .value-action{min-height:44px;padding:0 12px;border:1px solid rgba(196,218,236,.25);border-radius:10px;background:rgba(7,11,15,.76);color:#cbd8e4;font-size:12px;white-space:nowrap}.liquid-candidate .value-action span{margin-left:7px;color:#8ea2b4}.liquid-candidate .value-action:active{transform:scale(.97)}
+.liquid-candidate .project-picture .project-featured{position:absolute;right:11px;top:11px;padding:5px 8px;border:1px solid rgba(227,239,248,.36);border-radius:9px;background:rgba(6,10,14,.78);color:#e7f0f6;font-size:10px;letter-spacing:.04em}.liquid-candidate .project-value-line{display:flex;gap:8px;margin:10px 14px 0;padding-left:8px;border-left:1px solid rgba(190,213,233,.34);color:#96a8b8;font-size:12px;line-height:1.55}.liquid-candidate .project-value-line span{flex:0 0 auto;color:#c1d1df;font-size:10px;letter-spacing:.05em}.liquid-candidate .project-featured-card{border-color:rgba(207,226,241,.29)}
+.liquid-candidate .detail-quick-read{margin:24px 0 0;padding:16px 0 4px;border-top:1px solid rgba(194,218,237,.26);border-bottom:1px solid rgba(194,218,237,.16)}.liquid-candidate .quick-read-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:8px}.liquid-candidate .quick-read-head>span{color:#8194a8;font-size:10px;letter-spacing:2.3px}.liquid-candidate .quick-read-head>h2{margin:0;color:#e8eef4;font-size:21px;font-weight:400}.liquid-candidate .quick-read-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.liquid-candidate .quick-read-row{min-width:0;padding:12px 0;border-top:1px solid rgba(197,216,237,.12)}.liquid-candidate .quick-read-row>span{display:block;color:#b3c6d7;font-size:11px;letter-spacing:.04em}.liquid-candidate .quick-read-row>p{margin:6px 0 0;color:#8496a7;font-size:12px;line-height:1.6}.liquid-candidate .detail-quick-read+ .detail-lead{margin-top:20px}
+@media(max-width:620px){.liquid-candidate .portfolio-value{display:block}.liquid-candidate .portfolio-value-actions{margin-top:13px}.liquid-candidate .value-action{flex:1}.liquid-candidate .quick-read-grid{grid-template-columns:1fr}.liquid-candidate .quick-read-row{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px}.liquid-candidate .quick-read-row>p{margin:0}}
+@media(max-width:360px){.liquid-candidate .portfolio-value{padding:14px 13px}.liquid-candidate .portfolio-value-copy>p{font-size:12px}.liquid-candidate .value-action{padding:0 9px}}
+
+/* About composition pass 2026-09-18: identity, proof and next action share one
+   reading path. */
+.liquid-candidate .page-content.section-about{padding-bottom:156px}
+.liquid-candidate .section-about .about-sky{opacity:.48}
+.liquid-candidate .section-about .about-heading,
+.liquid-candidate .section-about .about-actions{max-width:342px;margin-left:auto;margin-right:auto}
+.liquid-candidate .section-about .about-heading{padding:58px 0 0;text-align:left}
+.liquid-candidate .section-about .about-identity{max-width:320px}
+.liquid-candidate .section-about .about-name{margin:12px 0 0;padding:0;color:#f0f2f5;font-size:36px;line-height:1.08;letter-spacing:0;font-weight:420}
+.liquid-candidate .section-about .about-name-en{margin-top:8px;color:#8797a7;font-size:11px;letter-spacing:.28em;line-height:1.2}
+.liquid-candidate .section-about .about-role{margin-top:15px;color:#e0e6ec;font-size:16px;line-height:1.4}
+.liquid-candidate .section-about .about-statement{max-width:320px;margin:9px 0 0;color:#c5d1dc;font-size:15px;line-height:1.55}
+.liquid-candidate .section-about .about-facts{margin-top:18px;border-top:1px solid rgba(197,216,237,.16)}
+.liquid-candidate .section-about .about-fact{display:grid;grid-template-columns:42px minmax(0,1fr);gap:12px;padding:9px 0;border-bottom:1px solid rgba(197,216,237,.11)}
+.liquid-candidate .section-about .about-fact>span{color:#b4c6d8;font-size:11px;letter-spacing:.12em;line-height:1.65}
+.liquid-candidate .section-about .about-fact>p{margin:0;color:#8795a5;font-size:12px;line-height:1.58}
+.liquid-candidate .section-about .about-actions{margin-top:20px}
+.liquid-candidate .section-about .about-actions-label{margin:0 0 8px;color:#708294;font-size:10px;letter-spacing:.18em;line-height:1.4}
+.liquid-candidate .section-about .about-links{max-width:none;margin:0;gap:8px}
+.liquid-candidate .section-about .link-row{min-height:44px;height:54px;border-radius:15px}
+.liquid-candidate .section-about .link-row-primary{height:58px}
+.liquid-candidate .section-about .link-row-tertiary{height:44px;padding-left:0;border-color:transparent;background:transparent;box-shadow:none;color:#8c9aa8;font-size:12px}
+.liquid-candidate .section-about .link-row-tertiary .line-icon{opacity:.68}
+/* Refine the primary action tiles and glyphs without changing button hit areas. */
+.liquid-candidate .section-about .link-row-primary .line-icon,
+.liquid-candidate .section-about .link-row-secondary .line-icon{
+  width:36px;height:36px;flex:0 0 36px;border-radius:11px;
+  border-color:rgba(190,211,228,.52);
+  background:linear-gradient(145deg,rgba(42,55,68,.86),rgba(7,10,14,.97) 70%);
+  box-shadow:inset 0 1px rgba(255,255,255,.2),inset 0 -1px rgba(153,181,201,.1),0 4px 11px rgba(0,0,0,.24);
+}
+.liquid-candidate .section-about .resume-icon:before{
+  inset:5px 8px;
+  border-color:rgba(230,239,247,.9);
+  border-radius:3px 5px 3px 3px;
+  background:
+    linear-gradient(135deg,transparent 0 70%,rgba(230,239,247,.72) 71% 75%,transparent 76%),
+    linear-gradient(180deg,rgba(255,255,255,.13),transparent 52%);
+  box-shadow:-2px 2px 0 -1px rgba(184,210,229,.42),inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.liquid-candidate .section-about .resume-icon:after{
+  left:13px;right:10px;top:11px;height:10px;border-radius:1px;
+  background:
+    linear-gradient(rgba(236,243,248,.96),rgba(236,243,248,.96)) 0 0/100% 1px no-repeat,
+    linear-gradient(rgba(224,235,243,.82),rgba(224,235,243,.82)) 0 4px/82% 1px no-repeat,
+    linear-gradient(rgba(224,235,243,.62),rgba(224,235,243,.62)) 0 8px/61% 1px no-repeat;
+  box-shadow:none;
+}
+.liquid-candidate .section-about .mail-icon:before{
+  border-color:rgba(230,239,247,.9);
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 58%);
+  box-shadow:inset 0 1px rgba(255,255,255,.12),0 1px rgba(10,15,20,.42);
+}
+.liquid-candidate .section-about .mail-icon:after{
+  left:8px;right:8px;top:9px;width:auto;height:12px;border:0;transform:none;
+  background:linear-gradient(135deg,rgba(232,240,246,.96),rgba(188,211,228,.8));
+  clip-path:polygon(0 0,50% 52%,100% 0,100% 18%,50% 70%,0 18%);
+}
+@media(max-width:360px){
+  .liquid-candidate .section-about .about-heading{padding-top:48px}
+  .liquid-candidate .section-about .about-name{font-size:33px}
+  .liquid-candidate .section-about .about-statement{font-size:14px}
+  .liquid-candidate .section-about .about-fact{grid-template-columns:38px minmax(0,1fr);gap:9px}
+  .liquid-candidate .section-about .about-fact>p{font-size:11.5px}
+}
+
+/* Liquid-glass identity card: preserve the scene through the surface, then shape it with reflected light. */
+.liquid-candidate .portfolio-value{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border:1px solid transparent;
+  border-radius:22px;
+  background:
+    radial-gradient(105% 120% at 6% -8%,rgba(233,244,251,.055),transparent 54%) padding-box,
+    radial-gradient(78% 92% at 100% 105%,rgba(81,151,173,.025),transparent 66%) padding-box,
+    linear-gradient(148deg,rgba(186,207,222,.04),rgba(66,83,96,.015) 43%,rgba(6,12,17,.08)) padding-box,
+    linear-gradient(138deg,rgba(245,250,253,.34),rgba(165,187,202,.10) 23%,rgba(60,77,89,.07) 58%,rgba(130,191,208,.19)) border-box;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.27),inset 0 0 0 1px rgba(226,239,247,.055),inset 0 -1px 0 rgba(136,197,213,.09),0 18px 40px rgba(0,0,0,.23),0 0 20px rgba(106,164,184,.04);
+  -webkit-backdrop-filter:blur(8px) saturate(1.15) brightness(1.03);
+  backdrop-filter:blur(8px) saturate(1.15) brightness(1.03);
+}
+.liquid-candidate .portfolio-value::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:1px;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(126deg,rgba(250,253,255,.07),transparent 28%,transparent 68%,rgba(222,241,247,.025)),
+    radial-gradient(70% 100% at 8% 0%,rgba(240,248,253,.04),transparent 72%),
+    radial-gradient(72% 86% at 98% 104%,rgba(84,168,188,.025),transparent 76%);
+  opacity:.7;
+  transition:opacity 260ms ease,transform 420ms cubic-bezier(.2,.7,.2,1);
+}
+.liquid-candidate .portfolio-value::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:-35%;
+  left:-9%;
+  width:76%;
+  height:90%;
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(ellipse at 42% 28%,rgba(252,254,255,.075),rgba(219,237,246,.025) 24%,transparent 66%);
+  filter:blur(9px);
+  opacity:.52;
+  transition:opacity 260ms ease,transform 480ms cubic-bezier(.2,.7,.2,1);
+}
+.liquid-candidate .portfolio-value:active::before{opacity:.86}
+.liquid-candidate .portfolio-value:active::after{opacity:.72;transform:translate3d(6px,4px,0) scale(1.025)}
+.liquid-candidate .portfolio-value-copy,.liquid-candidate .portfolio-value-actions{position:relative;z-index:1}
+.liquid-candidate .value-action{
+  min-height:48px;
+  border-color:rgba(224,237,245,.34);
+  border-radius:15px;
+  background:linear-gradient(150deg,rgba(212,228,239,.045),rgba(89,112,128,.025) 48%,rgba(7,14,20,.10));
+  box-shadow:inset 0 1px 0 rgba(250,253,255,.23),inset 0 -1px 0 rgba(130,177,197,.08),0 7px 18px rgba(0,0,0,.16);
+  -webkit-backdrop-filter:blur(8px) saturate(1.22) brightness(1.04);
+  backdrop-filter:blur(8px) saturate(1.22) brightness(1.04);
+  transition:transform 180ms cubic-bezier(.2,.75,.25,1),border-color 180ms ease,box-shadow 180ms ease,background-color 180ms ease,filter 180ms ease;
+}
+.liquid-candidate .value-action-primary{
+  border-color:rgba(238,246,250,.48);
+  background:linear-gradient(145deg,rgba(224,237,245,.075),rgba(118,151,169,.035) 46%,rgba(18,27,35,.11));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(127,177,198,.10),0 8px 20px rgba(61,98,121,.10);
+}
+.liquid-candidate .value-action:active{transform:scale(.975);filter:brightness(1.14) saturate(1.12);border-color:rgba(241,248,252,.72);box-shadow:inset 0 2px 8px rgba(2,8,12,.22),inset 0 1px 0 rgba(255,255,255,.28)}
+.liquid-candidate .value-action:focus-visible{outline:2px solid rgba(195,224,239,.78);outline-offset:3px}
+@media(hover:hover){
+  .liquid-candidate .portfolio-value:hover::before{opacity:.82;transform:translate3d(2px,0,0)}
+  .liquid-candidate .portfolio-value:hover::after{opacity:.72;transform:translate3d(9px,6px,0) scale(1.04)}
+  .liquid-candidate .value-action:hover{transform:translateY(-1px);filter:brightness(1.08);border-color:rgba(230,242,250,.62);box-shadow:inset 0 1px 0 rgba(255,255,255,.30),0 9px 20px rgba(0,0,0,.24),0 0 17px rgba(112,170,193,.11)}
+}
+@media(prefers-reduced-motion:reduce){
+  .liquid-candidate .portfolio-value::before,.liquid-candidate .portfolio-value::after,.liquid-candidate .value-action{transition:none}
+  .liquid-candidate .value-action:hover,.liquid-candidate .value-action:active{transform:none}
+}
