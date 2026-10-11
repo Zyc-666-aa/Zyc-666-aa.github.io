@@ -1,4 +1,4 @@
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LushRenderer=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
+(function(root,factory){if(typeof window==='undefined'&&typeof module==='object'&&module.exports)module.exports=factory();else root.LushRenderer=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 const vert='attribute vec2 position;varying vec2 uv;void main(){uv=position*.5+.5;gl_Position=vec4(position,0.,1.);}';
 const background=`precision highp float;varying vec2 uv;uniform vec2 size;uniform float progress;

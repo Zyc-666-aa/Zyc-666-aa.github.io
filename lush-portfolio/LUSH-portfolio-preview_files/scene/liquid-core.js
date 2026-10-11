@@ -1,4 +1,4 @@
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.LushLiquid=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
+(function(root,factory){if(typeof window==='undefined'&&typeof module==='object'&&module.exports)module.exports=factory();else root.LushLiquid=factory();})(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const rubber=(value,min,max,range)=>{const edge=clamp(value,min,max),over=value-edge;return edge+over*.22/(1+Math.abs(over)/range);};
