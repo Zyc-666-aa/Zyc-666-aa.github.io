@@ -330,7 +330,7 @@ function workCard(item,featured){
       const delivery=escapeMarkup(item.delivery||'');
       const summary=escapeMarkup(item.summary||item.description||'');
       const imageMode=item.coverLayout==='horizontal-recomposition'?'mobile-project-cover-fill':'';
-      const longTitle=item.id==='dear-you-premiere'?' long':'';
+      const longTitle=(item.id==='dear-you-premiere'||item.id==='yuxiaobing')?' long':'';
       return '<button class="project mobile-project-card" data-id="'+id+'" aria-label="查看'+title+'，'+subtitle+'"><div class="mobile-project-image"><img class="'+imageMode+'" src="'+cover+'" alt="'+alt+'" loading="'+(index===0?'eager':'lazy')+'"></div><div class="mobile-project-copy"><div class="mobile-project-title-line"><h2 class="project-name'+longTitle+'">'+title+'</h2><span class="project-category">'+escapeMarkup(item.category||'')+'</span></div><p class="mobile-project-subtitle">'+subtitle+'</p><p class="mobile-project-summary">'+summary+'</p><div class="mobile-project-facts"><div class="mobile-project-meta"><span>负责</span><strong>'+role+'</strong></div><div class="mobile-project-meta"><span>交付</span><strong>'+delivery+'</strong></div></div><div class="case-button"><span>查看案例</span><span class="case-chevron" aria-hidden="true">›</span></div></div></button>';
     }).join('');
     const filters=cats.map(category=>'<button class="filter '+(category===state.category?'selected':'')+'" data-category="'+escapeMarkup(category)+'" aria-pressed="'+(category===state.category)+'">'+escapeMarkup(category)+'</button>').join('');
