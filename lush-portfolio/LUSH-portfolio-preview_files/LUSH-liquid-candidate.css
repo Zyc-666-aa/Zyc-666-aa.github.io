@@ -2530,3 +2530,4 @@
 .liquid-candidate .detail-cover-button:focus-visible{outline:1px solid #dceaf6;outline-offset:3px}
 .liquid-candidate .detail-cover{display:block;width:100%;height:auto;max-height:56svh;object-fit:contain;background:#0b1016}
 .liquid-candidate .detail-cover-hint{position:absolute;right:12px;bottom:12px;padding:8px 12px;border:1px solid rgba(220,234,246,.38);border-radius:999px;background:rgba(4,7,10,.78);color:#f0f4f8;font-size:12px;line-height:1.25}
+.liquid-candidate .detail-cover-button.proposal-board-button .detail-cover{max-height:none}

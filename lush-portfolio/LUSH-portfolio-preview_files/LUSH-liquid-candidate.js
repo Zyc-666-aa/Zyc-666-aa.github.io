@@ -363,16 +363,21 @@ function workCard(item,featured){
     layer.classList.remove('is-closing');
     layer.classList.add('is-visible');
     const c=$('#detailContent');
-    const cover=item.detailCover||item.cover;
-    const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
-    c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1><p class="detail-subtitle">'+item.subtitle+'</p>'+coverMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item)+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
+    if(item.id==='yuxiaobing'){
+      const cover=escapeHtml(item.detailCover||item.cover),editorial=item.editorial||{};
+      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+escapeHtml(item.category)+'</span><h1 id="detailTitle">'+escapeHtml(editorial.title||item.title)+'</h1><button class="detail-cover-button proposal-board-button" type="button" data-media-src="'+cover+'" aria-label="查看完整提案展板"><img class="detail-cover" src="'+cover+'" alt="玉小冰角色设定、三视图与文创物料完整提案"><span class="detail-cover-hint" aria-hidden="true">点击查看大图</span></button><p class="detail-subtitle">'+escapeHtml(editorial.summary||item.subtitle)+'</p><div class="detail-meta"><div><span>我的工作</span><strong>'+escapeHtml(editorial.contribution||item.role)+'</strong></div><div><span>结果</span><strong>'+escapeHtml(editorial.result||item.detailDelivery||'')+'</strong></div></div><button class="detail-end" id="detailEnd" type="button">返回作品</button>';
+    }else{
+      const cover=item.detailCover||item.cover;
+      const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
+      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1><p class="detail-subtitle">'+item.subtitle+'</p>'+coverMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item)+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
+    }
     if(item.id==='dear-you-premiere'){
       const journey=c.querySelector('.detail-journey'),tree=c.querySelector('.design-logic-tree'),story=c.querySelector('.case-story'),sponsor=c.querySelector('.sponsor-section');
       if(tree&&journey)c.insertBefore(tree,journey);
       if(sponsor&&journey)c.insertBefore(sponsor,journey);
       if(journey&&story){const more=document.createElement('details'),summary=document.createElement('summary');more.className='case-more';summary.textContent='展开项目过程与补充判断';c.insertBefore(more,journey);more.append(summary,journey,story);}
     }
-    mountDetailNavigation(item);
+    if(item.id!=='yuxiaobing')mountDetailNavigation(item);
     if(item.id==='dear-you-premiere')$('#detailLayer .detail-index').addEventListener('click',event=>{const button=event.target.closest('button[data-jump]');if(!button)return;const target=c.querySelector('#case-'+button.dataset.jump),more=target&&target.closest('details.case-more');if(!more)return;more.open=true;requestAnimationFrame(()=>{c.scrollTop+=target.getBoundingClientRect().top-c.getBoundingClientRect().top-18;target.focus({preventScroll:true});});});
     c.scrollTop=0;
     setTimeout(()=>focusFirst(layer),0);
