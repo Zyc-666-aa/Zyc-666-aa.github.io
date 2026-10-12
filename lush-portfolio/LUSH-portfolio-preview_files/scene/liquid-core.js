@@ -5,7 +5,7 @@
   const welcome=Object.freeze({
     label:'PORTFOLIO',
     hint:'上滑进入',
-    title:'探索郁葱的艺术世界',
+    title:'Explore Lush\'s world',
     enterLabel:'查看作品',
     copyRevealStart:.78,
     renderProgressFloor:.25,

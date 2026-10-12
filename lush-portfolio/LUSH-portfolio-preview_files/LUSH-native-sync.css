@@ -13,6 +13,9 @@
 .liquid-candidate .page-content.section-work{width:100%;max-width:700px;margin:0 auto;padding:64px 22px 32px;box-sizing:border-box}
 .liquid-candidate .section-work .content-wordmark{position:relative;top:-10px;height:32px;margin:0 0 80px -5px!important;opacity:.94}
 .liquid-candidate .section-work .content-wordmark img{width:83px;height:32px;object-fit:contain;object-position:left center}
+.liquid-candidate .section-about .content-wordmark{position:relative;top:-14px;height:32px;margin:0 0 22px 1px!important;opacity:.94}
+.liquid-candidate .section-about .content-wordmark img{width:83px;height:32px;object-fit:contain;object-position:left center}
+@media(max-width:360px){.liquid-candidate .section-about .content-wordmark{margin-left:-3px!important}}
 .liquid-candidate .mobile-applicant-summary{display:grid;gap:5px;margin:0 0 17px;min-width:0}
 .liquid-candidate .mobile-applicant-name{color:#edf1f5;font-size:14px;line-height:1.5;letter-spacing:0}
 .liquid-candidate .mobile-applicant-role{color:#aebbc7;font-size:12px;line-height:1.5}

@@ -29,3 +29,157 @@
 .liquid-candidate details.case-more[open] > summary::after {
   content: "−";
 }
+
+.liquid-candidate .portfolio-value-label,
+.liquid-candidate .resume-preview-label {
+  display: block;
+  margin-top: 12px;
+  color: #9bafbe;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: .08em;
+}
+
+.liquid-candidate .portfolio-value-label {
+  margin-top: 10px;
+}
+
+.liquid-candidate .resume-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 4px 0 16px;
+}
+
+.liquid-candidate .resume-preview-profile,
+.liquid-candidate .resume-preview-section {
+  min-width: 0;
+}
+
+.liquid-candidate .resume-preview-name {
+  margin: 0;
+  color: #c2ced9;
+  font-size: 22px;
+}
+
+.liquid-candidate .resume-preview-intent {
+  margin: 3px 0 0;
+  color: #edf2f6;
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.liquid-candidate .resume-preview-role,
+.liquid-candidate .resume-preview-summary,
+.liquid-candidate .resume-preview-body {
+  margin: 6px 0 0;
+  color: #bac6d1;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.liquid-candidate .resume-preview-section {
+  padding-top: 16px;
+  border-top: 1px solid #c2d5e22e;
+}
+
+.liquid-candidate .resume-preview-section > h3 {
+  margin: 0 0 12px;
+  color: #edf2f6;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.liquid-candidate .resume-preview-contacts p {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0 0;
+  color: #c3cdd7;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.liquid-candidate .resume-preview-contacts p span:first-child {
+  flex: 0 0 44px;
+  color: #95a8b8;
+}
+
+.liquid-candidate .resume-preview-entry {
+  min-width: 0;
+  margin-top: 18px;
+}
+
+.liquid-candidate .resume-preview-section > h3 + .resume-preview-entry {
+  margin-top: 0;
+}
+
+.liquid-candidate .resume-preview-entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.liquid-candidate .resume-preview-entry h4 {
+  min-width: 0;
+  margin: 0;
+  color: #e2eaf1;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.liquid-candidate .resume-preview-entry-head > span {
+  flex: none;
+  color: #a8bdca;
+  font-size: 10px;
+}
+
+.liquid-candidate .resume-preview-meta {
+  margin: 4px 0 0;
+  color: #95a8b8;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.liquid-candidate .resume-preview-points {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: #bfccd7;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.liquid-candidate .resume-preview-points li + li {
+  margin-top: 6px;
+}
+
+.liquid-candidate .resume-preview-result {
+  margin: 10px 0 0;
+  color: #d6e1e9;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.liquid-candidate .resume-preview-case {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0;
+  border-top: 1px solid #dbe6f525;
+  background: transparent;
+  color: #c0d4e3;
+  text-align: left;
+  font: inherit;
+  font-size: 12px;
+}

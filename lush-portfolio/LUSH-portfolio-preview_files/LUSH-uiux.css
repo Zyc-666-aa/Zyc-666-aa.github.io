@@ -276,3 +276,4 @@
   .liquid-candidate .portfolio-value::before,.liquid-candidate .portfolio-value::after,.liquid-candidate .value-action{transition:none}
   .liquid-candidate .value-action:hover,.liquid-candidate .value-action:active{transform:none}
 }
+.liquid-candidate .section-about .about-heading{margin-top:100px!important}
