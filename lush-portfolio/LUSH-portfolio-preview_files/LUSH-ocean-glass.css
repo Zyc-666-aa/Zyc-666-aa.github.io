@@ -1,6 +1,6 @@
 /* Independent, stationary material layers. Dragging never changes backdrop-filter. */
-:root {--glass-tint:8,30,50;--glass-deep:3,15,30;--glass-opacity:.36;--glass-blur:24px;--glass-saturation:115%;--sheet-duration:540ms;}
-.liquid-candidate #sheetOverlay {background:rgba(2,8,16,.10);align-items:flex-end;justify-content:center;padding-top:max(20px,env(safe-area-inset-top,0px));box-sizing:border-box;overflow:hidden;}
+:root {--glass-tint:8,30,50;--glass-deep:3,15,30;--glass-opacity:.36;--glass-blur:24px;--glass-saturation:32%;--sheet-duration:540ms;}
+.liquid-candidate #sheetOverlay {background:rgba(2,8,16,.18);align-items:flex-end;justify-content:center;padding-top:max(20px,env(safe-area-inset-top,0px));box-sizing:border-box;overflow:hidden;}
 .liquid-candidate #menuSheet[data-ocean-glass] {
   position:relative;display:flex;flex-direction:column;flex:none;box-sizing:border-box;
   width:calc(100% - 16px);max-width:720px;max-height:none;min-height:0;
@@ -8,18 +8,31 @@
   backdrop-filter:none;-webkit-backdrop-filter:none;isolation:isolate;overflow:hidden;animation:none;
 }
 .liquid-candidate #menuSheet::before,.liquid-candidate #menuSheet::after {content:none;}
-.glass-sheet-blur,.glass-sheet-material,.glass-sheet-edge,.glass-sheet-lighting {position:absolute;inset:0;border-radius:inherit;pointer-events:none;}
-.glass-sheet-blur {z-index:-4;backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturation));-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturation));}
-.glass-sheet-material {z-index:-3;background:linear-gradient(180deg,rgba(var(--glass-tint),var(--glass-opacity)),rgba(var(--glass-deep),calc(var(--glass-opacity) + .08)));}
-.glass-sheet-edge {z-index:-2;box-shadow:inset 0 1px 1px rgba(180,220,255,.15),inset 1px 0 2px rgba(120,170,220,.06),inset -1px 0 2px rgba(120,170,220,.06),inset 0 3px 5px rgba(0,5,12,.10);}
-.glass-sheet-edge::before {content:'';position:absolute;inset:0;padding:2px;border-radius:inherit;background:linear-gradient(110deg,rgba(170,215,245,.10),transparent 20%,transparent 80%,rgba(150,195,230,.07));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;}
-.glass-sheet-lighting {z-index:-1;height:38px;opacity:.1;background:radial-gradient(ellipse at 4% 0%,rgba(180,220,255,.55),transparent 23%),radial-gradient(ellipse at 96% 0%,rgba(180,220,255,.35),transparent 25%);box-shadow:inset 0 1px 0 rgba(180,220,255,.15);}
+.glass-sheet-blur,.glass-sheet-material,.glass-sheet-volume,.glass-sheet-edge,.glass-sheet-lighting {position:absolute;inset:0;border-radius:inherit;pointer-events:none;}
+.glass-sheet-blur {z-index:-6;backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturation)) brightness(.70);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturation)) brightness(.70);}
+/* The center retains its transmission; absorption is confined to the curved rim. */
+.glass-sheet-material {z-index:-4;background:linear-gradient(180deg,rgba(8,30,50,.36),rgba(3,15,30,.40) 48%,rgba(2,10,20,.49));opacity:var(--glass-transmission,1);}
+.glass-sheet-volume {z-index:-3;background:linear-gradient(180deg,rgba(180,220,255,.025),transparent 18%,transparent 74%,rgba(2,10,20,.09));box-shadow:inset 0 1px 0 rgba(180,220,255,.045),inset 0 10px 16px -12px rgba(120,170,210,.11),inset 0 -18px 24px -16px rgba(2,10,20,.52);}
+.glass-sheet-edge {z-index:-2;}
+.glass-sheet-fresnel,.glass-sheet-absorption {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.glass-sheet-edge::before {content:'';position:absolute;inset:0;padding:16px;border-radius:inherit;background:linear-gradient(180deg,rgba(180,220,255,.16),rgba(120,170,210,.055) 18%,rgba(70,120,157,.025) 44%,rgba(0,3,9,.20));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:var(--glass-edge-light,1);}
+#menuSheet[data-refraction='optical'] .glass-sheet-edge::before,#menuSheet[data-refraction='optical'] .glass-sheet-edge::after,#menuSheet[data-refraction='optical'] .glass-sheet-lighting {display:none;}
+[data-refraction='fallback'] .glass-sheet-fresnel,[data-refraction='fallback'] .glass-sheet-absorption{display:none;}
+#menuSheet[data-refraction='optical'] .glass-sheet-fresnel {opacity:calc(var(--glass-edge-light,1) * .72);}
+#menuSheet[data-refraction='optical'] .glass-sheet-volume {background:none;box-shadow:none;}
+/* Refract the untouched backdrop; rough center transmission must not blur the bevel first. */
+#menuSheet[data-refraction='optical'] .glass-sheet-blur {-webkit-mask-image:var(--glass-transmission-mask);mask-image:var(--glass-transmission-mask);-webkit-mask-size:100% 100%;mask-size:100% 100%;}
+.glass-sheet-edge::after {content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(0,3,9,.35),inset 2px 0 3px rgba(0,3,9,.18),inset -2px 0 3px rgba(0,3,9,.18),inset 0 -10px 12px -8px rgba(0,3,9,.65);}
+.glass-sheet-refraction {position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-7;padding:18px;box-sizing:border-box;opacity:1;backdrop-filter:url(#lush-sheet-optics);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;}
+.glass-sheet-lighting {z-index:-1;height:22px;opacity:.14;overflow:hidden;}
+.glass-sheet-lighting::before {content:'';position:absolute;inset:0 -4%;border-radius:44px 44px 0 0;background:linear-gradient(180deg,rgba(180,220,255,.16),rgba(120,170,210,.045) 7px,transparent 20px);-webkit-mask:linear-gradient(#000 0 42%,transparent 100%);mask:linear-gradient(#000 0 42%,transparent 100%);transform:translate3d(var(--glass-light-x,0px),0,0);}
+.glass-sheet-lighting::after {content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(180,220,255,.18);}
 .glass-sheet-head {flex:none;position:relative;padding:0 26px;touch-action:none;}
 .glass-sheet-content {flex:none;box-sizing:border-box;min-height:0;position:relative;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:0 26px calc(28px + env(safe-area-inset-bottom,0px));scrollbar-width:thin;scrollbar-color:rgba(180,210,230,.20) transparent;}
 .glass-sheet-content::-webkit-scrollbar {width:4px;}
 .glass-sheet-content::-webkit-scrollbar-thumb {background:rgba(180,210,230,.20);border-radius:4px;}
 .liquid-candidate #menuSheet .sheet-handle {width:100%;height:38px;margin:0;background:none;box-shadow:none;position:relative;cursor:ns-resize;touch-action:none;}
-.liquid-candidate #menuSheet .sheet-handle::after {content:'';position:absolute;width:38px;height:3px;border-radius:3px;top:15px;left:calc(50% - 19px);background:rgba(187,209,225,.5);}
+.liquid-candidate #menuSheet .sheet-handle::after {content:'';position:absolute;width:38px;height:3px;border-radius:3px;top:15px;left:calc(50% - 19px);background:rgba(150,184,207,.27);box-shadow:inset 0 1px 1px rgba(205,230,247,.20),inset 0 -1px 1px rgba(0,7,17,.35);}
 .liquid-candidate #menuSheet .sheet-handle:focus-visible {outline:2px solid rgba(180,220,255,.38);outline-offset:-3px;border-radius:16px;}
 .liquid-candidate #menuSheet .sheet-title {margin:0 0 24px;touch-action:none;}
 .liquid-candidate #menuSheet .sheet-close:focus-visible {outline:2px solid rgba(180,220,255,.38);outline-offset:2px;border-radius:50%;}
@@ -47,7 +60,8 @@
 }
 @media(prefers-reduced-motion:reduce){.glass-sheet-lighting{display:none;}}
 @media(forced-colors:active){
-  .glass-sheet-blur,.glass-sheet-edge,.glass-sheet-lighting{display:none;}
+  .glass-sheet-blur,.glass-sheet-volume,.glass-sheet-edge,.glass-sheet-lighting,.glass-sheet-refraction{display:none;}
   .glass-sheet-material,.liquid-candidate [data-ocean-glass='chrome']{background:Canvas;backdrop-filter:none;-webkit-backdrop-filter:none;}
   .liquid-candidate #menuSheet[data-ocean-glass]{outline:1px solid CanvasText;}
 }
+[data-refraction='fallback'] .glass-sheet-refraction{display:none;}
