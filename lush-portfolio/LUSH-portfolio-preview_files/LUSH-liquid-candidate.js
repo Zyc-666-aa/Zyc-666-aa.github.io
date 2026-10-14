@@ -114,7 +114,7 @@
 
   function header(){ const works=$('#worksButton'),about=$('#aboutButton'); works.classList.toggle('current',state.section==='work');about.classList.toggle('current',state.section==='about');works.setAttribute('aria-current',state.section==='work'?'page':'false');about.setAttribute('aria-current',state.section==='about'?'page':'false'); }
   const premiereItem = data.items.find(item=>item.id==='dear-you-premiere');
-  if(premiereItem){premiereItem.title='《给阿嫲的情书》昆士兰首映礼视觉设计';premiereItem.subtitle='澳大利亚昆士兰州电影首映礼 / 视觉设计与物料交付';}
+  if(premiereItem){premiereItem.title='《给阿嫲的情书》昆士兰首映礼视觉设计';premiereItem.subtitle='昆士兰首映礼主视觉';}
   if(data.modelFramework){data.modelFramework.eyebrow='AI / COLLABORATION';data.modelFramework.model='AI 协作工具';data.modelFramework.partners='Figma / 微信开发者工具 / HTML / CSS / JavaScript';data.modelFramework.boundary='AI 参与结构梳理、视觉探索和重复实现；最终文字、素材、路径、版权和视觉取舍由我确认，不包含模型 API、密钥或自动调用服务。';}
   const aiOrb=data.archive?.find(entry=>entry[0]==='gpt6-orb');
   if(aiOrb)aiOrb[1]='AI 协作球体';
