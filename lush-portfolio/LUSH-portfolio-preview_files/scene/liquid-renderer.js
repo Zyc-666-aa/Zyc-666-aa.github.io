@@ -134,7 +134,7 @@ void main(){
   }
   gl_FragColor=vec4(color,1.);
 }`;
-const kinds=['speech0','mac','phoneSticker','star','plane','code','planet','bolt','speech1','star','mac','plane','speech2','phoneSticker','planet','code','bolt','star','plane','speech3','mac','planet','phoneSticker','star','speech0','bolt','planet','code','speech2','star'];
+const kinds=['speech0','mac','phoneSticker','star','plane','code','planet','bolt','speech1','star','mac','plane','speech2','phoneSticker','planet','code','bolt','star','speech3','planet','star'];
 const clamp01=value=>Math.max(0,Math.min(1,value));
 function drawSpacedText(ctx,text,centerX,centerY,size,spacing,color,font='Arial, sans-serif'){
  const chars=Array.from(text||'');if(!chars.length)return;
@@ -151,7 +151,7 @@ function drawPill(ctx,x,y,w,h){
 // A time-staggered stream. Every cycle starts below the centre of the same lens.
 // No pre-scattered starting positions: birth -> rolling at the lip -> free flight.
 function stickerPose(i,key,age,G,w,h,m){
- const interval=.15,life=kinds.length*interval;
+ const life=4.5,interval=life/kinds.length;
  const elapsed=age-i*interval;if(elapsed<0)return null;
  const a=elapsed%life,t=a/life,exit=.20;
  const inside=Math.min(1,t/exit),flight=Math.max(0,(t-exit)/(1-exit));
