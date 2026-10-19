@@ -40,18 +40,23 @@ vec2 lensUV(vec3 entry,vec3 normal,float ior,out float exitReflectance){
   return vec2(pixel.x/size.x,1.-pixel.y/size.y);
 }
 void main(){
-  vec2 q=vec2(uv.x,1.-uv.y)*size,z=(q-center)/radius;
-  float r=length(z);
+  vec2 q=vec2(uv.x,1.-uv.y)*size,raw=(q-center)/radius;
+  float rawRadius=length(raw);
   vec3 outside=sampleScene(uv),color=outside;
   float compact=smoothstep(.62,1.,progress);
   float nativeLimit=1.008+max(mix(64.,30.,compact),40.)/radius;
-  if(nativeGlassBoost>.5&&r>nativeLimit){gl_FragColor=vec4(outside,1.);return;}
-  // A restrained, edge-localized cool bloom compensates for the WeChat canvas compositor.
-  float haloDistance=max(r-.992,0.)*radius;
+  if(nativeGlassBoost>.5&&rawRadius>nativeLimit*1.024){gl_FragColor=vec4(outside,1.);return;}
+  // Keep the radial edge light; reserve angular waves for the lens itself.
+  float haloDistance=max(rawRadius-.992,0.)*radius;
   float haloWidth=mix(16.,8.,compact);
   float nativeHalo=exp(-pow(haloDistance/haloWidth,2.))*(1.-smoothstep(mix(40.,18.,compact),mix(64.,30.,compact),haloDistance));
   color+=vec3(.06,.17,.28)*nativeHalo*nativeGlassBoost;
-  color+=vec3(.10,.11,.12)*exp(-abs(r-1.)*radius/8.)*compact*.45;
+  color+=vec3(.10,.11,.12)*exp(-abs(rawRadius-1.)*radius/8.)*compact*.45;
+  if(rawRadius>1.024){gl_FragColor=vec4(color,1.);return;}
+  float theta=dot(raw,raw)>1e-8?atan(raw.y,raw.x):0.;
+  float organic=0.012*sin(theta*2.0+flow*0.12)+0.006*sin(theta*3.0-flowX*0.18)+0.004*sin(theta*5.0+releaseAge*1.3)*exp(-releaseAge*3.0)*releaseEnergy;
+  vec2 z=raw/(1.0+organic);
+  float r=length(z);
   if(r<1.){
     float depth=sqrt(max(.00001,1.-r*r));
     vec3 entry=vec3(z,depth);
@@ -157,17 +162,19 @@ function stickerPose(i,key,age,G,w,h,m){
  const inside=Math.min(1,t/exit),flight=Math.max(0,(t-exit)/(1-exit));
  const pop=Math.exp(-Math.pow((t-.225)/.055,2));
  const seed=i*2.39996323,lane=Math.sin(seed);
- const lipX=lane*G.r*.38;
- const travel=Math.min(h*.59,620);
- const rise=travel*flight+G.r*.11*pop;
- const fan=(Math.min(w*.35,195)*Math.pow(flight,.75));
- const x=G.cx+lipX+Math.sin(seed+flight*2.1)*fan+Math.sin(inside*Math.PI)*G.r*.12;
- const y=G.cy+G.r*(.32-1.24*inside)-rise;
+ const lipX=lane*G.r*.26;
+ const travelRoom=Math.max(h*.10,h*.5-G.r*.84-50);
+ const travel=Math.min(h*.34,480,(w>h||h<=420)?travelRoom:480);
+ const rise=travel*flight+G.r*.09*pop;
+ const fan=(Math.min(w*.24,126)*Math.pow(flight,.72));
+ const orbit=Math.sin(flight*Math.PI)*G.r*.17;
+ const x=G.cx+lipX+Math.sin(seed+flight*1.5)*fan+orbit;
+ const y=G.cy+G.r*(.28-1.12*inside)-rise;
  const scale=(w<350?.87:1)*(.46+.54*Math.min(1,inside*1.3))*(1+.09*pop);
  const width=(key.startsWith('speech')?72:key==='phoneSticker'?43:key==='star'?29:54)*scale;
  const height=width*(key==='phoneSticker'?1.47:key.startsWith('speech')?.7:1);
- const roll=(1-Math.min(1,inside))*Math.PI*1.2*(i%2?1:-1);
- const angle=lane*.65+roll+flight*Math.sin(seed)*1.3+Math.sin(seed)*.08*pop+Math.sin(m.clock*.6+i)*.06;
+ const roll=(1-Math.min(1,inside))*Math.PI*.68*(i%2?1:-1);
+ const angle=lane*.34+roll+flight*Math.sin(seed)*.78+Math.sin(seed)*.04*pop+Math.sin(m.clock*.38+i)*.035;
  const opacity=Math.min(1,a/.12)*Math.min(1,(1-t)/.12)*Math.max(0,Math.min(1,(G.p-.60)/.32));
  return {x,y,w:width,h:height,angle,opacity,t,emerging:t<.37?1:0,pop};
 }

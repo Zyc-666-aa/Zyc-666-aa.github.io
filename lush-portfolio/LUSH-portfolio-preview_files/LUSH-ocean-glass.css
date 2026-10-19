@@ -65,3 +65,64 @@
   .liquid-candidate #menuSheet[data-ocean-glass]{outline:1px solid CanvasText;}
 }
 [data-refraction='fallback'] .glass-sheet-refraction{display:none;}
+
+/* Wabi-inspired welcome treatment: one quiet lens, a controlled orbit, and a readable action. */
+.liquid-candidate .welcome-layer{
+  background-color:#e7eaec;
+  background-image:
+    radial-gradient(ellipse at 50% 46%,rgba(173,190,201,.052) 0%,rgba(173,190,201,0) 36%),
+    radial-gradient(ellipse at 50% 99%,rgba(193,207,215,.038) 0%,rgba(193,207,215,0) 43%),
+    #010204;
+}
+.liquid-candidate .welcome-copy h1{
+  color:rgba(246,247,248,.96);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-weight:400;
+  letter-spacing:.012em;
+  text-shadow:0 2px 22px rgba(220,231,239,.11);
+}
+.liquid-candidate #enterButton{
+  color:#101418;
+  background:linear-gradient(138deg,rgba(248,249,249,.96) 0%,rgba(216,224,229,.92) 48%,rgba(246,247,245,.96) 100%);
+  border:1px solid rgba(244,248,251,.82);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.96),inset 0 -1px 0 rgba(113,130,143,.19),0 14px 38px rgba(0,0,0,.30),0 0 42px rgba(186,207,220,.08);
+  -webkit-backdrop-filter:blur(16px) saturate(118%);
+  backdrop-filter:blur(16px) saturate(118%);
+  font-weight:500;
+  letter-spacing:.015em;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.liquid-candidate #enterButton:active{
+  transform:translateY(1px) scale(.985);
+  filter:brightness(.97);
+}
+.liquid-candidate #enterButton:focus-visible{
+  outline:2px solid rgba(220,233,242,.82);
+  outline-offset:4px;
+}
+.liquid-candidate .liquid-fallback .welcome-dome,
+.liquid-candidate .liquid-fallback .welcome-dome:before,
+.liquid-candidate .liquid-fallback .welcome-dome:after{
+  border-radius:52% 48% 50% 50% / 48% 52% 47% 53%;
+}
+.liquid-candidate .liquid-fallback .welcome-dome:before,
+.liquid-candidate .liquid-fallback .welcome-dome:after{
+  animation:none;
+  transition:transform .32s ease,opacity .32s ease;
+}
+.liquid-candidate .liquid-fallback .welcome-dome:active:before{
+  transform:scale(1.018);
+  opacity:1;
+}
+@media(prefers-reduced-motion:reduce){
+  .liquid-candidate #enterButton,
+  .liquid-candidate .liquid-fallback .welcome-dome:before,
+  .liquid-candidate .liquid-fallback .welcome-dome:after{transition:none}
+}
+
+
+@media (orientation:landscape) and (max-height:420px){
+  .liquid-candidate .welcome-copy{top:65%;bottom:5%;width:min(82%,324px)}
+  .liquid-candidate .welcome-copy h1{font-size:clamp(16px,5.5vh,20px);line-height:1.12;margin:0 0 6px}
+  .liquid-candidate #enterButton{height:44px;min-height:44px}
+}
