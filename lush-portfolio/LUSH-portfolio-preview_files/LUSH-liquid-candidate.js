@@ -282,16 +282,19 @@
    return '<section class="case-signals" aria-label="案例快速阅读"><div class="case-signals-head"><span>CASE READ / 30 SEC</span><h2>'+(isPremiere?'先看落地结果':'先看用户和问题')+'</h2></div>'+result+evidence+'<div class="case-signals-grid">'+rows.map(row=>'<div><span>'+row[0]+'</span><p>'+row[1]+'</p></div>').join('')+'</div></section>';
   }
   function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));}
+  function interactionVideoMarkup(item){
+    const video=item?.journey?.interactionVideo;
+    if(!video)return '';
+    return '<figure class="mobile-interaction-video"><video controls playsinline preload="metadata"'+(video.poster?' poster="'+escapeMarkup(video.poster)+'"':'')+' src="'+escapeMarkup(video.src)+'"></video><figcaption><strong>'+escapeMarkup(video.title||'')+'</strong><span>'+escapeMarkup(video.caption||'')+'</span></figcaption></figure>';
+  }
   function compactProcess(item){
     const j=item&&item.journey;
     if(!j)return '';
     const steps=(j.steps||[]).slice(0,4);
     const process=(j.process||[]).filter(step=>step&&step.image);
     const processMarkup=process.length?'<div class="mobile-process-media">'+process.map((step,index)=>'<figure><img loading="lazy" src="'+escapeMarkup(step.image)+'" alt="'+escapeMarkup([step.title,step.source].filter(Boolean).join('\uff1a'))+'"><figcaption><strong>'+escapeMarkup(step.title||'')+'</strong><span>'+escapeMarkup(step.note||step.source||'')+'</span></figcaption></figure>').join('')+'</div>':'';
-    const video=j.interactionVideo;
-    const videoMarkup=video?'<figure class="mobile-interaction-video"><video controls playsinline preload="metadata"'+(video.poster?' poster="'+escapeMarkup(video.poster)+'"':'')+' src="'+escapeMarkup(video.src)+'"></video><figcaption><strong>'+escapeMarkup(video.title||'')+'</strong><span>'+escapeMarkup(video.caption||'')+'</span></figcaption></figure>':'';
     const intro=(j.intro||'\u5148\u786e\u8ba4\u95ee\u9898\uff0c\u518d\u51b3\u5b9a\u7ed3\u6784\uff0c\u6700\u540e\u56de\u5230\u771f\u5b9e\u5c4f\u5e55\u9a8c\u8bc1\u3002').replace(/\u56fe[\u56db\u4e94]\u7684\u7ad6\u7248\u6d77\u62a5/g,'\u7ad6\u7248\u4e3b\u6d77\u62a5');
-    return '<section class="detail-journey compact-journey" id="case-process"><div class="journey-head"><h2>\u6211\u5982\u4f55\u628a\u95ee\u9898\u505a\u6210\u65b9\u6848</h2><span>DESIGN PROCESS</span></div><p class="journey-intro">'+escapeMarkup(intro)+'</p><div class="compact-process-list">'+steps.map((step,index)=>'<article class="compact-process-item"><span>'+String(index+1).padStart(2,'0')+'</span><div><h3>'+escapeMarkup(step.title||'')+'</h3><p>'+escapeMarkup(step.body||'')+'</p></div></article>').join('')+'</div>'+processMarkup+videoMarkup+'<div class="compact-boundary"><span>'+escapeMarkup(j.aiTitle||'AI \u4f7f\u7528\u8fb9\u754c')+'</span><p>'+escapeMarkup(j.ai||'\u5de5\u5177\u53ea\u53c2\u4e0e\u63a2\u7d22\u548c\u5b9e\u73b0\uff0c\u9879\u76ee\u4e8b\u5b9e\u4ee5\u771f\u5b9e\u7d20\u6750\u4e3a\u51c6\u3002')+'</p></div></section>';
+    return '<section class="detail-journey compact-journey" id="case-process"><div class="journey-head"><h2>\u6211\u5982\u4f55\u628a\u95ee\u9898\u505a\u6210\u65b9\u6848</h2><span>DESIGN PROCESS</span></div><p class="journey-intro">'+escapeMarkup(intro)+'</p><div class="compact-process-list">'+steps.map((step,index)=>'<article class="compact-process-item"><span>'+String(index+1).padStart(2,'0')+'</span><div><h3>'+escapeMarkup(step.title||'')+'</h3><p>'+escapeMarkup(step.body||'')+'</p></div></article>').join('')+'</div>'+processMarkup+'<div class="compact-boundary"><span>'+escapeMarkup(j.aiTitle||'AI \u4f7f\u7528\u8fb9\u754c')+'</span><p>'+escapeMarkup(j.ai||'\u5de5\u5177\u53ea\u53c2\u4e0e\u63a2\u7d22\u548c\u5b9e\u73b0\uff0c\u9879\u76ee\u4e8b\u5b9e\u4ee5\u771f\u5b9e\u7d20\u6750\u4e3a\u51c6\u3002')+'</p></div></section>';
   }function compactOutcome(item){
     const result=item?.snapshot?.result;
     if(item?.id==='dear-you-premiere')return '';
@@ -393,7 +396,7 @@ function workCard(item,featured){
     }else{
       const cover=item.detailCover||item.cover;
       const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
-      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1><p class="detail-subtitle">'+item.subtitle+'</p>'+coverMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item)+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
+      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1><p class="detail-subtitle">'+item.subtitle+'</p>'+interactionVideoMarkup(item)+coverMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item)+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
     }
     if(item.id==='dear-you-premiere'){
       const journey=c.querySelector('.detail-journey'),tree=c.querySelector('.design-logic-tree'),story=c.querySelector('.case-story'),sponsor=c.querySelector('.sponsor-section');
