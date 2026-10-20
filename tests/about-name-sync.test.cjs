@@ -10,7 +10,7 @@ const bundle = readFileSync(bundlePath, 'utf8');
 for (const htmlPath of ['index.html', 'lush-portfolio/index.html']) {
   test(`${htmlPath} loads About-name data and three-state glass bundles`, () => {
     const html = readFileSync(path.join(root, htmlPath), 'utf8');
-    assert.match(html, /LUSH-current-data\.js\?v=20261020-beyao-proof-copy-v1/);
+    assert.match(html, /LUSH-current-data\.js\?v=20261020-resume-methods-remove-v1/);
     assert.match(html, /LUSH-ocean-glass\.css\?v=20261019-wabi-welcome-v1/);
     assert.match(html, /LUSH-sheet-physics\.js\?v=20261013-detents-v3/);
     assert.match(html, /LUSH-ocean-glass\.js\?v=20261014-optical-model-v5/);
