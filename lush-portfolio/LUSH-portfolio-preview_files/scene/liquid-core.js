@@ -11,7 +11,7 @@
     renderProgressFloor:.25,
     stickerTimeScale:.65,
     stickerSequence:Object.freeze(['speech0','mac','phoneSticker','star','plane','code','planet','bolt','speech1','speech2','speech3']),
-    geometry(w,h,progress,side=0){const p=clamp(progress),idleRadius=Math.min(310,h*.62);return {cx:w*.5+side,cy:(h+70)*(1-p)+h*.472*p,r:idleRadius*(1-p)+Math.min(56,w*.093)*p,p};}
+    geometry(w,h,progress,side=0){const p=clamp(progress),idleRadius=Math.min(280,h*.32+52);return {cx:w*.5+side,cy:(h+76)*(1-p)+h*.472*p,r:idleRadius*(1-p)+Math.min(56,w*.093)*p,p};}
   });
   class Motion {
     constructor(reduced=false){this.reduced=reduced;this.reset();}
