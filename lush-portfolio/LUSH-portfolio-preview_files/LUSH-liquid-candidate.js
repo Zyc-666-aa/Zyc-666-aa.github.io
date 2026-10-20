@@ -278,7 +278,7 @@
    const rows=[['目标用户',s.user],['原始困难',s.challenge],['我的贡献',proof.contribution||s.scope]];
    if(!isPremiere)rows.push(['结果边界',proof.result||s.result]);
     const result=isPremiere?'<div class="case-result"><span>落地结果</span><p>'+((proof.result)||s.result)+'</p></div>':'';
-   const heading=isPremiere?'':'<div class="case-signals-head"><span>CASE READ / 30 SEC</span><h2>先看用户和问题</h2></div>';
+   const heading=isPremiere?'':'<div class="case-signals-head"><span>CASE READ</span><h2>先看用户和问题</h2></div>';
    return '<section class="case-signals" aria-label="案例快速阅读">'+heading+result+evidence+'<div class="case-signals-grid">'+rows.map(row=>'<div><span>'+row[0]+'</span><p>'+row[1]+'</p></div>').join('')+'</div></section>';
   }
   function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));}
