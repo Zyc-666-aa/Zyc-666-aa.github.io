@@ -120,3 +120,15 @@
 @media(prefers-reduced-motion:reduce){
   .liquid-candidate .mobile-project-card,.liquid-candidate .mobile-quick-link,.liquid-candidate .mobile-project-filters .glass-lens{scroll-behavior:auto;transition:none}
 }
+
+.liquid-candidate .mobile-process-evidence{display:grid;gap:10px;margin:18px 0}
+.liquid-candidate .mobile-process-generation,.liquid-candidate .mobile-process-contact-sheet{min-width:0;margin:0;overflow:hidden;border:1px solid rgba(218,229,239,.12);border-radius:10px;background:rgba(10,13,18,.8)}
+.liquid-candidate .mobile-process-generation img,.liquid-candidate .mobile-process-contact-sheet img{display:block;width:100%;height:auto;object-fit:contain}
+.liquid-candidate .mobile-process-generation img{aspect-ratio:16/9;background:#0b0e13}
+.liquid-candidate .mobile-process-contact-sheet img{aspect-ratio:4/3;background:#f3f2ee}
+.liquid-candidate .mobile-process-evidence figcaption{display:grid;gap:3px;padding:9px 10px;color:#aeb8c4;font-size:12px;line-height:1.5}
+.liquid-candidate .mobile-process-evidence figcaption strong{color:#e1e7ee;font-size:13px;font-weight:500}
+.liquid-candidate .detail-experience-link{display:flex;align-items:center;justify-content:space-between;margin:0 0 18px;padding:0 18px;text-align:left;text-decoration:none;transition:background-color 160ms ease,border-color 160ms ease,transform 160ms ease}
+.liquid-candidate .detail-experience-link:hover{border-color:rgba(177,193,211,.56);background-color:rgba(197,217,240,.06)}
+.liquid-candidate .detail-experience-link:focus-visible{outline:2px solid rgba(177,193,211,.72);outline-offset:3px}
+.liquid-candidate .detail-experience-link:active{transform:translateY(1px)}
