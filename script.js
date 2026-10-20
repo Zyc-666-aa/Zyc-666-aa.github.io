@@ -60,18 +60,6 @@ const PROJECTS = [
     ]),
   },
   {
-    id: "shiwan-yubingshao",
-    index: "05",
-    title: "石湾玉冰烧",
-    label: "IP IMAGE DESIGN / CULTURAL PRODUCT",
-    summary: "围绕石湾玉冰烧酒瓶形象进行 IP 角色与文创延展设计，包含角色设定、三视图、表情延展、标准色与文创产品展示，作为普通项目收录在作品集中。",
-    kind: "design",
-    images: [
-      ["./shiwan-yubingshao-01.png", "IP形象设计"],
-      ["./shiwan-yubingshao-02.png", "文创产品展示"],
-    ],
-  },
-  {
     id: "beiyao",
     index: "06",
     title: "贝曜",

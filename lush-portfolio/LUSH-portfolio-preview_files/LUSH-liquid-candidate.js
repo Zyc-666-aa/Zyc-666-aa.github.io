@@ -173,7 +173,7 @@
     };
     if(oceanSheet)oceanSheet.close(finish);else{$('#sheetOverlay').hidden=true;finish();}
   }
-  function documentMarkup(item){if(!item.documents?.length)return '';const intro=item.id==='yuxiaobing'?'原始角色设定与文创设计展板，点击缩略图查看完整页面与对应设计说明。':item.documents.length+' 页项目资料合并为一个设计作品，点击缩略图查看完整页面与对应设计说明。';return '<section class="detail-section project-documents"><h2>项目资料</h2><p>'+intro+'</p><div class="document-grid">'+item.documents.map((doc,i)=>'<button class="document-card" type="button" data-document-id="'+doc.id+'" aria-label="查看'+doc.title+' 页面与设计说明"><span class="document-thumb"><img src="'+doc.preview+'" alt="'+doc.title+'" loading="lazy" decoding="async"><span class="document-index">'+String(i+1).padStart(2,'0')+' / '+String(item.documents.length).padStart(2,'0')+'</span></span><span class="document-name">'+doc.title+'</span><small>点击查看图片与说明</small></button>').join('')+'</div></section>'; }
+  function documentMarkup(item){if(!item.documents?.length)return '';const intro=item.documents.length+' 页项目资料合并为一个设计作品，点击缩略图查看完整页面与对应设计说明。';return '<section class="detail-section project-documents"><h2>项目资料</h2><p>'+intro+'</p><div class="document-grid">'+item.documents.map((doc,i)=>'<button class="document-card" type="button" data-document-id="'+doc.id+'" aria-label="查看'+doc.title+' 页面与设计说明"><span class="document-thumb"><img src="'+doc.preview+'" alt="'+doc.title+'" loading="lazy" decoding="async"><span class="document-index">'+String(i+1).padStart(2,'0')+' / '+String(item.documents.length).padStart(2,'0')+'</span></span><span class="document-name">'+doc.title+'</span><small>点击查看图片与说明</small></button>').join('')+'</div></section>'; }
   function snapshotMarkup(item){const s=item.snapshot;if(!s)return '';const rows=[['项目价值',s.value],['项目目标',s.goal],['核心用户',s.user],['我的范围',s.scope],['核心挑战',s.challenge],['阶段结果',s.result]];return '<section class="detail-snapshot"><div class="snapshot-head"><span>PROJECT SNAPSHOT</span><h2>项目摘要</h2></div><div class="snapshot-grid">'+rows.map(row=>'<div class="snapshot-row"><span>'+row[0]+'</span><p>'+row[1]+'</p></div>').join('')+'</div></section>'; }
   function toolingMarkup(item){
     if(!item.tools&&!item.references)return '';
@@ -335,7 +335,7 @@
     if(!item.documents?.length)return sponsors;
     return sponsors+'<section class="project-documents compact-evidence" id="case-evidence"><div class="case-story-head"><span>PROJECT MATERIALS</span><h2>项目资料</h2><p>'+item.documents.length+' 份项目资料，点击查看页面与设计说明。</p></div><div class="document-grid">'+item.documents.map((doc,i)=>'<button class="document-card" type="button" data-document-id="'+doc.id+'" aria-label="查看'+doc.title+' 页面与设计说明"><span class="document-thumb"><img loading="lazy" src="'+doc.preview+'" alt="'+doc.title+'"><span class="document-index">'+String(i+1).padStart(2,'0')+' / '+String(item.documents.length).padStart(2,'0')+'</span></span><span class="document-name">'+doc.title+'</span><small>查看资料</small></button>').join('')+'</div></section>';
   }
-  function projectCategoryLabel(item){const labels={'lush':'产品与交互','dear-you-premiere':'活动视觉','beyao':'数字服装','yuxiaobing':'品牌与 IP','lush-fashion':'交互原型'};return labels[item.id]||item.category;}
+  function projectCategoryLabel(item){const labels={'lush':'产品与交互','dear-you-premiere':'活动视觉','beyao':'数字服装','lush-fashion':'交互原型'};return labels[item.id]||item.category;}
 function workCard(item,featured){
     const signal=processValue(item);
     const proof=item.proof||{};
@@ -361,7 +361,7 @@ function workCard(item,featured){
       const delivery=escapeMarkup(item.delivery||'');
       const summary=escapeMarkup(item.summary||item.description||'');
       const imageMode=item.coverLayout==='horizontal-recomposition'?'mobile-project-cover-fill':'';
-      const longTitle=(item.id==='dear-you-premiere'||item.id==='yuxiaobing')?' long':'';
+      const longTitle=(item.id==='dear-you-premiere')?' long':'';
       return '<button class="project mobile-project-card" data-id="'+id+'" aria-label="查看'+title+'，'+subtitle+'"><div class="mobile-project-image"><img class="'+imageMode+'" src="'+cover+'" alt="'+alt+'" loading="'+(index===0?'eager':'lazy')+'"></div><div class="mobile-project-copy"><div class="mobile-project-title-line"><h2 class="project-name'+longTitle+'">'+title+'</h2><span class="project-category">'+escapeMarkup(item.category||'')+'</span></div><p class="mobile-project-subtitle">'+subtitle+'</p><p class="mobile-project-summary">'+summary+'</p><div class="mobile-project-facts"><div class="mobile-project-meta"><span>负责</span><strong>'+role+'</strong></div><div class="mobile-project-meta"><span>交付</span><strong>'+delivery+'</strong></div></div><div class="case-button"><span>查看案例</span><span class="case-chevron" aria-hidden="true">›</span></div></div></button>';
     }).join('');
     const filters=cats.map(category=>'<button class="filter '+(category===state.category?'selected':'')+'" data-category="'+escapeMarkup(category)+'" aria-pressed="'+(category===state.category)+'">'+escapeMarkup(category)+'</button>').join('');
@@ -384,12 +384,7 @@ function workCard(item,featured){
     const content=$('#detailContent'), header=$('#detailLayer .detail-header');
     header.querySelector('.detail-index')?.remove();
     const targets=[];
-    if(item?.id==='yuxiaobing'){
-      targets.push(['read','速读',content.querySelector('.yxb-case-overview')]);
-      targets.push(['original','原稿',content.querySelector('.yxb-case-original')]);
-      targets.push(['judgement','判断',content.querySelector('.yxb-case-decisions')]);
-      targets.push(['extension','延展',content.querySelector('.yxb-case-extensions')]);
-    }else{
+    {
       const quickRead=content.querySelector('.detail-quick-read'), snapshot=content.querySelector('.detail-snapshot');
       if(quickRead)targets.push(['result','结果',quickRead]);
       if(snapshot)targets.push(['summary','摘要',snapshot]);
@@ -406,22 +401,9 @@ function workCard(item,featured){
     function update(){frame=0;const edge=content.getBoundingClientRect().top+80;let active=visibleTargets[0]?.[0];for(const [id,,target]of visibleTargets){if(target.getBoundingClientRect().top<=edge)active=id;}if(content.scrollTop+content.clientHeight>=content.scrollHeight-8)active=visibleTargets.at(-1)?.[0];nav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.jump===active?'location':'false'));}
     content.onscroll=()=>{if(!frame)frame=requestAnimationFrame(update);};update();
     const docs=item.documents||[];
-    if(docs.length){const quick=document.createElement('button');quick.className='detail-evidence-link';quick.type='button';quick.textContent='查看 '+docs.length+' 页项目资料';const targetId=item?.id==='yuxiaobing'?'original':'documents';quick.addEventListener('click',()=>nav.querySelector('[data-jump="'+targetId+'"]').click());content.querySelector('.detail-subtitle').after(quick);}
+    if(docs.length){const quick=document.createElement('button');quick.className='detail-evidence-link';quick.type='button';quick.textContent='查看 '+docs.length+' 页项目资料';const targetId='documents';quick.addEventListener('click',()=>nav.querySelector('[data-jump="'+targetId+'"]').click());content.querySelector('.detail-subtitle').after(quick);}
   }
-  function yuxiaobingCaseMarkup(item,cover){
-    const editorial=item.editorial||{},analysis=editorial.analysis||{};
-    const route=analysis.diagram||[],decisions=editorial.keyDecisions||[];
-    const concepts=[
-      {src:'LUSH-portfolio-preview_files/assets/root/portfolio-focus/yuxiaobing-extension-gift-set-concept-v1.jpg',title:'礼赠组合方向',alt:'玉小冰角色应用于礼盒、纸袋与杯垫的 AI 辅助概念图',copy:'把角色作为礼赠组合的主视觉，尝试让包装、纸袋与小物沿用同一套识别。'},
-      {src:'LUSH-portfolio-preview_files/assets/root/portfolio-focus/yuxiaobing-extension-counter-display-concept-v1.jpg',title:'门店陈列方向',alt:'玉小冰角色用于桌面品牌陈列的 AI 辅助概念图',copy:'把二维角色转成桌面陈列提案，探索它在消费接触点中的展示尺度。'},
-      {src:'LUSH-portfolio-preview_files/assets/root/portfolio-focus/yuxiaobing-extension-social-story-concept-v1.jpg',title:'社交内容方向',alt:'玉小冰角色用于连续社交内容画面的 AI 辅助概念图',copy:'用连续画面尝试讲清角色状态与产品关系；后续需人工校对文案和品牌信息。'}
-    ];
-    const routeMarkup=route.map((step,index)=>'<article class="yxb-route-step"><span>0'+(index+1)+'</span><div><small>'+escapeHtml(step.from||'')+'</small><h3>'+escapeHtml(step.to||'')+'</h3><p>'+escapeHtml(step.why||'')+'</p></div></article>').join('');
-    const decisionMarkup=decisions.map((decision,index)=>'<article class="yxb-decision"><span>0'+(index+1)+'</span><div><h3>'+escapeHtml(decision.title||'')+'</h3><p>'+escapeHtml(decision.body||'')+'</p></div></article>').join('');
-    const conceptMarkup=concepts.map(concept=>'<article class="yxb-concept-card"><figure><img loading="lazy" src="'+concept.src+'" alt="'+escapeHtml(concept.alt)+'"><figcaption>AI 生成延展草案 · 未验证 / 非原始交付</figcaption></figure><div><h3>'+escapeHtml(concept.title)+'</h3><p>'+escapeHtml(concept.copy)+'</p></div></article>').join('');
-    const docs=documentMarkup(item);
-    return '<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+escapeHtml(editorial.type||item.category)+(editorial.date?' / '+escapeHtml(editorial.date):'')+'</span><h1 id="detailTitle">'+escapeHtml(editorial.title||item.title)+'</h1><button class="detail-cover-button proposal-board-button" type="button" data-media-src="'+escapeHtml(cover)+'" aria-label="查看项目封面大图"><img class="detail-cover" src="'+escapeHtml(cover)+'" alt="石湾玉冰烧与玉小冰角色的 AI 辅助概念封面，非原始交付或产品实拍"><span class="detail-cover-hint" aria-hidden="true">点击查看大图</span></button><p class="yxb-cover-source">'+escapeHtml(editorial.coverSource||'AI 辅助概念封面 · 非原始项目交付')+'</p><p class="detail-subtitle">'+escapeHtml(editorial.summary||item.subtitle)+'</p><div class="detail-meta"><div><span>项目职责</span><strong>'+escapeHtml(editorial.contribution||item.role)+'</strong></div><div><span>原始交付</span><strong>'+escapeHtml(editorial.result||item.detailDelivery||'')+'</strong></div></div><section class="yxb-case-overview" id="case-read"><div class="yxb-section-head"><span>CASE SNAPSHOT</span><h2>先看项目重点</h2><p>从原瓶的识别线索出发，建立角色规则，再把同一套规则延展到文创视觉。</p></div><div class="yxb-overview-grid"><article><span>识别锚点</span><strong>瓶盖、瓶型与品牌标签</strong></article><article><span>角色交付</span><strong>正侧背三视图、六款表情</strong></article><article><span>资料与状态</span><strong>两页原始展板；文创已制作（本人确认）</strong><small>现有资料未附实物照片、销量或用户反馈。</small></article></div></section><div class="yxb-case-original" id="case-original"><div class="yxb-section-head"><span>ORIGINAL PROJECT MATERIAL</span><h2>原始设计交付</h2><p>先展示项目原稿，再区分本次新增的 AI 辅助概念探索。</p></div>'+docs+'</div><section class="yxb-case-route" id="case-process"><div class="yxb-section-head"><span>DESIGN ROUTE</span><h2>从品牌识别到角色延展</h2><p>设计主线聚焦在识别要素的保留，以及变化范围的控制。</p></div><div class="yxb-route-list">'+routeMarkup+'</div></section><section class="yxb-case-decisions" id="case-judgement"><div class="yxb-section-head"><span>DESIGN DECISIONS</span><h2>关键设计判断</h2><p>围绕原始展板可以核对的规则，说明角色为何这样设计。</p></div><div class="yxb-decision-list">'+decisionMarkup+'</div><p class="yxb-research-boundary">'+escapeHtml(analysis.evidence||'受众与使用情境为项目资料推演，非正式调研。')+' '+escapeHtml(analysis.tradeoff||'识别度与小尺寸表现仍需后续验证。')+'</p></section><section class="yxb-case-extensions" id="case-extension"><div class="yxb-section-head"><span>AI-ASSISTED CONCEPT EXPLORATION</span><h2>延展方向探索</h2><p>基于原角色规则做三种应用设想，用于展示设计延展能力；这些画面不是原项目交付，也不代表品牌已采用。</p></div><div class="yxb-concept-grid">'+conceptMarkup+'</div></section><section class="yxb-case-next"><div class="yxb-section-head"><span>WHAT TO VALIDATE NEXT</span><h2>下一步验证</h2></div><p>'+escapeHtml(editorial.reflection||'补充实物记录，并通过小尺寸识别测试验证角色与品牌的关联。')+'</p><p class="yxb-case-boundary">'+escapeHtml(editorial.boundary||'受众与场景判断尚未经过正式调研；目前没有销量或用户反馈数据。')+'</p></section><button class="detail-end" id="detailEnd" type="button">返回作品</button>';
-  }
+
   function openDetail(item){
     detailFocus=document.activeElement;
     state.detail=item;
@@ -431,25 +413,7 @@ function workCard(item,featured){
     layer.classList.add('is-visible');
     const c=$('#detailContent');
     c.dataset.projectId=item.id;
-    if(item.id==='yuxiaobing'){
-      const cover=escapeHtml(item.detailCover||item.cover),editorial=item.editorial||{};
-      c.innerHTML=yuxiaobingCaseMarkup(item,cover);
-      const caseTitle=c.querySelector('#detailTitle');
-      const titleTail='延展研究';
-      if(caseTitle?.textContent?.endsWith(titleTail)){
-        const titleLead=caseTitle.textContent.slice(0,-titleTail.length);
-        caseTitle.textContent='';
-        caseTitle.append(document.createTextNode(titleLead));
-        const tail=document.createElement('span');
-        tail.className='detail-title-tail';
-        tail.textContent=titleTail;
-        caseTitle.append(tail);
-      }
-      const coverButton=c.querySelector('.proposal-board-button');
-      const coverImage=coverButton?.querySelector('.detail-cover');
-      if(coverButton)coverButton.setAttribute('aria-label','查看项目封面大图');
-      if(coverImage)coverImage.alt='项目封面插画，呈现玉小冰角色与文创物料延展示意，非产品实拍';
-    }else{
+    {
       const cover=item.detailCover||item.cover;
       const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
       const experienceLink=item.id==='lush-fashion'?'<a class="detail-end detail-experience-link" href="https://albertlush-d1gq6ex78779a34a3-1443272999.tcloudbaseapp.com/orla-video-site-20260926/" target="_blank" rel="noopener noreferrer" aria-label="打开 LUSH 服装网站原型，新窗口">打开网站原型 <span aria-hidden="true">›</span></a>':'';
