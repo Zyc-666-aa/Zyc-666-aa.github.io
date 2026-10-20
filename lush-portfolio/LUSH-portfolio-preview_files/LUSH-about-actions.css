@@ -1,0 +1,186 @@
+/* About page actions: a clear primary path and a quieter contact path. */
+.liquid-candidate .section-about .about-actions {
+  width: 100%;
+  max-width: 760px;
+  margin: 28px auto 0;
+}
+
+.liquid-candidate .section-about .about-actions-label {
+  margin: 0 0 12px;
+  color: #8b9aaa;
+  font-size: 11px;
+  letter-spacing: .14em;
+  line-height: 1.45;
+}
+
+.liquid-candidate .section-about .about-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  gap: 10px;
+}
+
+.liquid-candidate .section-about .link-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: 36px auto;
+  align-items: stretch;
+  justify-content: initial;
+  width: 100%;
+  min-width: 0;
+  min-height: 112px;
+  height: 112px;
+  padding: 14px 15px;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(190, 211, 228, .28);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(24, 32, 40, .84), rgba(6, 10, 14, .96));
+  box-shadow: inset 0 1px rgba(235, 243, 249, .09), inset 0 -1px rgba(0, 0, 0, .5);
+  text-align: left;
+  white-space: normal;
+  transition: transform 160ms cubic-bezier(.2, .8, .2, 1), border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.liquid-candidate .section-about .link-row::before {
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 44%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(228, 239, 248, .34), rgba(228, 239, 248, 0));
+  content: "";
+  pointer-events: none;
+}
+
+.liquid-candidate .section-about .link-row-primary {
+  border-color: rgba(207, 222, 234, .42);
+  background: linear-gradient(145deg, rgba(55, 67, 79, .9), rgba(20, 28, 36, .94) 58%, rgba(8, 12, 17, .98));
+  box-shadow: inset 0 1px rgba(246, 250, 253, .2), inset 0 -1px rgba(0, 0, 0, .5), 0 10px 24px rgba(0, 0, 0, .2);
+}
+
+.liquid-candidate .section-about .link-row-secondary {
+  background: linear-gradient(145deg, rgba(20, 27, 34, .78), rgba(5, 8, 11, .96));
+}
+
+.liquid-candidate .section-about .link-row .line-icon {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: start;
+  width: 34px;
+  height: 34px;
+  border-color: rgba(205, 220, 232, .48);
+  border-radius: 11px;
+  background: linear-gradient(145deg, rgba(50, 61, 72, .88), rgba(11, 15, 20, .96));
+  box-shadow: inset 0 1px rgba(247, 251, 254, .17), inset 0 -1px rgba(0, 0, 0, .35);
+}
+
+.liquid-candidate .section-about .link-row > span:nth-child(2) {
+  grid-row: 2;
+  grid-column: 1;
+  align-self: end;
+  min-width: 0;
+  color: #e8edf2;
+  font-size: 15px;
+  font-weight: 560;
+  letter-spacing: .01em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.liquid-candidate .section-about .link-row .chevron {
+  grid-row: 2;
+  grid-column: 2;
+  align-self: end;
+  justify-self: end;
+  margin: 0 0 -2px 8px;
+  color: #a7b5c1;
+  font-size: 0;
+  line-height: 1;
+}
+
+.liquid-candidate .section-about .link-row-primary .line-icon {
+  border-color: rgba(222, 234, 243, .58);
+  background: linear-gradient(145deg, rgba(83, 98, 112, .78), rgba(20, 27, 34, .94));
+}
+
+.liquid-candidate .section-about .link-row-primary .resume-icon:before {
+  border-color: rgba(239, 245, 249, .96);
+}
+
+.liquid-candidate .section-about .link-row-primary .resume-icon:after {
+  background: rgba(239, 245, 249, .96);
+  box-shadow: 0 5px rgba(239, 245, 249, .88);
+}
+
+.liquid-candidate .section-about .link-row:hover,
+.liquid-candidate .section-about .link-row:focus-visible {
+  border-color: rgba(221, 234, 244, .58);
+  box-shadow: inset 0 1px rgba(246, 250, 253, .2), 0 12px 28px rgba(0, 0, 0, .24);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.liquid-candidate .section-about .link-row:focus-visible {
+  outline: 2px solid rgba(212, 229, 242, .8);
+  outline-offset: 3px;
+}
+
+.liquid-candidate .section-about .link-row:active {
+  transform: scale(.985);
+}
+
+@media (max-width: 360px) {
+  .liquid-candidate .section-about .about-actions {
+    margin-top: 22px;
+  }
+
+  .liquid-candidate .section-about .about-links {
+    gap: 8px;
+  }
+
+  .liquid-candidate .section-about .link-row {
+    min-height: 104px;
+    height: 104px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .liquid-candidate .section-about .link-row .line-icon {
+    width: 31px;
+    height: 31px;
+  }
+
+  .liquid-candidate .section-about .link-row > span:nth-child(2) {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) and (max-height: 760px) {
+  .liquid-candidate .section-about .about-heading {
+    padding-top: 12px !important;
+  }
+
+  .liquid-candidate .section-about .about-actions {
+    margin-top: 14px;
+  }
+
+  .liquid-candidate .section-about .about-actions-label {
+    margin-bottom: 8px;
+  }
+
+  .liquid-candidate .section-about .link-row {
+    min-height: 96px;
+    height: 96px;
+    padding: 10px 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-candidate .section-about .link-row {
+    transition: none;
+  }
+}

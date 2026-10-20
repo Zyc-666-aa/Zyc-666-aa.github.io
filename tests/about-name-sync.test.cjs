@@ -10,11 +10,13 @@ const bundle = readFileSync(bundlePath, 'utf8');
 for (const htmlPath of ['index.html', 'lush-portfolio/index.html']) {
   test(`${htmlPath} loads About-name data and three-state glass bundles`, () => {
     const html = readFileSync(path.join(root, htmlPath), 'utf8');
-    assert.match(html, /LUSH-current-data\.js\?v=20261012-about-name-v1/);
-    assert.match(html, /LUSH-ocean-glass\.css\?v=20261013-detents-v3/);
+    assert.match(html, /LUSH-current-data\.js\?v=20261020-portfolio-release-v1/);
+    assert.match(html, /LUSH-ocean-glass\.css\?v=20261019-wabi-welcome-v1/);
     assert.match(html, /LUSH-sheet-physics\.js\?v=20261013-detents-v3/);
-    assert.match(html, /LUSH-ocean-glass\.js\?v=20261013-detents-v3/);
-    assert.match(html, /LUSH-liquid-candidate\.js\?v=20261013-detents-v3/);
+    assert.match(html, /LUSH-ocean-glass\.js\?v=20261014-optical-model-v5/);
+    assert.match(html, /LUSH-liquid-candidate\.js\?v=20261020-portfolio-release-v1/);
+    assert.match(html, /LUSH-yuxiaobing-detail\.css\?v=20261020-portfolio-release-v1" media="print" onload="this\.media='all'"/);
+    assert.match(html, /LUSH-about-actions\.css\?v=20261020-portfolio-release-v1" media="print" onload="this\.media='all'"/);
   });
 }
 
@@ -22,7 +24,8 @@ test('both website About templates show the resume name and Albert', () => {
   const views = [...bundle.matchAll(/function aboutView\(\)\{[^\r\n]*/g)].map(match => match[0]);
   assert.equal(views.length, 2, 'both website rendering variants must be checked');
   for (const view of views) {
-    assert.match(view, /class="about-name">'\+escapeMarkup\(data\.resume\.name\)\+' \/ Albert<\/div>/);
+    assert.match(view, /class="about-name">'\+escapeMarkup\(data\.resume\.name\)\+'<\/div>/);
+    assert.match(view, /class="about-name-en">'\+escapeMarkup\(data\.resume\.english\)\+'<\/p>/);
     assert.match(view, /class="about-role">'\+data\.resume\.role\+'<\/p>/);
   }
 });

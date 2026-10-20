@@ -183,3 +183,28 @@
   font: inherit;
   font-size: 12px;
 }
+
+.liquid-candidate .detail-experience-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 18px;
+  padding: 0 18px;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.liquid-candidate .detail-experience-link:hover {
+  border-color: rgba(177, 193, 211, .56);
+  background-color: rgba(197, 217, 240, .06);
+}
+
+.liquid-candidate .detail-experience-link:focus-visible {
+  outline: 2px solid rgba(177, 193, 211, .72);
+  outline-offset: 3px;
+}
+
+.liquid-candidate .detail-experience-link:active {
+  transform: translateY(1px);
+}

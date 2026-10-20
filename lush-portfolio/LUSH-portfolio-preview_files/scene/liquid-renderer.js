@@ -139,7 +139,7 @@ void main(){
   }
   gl_FragColor=vec4(color,1.);
 }`;
-const kinds=['speech0','mac','phoneSticker','star','plane','code','planet','bolt','speech1','star','mac','plane','speech2','phoneSticker','planet','code','bolt','star','speech3','planet','star'];
+const kinds=['speech0','mac','phoneSticker','star','plane','code','planet','bolt','speech1','star','mac','plane','speech2','phoneSticker','planet'];
 const clamp01=value=>Math.max(0,Math.min(1,value));
 function drawSpacedText(ctx,text,centerX,centerY,size,spacing,color,font='Arial, sans-serif'){
  const chars=Array.from(text||'');if(!chars.length)return;
@@ -156,25 +156,23 @@ function drawPill(ctx,x,y,w,h){
 // A time-staggered stream. Every cycle starts below the centre of the same lens.
 // No pre-scattered starting positions: birth -> rolling at the lip -> free flight.
 function stickerPose(i,key,age,G,w,h,m){
- const life=4.5,interval=life/kinds.length;
+ const life=3.6,interval=life/kinds.length;
  const elapsed=age-i*interval;if(elapsed<0)return null;
  const a=elapsed%life,t=a/life,exit=.20;
  const inside=Math.min(1,t/exit),flight=Math.max(0,(t-exit)/(1-exit));
  const pop=Math.exp(-Math.pow((t-.225)/.055,2));
  const seed=i*2.39996323,lane=Math.sin(seed);
- const lipX=lane*G.r*.26;
- const travelRoom=Math.max(h*.10,h*.5-G.r*.84-50);
- const travel=Math.min(h*.34,480,(w>h||h<=420)?travelRoom:480);
- const rise=travel*flight+G.r*.09*pop;
- const fan=(Math.min(w*.24,126)*Math.pow(flight,.72));
- const orbit=Math.sin(flight*Math.PI)*G.r*.17;
- const x=G.cx+lipX+Math.sin(seed+flight*1.5)*fan+orbit;
- const y=G.cy+G.r*(.28-1.12*inside)-rise;
+ const lipX=lane*G.r*.38;
+ const travel=Math.min(h*.59,620);
+ const rise=travel*flight+G.r*.11*pop;
+ const fan=(Math.min(w*.35,195)*Math.pow(flight,.75));
+ const x=G.cx+lipX+Math.sin(seed+flight*2.1)*fan+Math.sin(inside*Math.PI)*G.r*.12;
+ const y=G.cy+G.r*(.32-1.24*inside)-rise;
  const scale=(w<350?.87:1)*(.46+.54*Math.min(1,inside*1.3))*(1+.09*pop);
  const width=(key.startsWith('speech')?72:key==='phoneSticker'?43:key==='star'?29:54)*scale;
  const height=width*(key==='phoneSticker'?1.47:key.startsWith('speech')?.7:1);
- const roll=(1-Math.min(1,inside))*Math.PI*.68*(i%2?1:-1);
- const angle=lane*.34+roll+flight*Math.sin(seed)*.78+Math.sin(seed)*.04*pop+Math.sin(m.clock*.38+i)*.035;
+ const roll=(1-Math.min(1,inside))*Math.PI*1.2*(i%2?1:-1);
+ const angle=lane*.65+roll+flight*Math.sin(seed)*1.3+Math.sin(seed)*.08*pop+Math.sin(m.clock*.6+i)*.06;
  const opacity=Math.min(1,a/.12)*Math.min(1,(1-t)/.12)*Math.max(0,Math.min(1,(G.p-.60)/.32));
  return {x,y,w:width,h:height,angle,opacity,t,emerging:t<.37?1:0,pop};
 }
