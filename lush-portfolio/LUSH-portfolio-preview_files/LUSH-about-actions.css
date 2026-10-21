@@ -1,4 +1,4 @@
-/* About page actions: a clear primary path and a quieter contact path. */
+/* About page actions: matching dark glass surfaces for both entry points. */
 .liquid-candidate .section-about .about-actions {
   width: 100%;
   max-width: 760px;
@@ -56,14 +56,12 @@
   pointer-events: none;
 }
 
-.liquid-candidate .section-about .link-row-primary {
-  border-color: rgba(207, 222, 234, .42);
-  background: linear-gradient(145deg, rgba(55, 67, 79, .9), rgba(20, 28, 36, .94) 58%, rgba(8, 12, 17, .98));
-  box-shadow: inset 0 1px rgba(246, 250, 253, .2), inset 0 -1px rgba(0, 0, 0, .5), 0 10px 24px rgba(0, 0, 0, .2);
-}
-
-.liquid-candidate .section-about .link-row-secondary {
+.liquid-candidate .section-about .about-actions .link-row-primary,
+.liquid-candidate .section-about .about-actions .link-row-secondary {
+  border-color: rgba(190, 211, 228, .28);
   background: linear-gradient(145deg, rgba(20, 27, 34, .78), rgba(5, 8, 11, .96));
+  box-shadow: inset 0 1px rgba(235, 243, 249, .09), inset 0 -1px rgba(0, 0, 0, .5);
+  color: #e8edf2;
 }
 
 .liquid-candidate .section-about .link-row .line-icon {
@@ -102,16 +100,11 @@
   line-height: 1;
 }
 
-.liquid-candidate .section-about .link-row-primary .line-icon {
-  border-color: rgba(222, 234, 243, .58);
-  background: linear-gradient(145deg, rgba(83, 98, 112, .78), rgba(20, 27, 34, .94));
-}
-
-.liquid-candidate .section-about .link-row-primary .resume-icon:before {
+.liquid-candidate .section-about .link-row .resume-icon:before {
   border-color: rgba(239, 245, 249, .96);
 }
 
-.liquid-candidate .section-about .link-row-primary .resume-icon:after {
+.liquid-candidate .section-about .link-row .resume-icon:after {
   background: rgba(239, 245, 249, .96);
   box-shadow: 0 5px rgba(239, 245, 249, .88);
 }
