@@ -1,179 +1,61 @@
-/* About page actions: matching dark glass surfaces for both entry points. */
-.liquid-candidate .section-about .about-actions {
-  width: 100%;
-  max-width: 760px;
-  margin: 28px auto 0;
+/* Image-generated glass surface, shared identically by both entry points. */
+.liquid-candidate .section-about .about-actions{width:100%;max-width:760px;margin:28px auto 0}
+.liquid-candidate .section-about .about-actions-label{margin:0 0 12px;color:#8b9aaa;font-size:11px;letter-spacing:.14em;line-height:1.45}
+.liquid-candidate .section-about .about-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:none;margin:0;gap:12px}
+.liquid-candidate .section-about .about-actions :is(.link-row-primary,.link-row-secondary){
+  position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) 12px;grid-template-rows:1fr;align-items:center;justify-content:initial;gap:16px;
+  width:100%;min-width:0;min-height:112px;height:112px;padding:0 26px;box-sizing:border-box;overflow:hidden;border:0;border-radius:28px;appearance:none;
+  background-color:#05070a;background-image:url("assets/ui/about-cta-dark-glass-imagegen-v1.jpg"),linear-gradient(145deg,#1a2028,#05070a);background-size:100% 100%;background-position:center;background-repeat:no-repeat;
+  box-shadow:0 8px 22px rgba(0,0,0,.28);color:#dbe3e9;text-align:left;white-space:nowrap;cursor:pointer;transform:none;filter:none;
+  transition:transform 160ms ease,filter 160ms ease
 }
-
-.liquid-candidate .section-about .about-actions-label {
-  margin: 0 0 12px;
-  color: #8b9aaa;
-  font-size: 11px;
-  letter-spacing: .14em;
-  line-height: 1.45;
+.liquid-candidate .section-about .about-actions .link-row::before,
+.liquid-candidate .section-about .about-actions .link-row::after{content:none}
+.liquid-candidate .section-about .about-actions .link-row .line-icon{
+  position:relative;inset:auto;display:block;grid-column:1;grid-row:1;align-self:center;justify-self:center;width:32px;height:32px;min-width:0;flex:none;margin:0;padding:0;border:0;border-radius:0;
+  background:none;box-shadow:none;opacity:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.65))
 }
-
-.liquid-candidate .section-about .about-links {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: 100%;
-  max-width: none;
-  margin: 0;
-  gap: 10px;
+.liquid-candidate .section-about .about-actions .link-row .line-icon::before{
+  content:"";position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:0;box-shadow:none;transform:none;background-color:transparent;background-repeat:no-repeat;background-position:center;background-size:contain;opacity:1
 }
-
-.liquid-candidate .section-about .link-row {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: 36px auto;
-  align-items: stretch;
-  justify-content: initial;
-  width: 100%;
-  min-width: 0;
-  min-height: 112px;
-  height: 112px;
-  padding: 14px 15px;
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid rgba(190, 211, 228, .28);
-  border-radius: 18px;
-  background: linear-gradient(145deg, rgba(24, 32, 40, .84), rgba(6, 10, 14, .96));
-  box-shadow: inset 0 1px rgba(235, 243, 249, .09), inset 0 -1px rgba(0, 0, 0, .5);
-  text-align: left;
-  white-space: normal;
-  transition: transform 160ms cubic-bezier(.2, .8, .2, 1), border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+.liquid-candidate .section-about .about-actions .link-row .line-icon::after{content:none}
+.liquid-candidate .section-about .about-actions .link-row .resume-icon::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20stroke%3D%22%23dbe3e9%22%20stroke-width%3D%221.65%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M8%203.5h11l6%206V28H8z%22%2F%3E%3Cpath%20d%3D%22M19%203.5V10h6M12%2015h9M12%2020h9M12%2025h6%22%2F%3E%3C%2Fsvg%3E")}
+.liquid-candidate .section-about .about-actions .link-row .mail-icon::before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20stroke%3D%22%23dbe3e9%22%20stroke-width%3D%221.65%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223.5%22%20y%3D%227%22%20width%3D%2225%22%20height%3D%2218%22%20rx%3D%223%22%2F%3E%3Cpath%20d%3D%22m5%209%2011%209L27%209%22%2F%3E%3C%2Fsvg%3E")}
+.liquid-candidate .section-about .about-actions .link-row>span:nth-child(2){
+  position:static;display:block;grid-column:2;grid-row:1;align-self:center;justify-self:center;min-width:0;width:auto;max-width:none;margin:0;padding:0;
+  color:#e4e9ed;font-size:23px;font-weight:520;letter-spacing:.035em;line-height:1.25;white-space:nowrap;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.65)
 }
-
-.liquid-candidate .section-about .link-row::before {
-  position: absolute;
-  top: 0;
-  left: 14px;
-  width: 44%;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(228, 239, 248, .34), rgba(228, 239, 248, 0));
-  content: "";
-  pointer-events: none;
+.liquid-candidate .section-about .about-actions .link-row .chevron{position:relative;inset:auto;display:block;grid-column:3;grid-row:1;align-self:center;justify-self:end;width:12px;height:18px;margin:0;color:#dbe3e9;font-size:0;line-height:1;transform:none}
+.liquid-candidate .section-about .about-actions .link-row .chevron::before{content:"";position:absolute;inset:auto;left:0;top:4px;width:9px;height:9px;border:0;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor;border-radius:0;background:none;box-shadow:none;transform:rotate(45deg)}
+.liquid-candidate .section-about .about-actions .link-row .chevron::after{content:none}
+.liquid-candidate .section-about .about-actions .link-row:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.liquid-candidate .section-about .about-actions .link-row:focus-visible{outline:2px solid #c0d3e2;outline-offset:4px;filter:brightness(1.08)}
+.liquid-candidate .section-about .about-actions .link-row:active{transform:scale(.985);filter:brightness(1.04)}
+@media(max-width:600px){
+  .liquid-candidate .section-about .about-actions :is(.link-row-primary,.link-row-secondary){height:76px;min-height:76px;grid-template-columns:26px minmax(0,1fr) 10px;padding:0 17px;gap:10px;border-radius:19px}
+  .liquid-candidate .section-about .about-actions .link-row .line-icon{width:26px;height:26px}
+  .liquid-candidate .section-about .about-actions .link-row>span:nth-child(2){font-size:16px;letter-spacing:.01em}
 }
-
-.liquid-candidate .section-about .about-actions .link-row-primary,
-.liquid-candidate .section-about .about-actions .link-row-secondary {
-  border-color: rgba(190, 211, 228, .28);
-  background: linear-gradient(145deg, rgba(20, 27, 34, .78), rgba(5, 8, 11, .96));
-  box-shadow: inset 0 1px rgba(235, 243, 249, .09), inset 0 -1px rgba(0, 0, 0, .5);
-  color: #e8edf2;
+@media(max-width:480px){
+  .liquid-candidate .section-about .about-actions :is(.link-row-primary,.link-row-secondary){height:68px;min-height:68px;grid-template-columns:24px minmax(0,1fr) 10px;padding:0 14px;gap:8px;border-radius:17px}
+  .liquid-candidate .section-about .about-actions .link-row .line-icon{width:24px;height:24px}
+  .liquid-candidate .section-about .about-actions .link-row>span:nth-child(2){font-size:14px}
+  .liquid-candidate .section-about .about-actions .link-row .chevron::before{width:7px;height:7px;top:5px}
 }
-
-.liquid-candidate .section-about .link-row .line-icon {
-  grid-row: 1;
-  grid-column: 1;
-  align-self: start;
-  width: 34px;
-  height: 34px;
-  border-color: rgba(205, 220, 232, .48);
-  border-radius: 11px;
-  background: linear-gradient(145deg, rgba(50, 61, 72, .88), rgba(11, 15, 20, .96));
-  box-shadow: inset 0 1px rgba(247, 251, 254, .17), inset 0 -1px rgba(0, 0, 0, .35);
+@media(max-width:360px){
+  .liquid-candidate .section-about .about-actions{margin-top:22px}
+  .liquid-candidate .section-about .about-links{gap:8px}
+  .liquid-candidate .section-about .about-actions :is(.link-row-primary,.link-row-secondary){grid-template-columns:22px minmax(0,1fr) 10px;padding:0 12px;gap:6px}
+  .liquid-candidate .section-about .about-actions .link-row .line-icon{width:22px;height:22px}
+  .liquid-candidate .section-about .about-actions .link-row>span:nth-child(2){font-size:13px}
 }
-
-.liquid-candidate .section-about .link-row > span:nth-child(2) {
-  grid-row: 2;
-  grid-column: 1;
-  align-self: end;
-  min-width: 0;
-  color: #e8edf2;
-  font-size: 15px;
-  font-weight: 560;
-  letter-spacing: .01em;
-  line-height: 1.25;
-  white-space: nowrap;
+@media(max-width:360px) and (max-height:760px){
+  .liquid-candidate .section-about .about-heading{padding-top:12px!important}
+  .liquid-candidate .section-about .about-actions{margin-top:14px}
+  .liquid-candidate .section-about .about-actions-label{margin-bottom:8px}
 }
-
-.liquid-candidate .section-about .link-row .chevron {
-  grid-row: 2;
-  grid-column: 2;
-  align-self: end;
-  justify-self: end;
-  margin: 0 0 -2px 8px;
-  color: #a7b5c1;
-  font-size: 0;
-  line-height: 1;
-}
-
-.liquid-candidate .section-about .link-row .resume-icon:before {
-  border-color: rgba(239, 245, 249, .96);
-}
-
-.liquid-candidate .section-about .link-row .resume-icon:after {
-  background: rgba(239, 245, 249, .96);
-  box-shadow: 0 5px rgba(239, 245, 249, .88);
-}
-
-.liquid-candidate .section-about .link-row:hover,
-.liquid-candidate .section-about .link-row:focus-visible {
-  border-color: rgba(221, 234, 244, .58);
-  box-shadow: inset 0 1px rgba(246, 250, 253, .2), 0 12px 28px rgba(0, 0, 0, .24);
-  outline: none;
-  transform: translateY(-2px);
-}
-
-.liquid-candidate .section-about .link-row:focus-visible {
-  outline: 2px solid rgba(212, 229, 242, .8);
-  outline-offset: 3px;
-}
-
-.liquid-candidate .section-about .link-row:active {
-  transform: scale(.985);
-}
-
-@media (max-width: 360px) {
-  .liquid-candidate .section-about .about-actions {
-    margin-top: 22px;
-  }
-
-  .liquid-candidate .section-about .about-links {
-    gap: 8px;
-  }
-
-  .liquid-candidate .section-about .link-row {
-    min-height: 104px;
-    height: 104px;
-    padding: 12px;
-    border-radius: 16px;
-  }
-
-  .liquid-candidate .section-about .link-row .line-icon {
-    width: 31px;
-    height: 31px;
-  }
-
-  .liquid-candidate .section-about .link-row > span:nth-child(2) {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 360px) and (max-height: 760px) {
-  .liquid-candidate .section-about .about-heading {
-    padding-top: 12px !important;
-  }
-
-  .liquid-candidate .section-about .about-actions {
-    margin-top: 14px;
-  }
-
-  .liquid-candidate .section-about .about-actions-label {
-    margin-bottom: 8px;
-  }
-
-  .liquid-candidate .section-about .link-row {
-    min-height: 96px;
-    height: 96px;
-    padding: 10px 12px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .liquid-candidate .section-about .link-row {
-    transition: none;
-  }
+@media(prefers-reduced-motion:reduce){
+  .liquid-candidate .section-about .about-actions .link-row{transition:none}
+  .liquid-candidate .section-about .about-actions .link-row:hover,
+  .liquid-candidate .section-about .about-actions .link-row:active{transform:none}
 }
