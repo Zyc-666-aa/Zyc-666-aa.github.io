@@ -1,0 +1,26 @@
+/* Actual LUSH case evidence. Scoped to this project only. */
+#detailContent[data-project-id="lush"] .pv-case{max-width:920px;margin:0 auto;padding-top:16px;color:#e8edf1}
+#detailContent[data-project-id="lush"] .pv-case h1{margin:0 0 18px;font-size:clamp(30px,5vw,52px);line-height:1.15}
+.pv-case .pv-intro{margin:0 0 24px;max-width:30em;font-size:18px;line-height:1.65;color:#d7e1eb}
+.pv-case .pv-picture{display:block;min-width:0;margin:0;padding:0;border:0;background:transparent;cursor:zoom-in;overflow:hidden}
+.pv-case .pv-picture img{display:block;width:100%;height:auto;margin:0}
+.pv-case .pv-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding:28px 22px 18px;background:linear-gradient(145deg,#111a25,#05080d);border:1px solid #b9d2ea29;border-radius:12px}
+.pv-case .pv-overview figure{min-width:0;margin:0;text-align:center}
+.pv-case .pv-screen{border-radius:12px;border:1px solid #acbdd82b;box-sizing:border-box}
+.pv-case .pv-overview figcaption{margin-top:12px;font-size:12px;color:#bac5d0}
+.pv-case .pv-source{margin:10px 0 0;color:#738496;font-size:11px;line-height:1.5}
+.pv-case .pv-meta{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px 14px;margin:28px 0 0;padding:18px 0;border-top:1px solid #a5c2de25;border-bottom:1px solid #a5c2de25;font-size:12px;line-height:1.6}
+.pv-case .pv-meta dt{color:#8293a4}.pv-case .pv-meta dd{margin:0}
+.pv-case .pv-section{margin-top:48px}.pv-case .pv-kicker{margin:0 0 12px;font-size:11px;letter-spacing:.08em;color:#8da7bf}
+.pv-case h2{margin:0 0 14px;font-size:clamp(24px,3vw,32px);line-height:1.3;font-weight:500;color:#edf2f7}
+.pv-case .pv-copy{margin:0;color:#98a8b8;font-size:13px;line-height:1.65}
+.pv-case .pv-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.pv-case .pv-route{min-width:0;padding:18px 16px;background:#090f16;border-top:1px solid #829db955}.pv-case h3{margin:0 0 5px;font-size:16px;font-weight:500;color:#e5edf5}
+.pv-case .pv-route-step{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:13px;color:#97aabd}.pv-case .pv-route-step>span:first-child{color:#56758d}
+.pv-case .pv-proof-screen{width:76%;max-width:360px;margin:24px auto 0;border:1px solid #9db4cf33;border-radius:18px;background:#040608}
+.pv-case .pv-process{list-style:none;margin:24px 0 28px;padding:0;border-top:1px solid #a5c2de25}
+.pv-case .pv-process li{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid #a5c2de25}.pv-case .pv-step-no{font-size:12px;color:#6e8aa2;padding-top:3px}
+.pv-case .pv-workbench{width:100%;border-radius:8px}.pv-case .pv-footnote{margin:30px 0 0;color:#718394;font-size:11px;line-height:1.65}
+.pv-case .pv-picture:focus-visible{outline:2px solid #b2cee5;outline-offset:5px}
+@media(max-width:480px){.pv-case .pv-overview{gap:8px;padding:16px 10px 12px}.pv-case .pv-overview figcaption{font-size:11px}.pv-case .pv-intro{font-size:17px}}
+@media(max-width:360px){.pv-case .pv-overview{gap:6px;padding:12px 8px}.pv-case .pv-route{padding:16px 12px}}

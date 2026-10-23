@@ -404,6 +404,15 @@ function workCard(item,featured){
     if(docs.length){const quick=document.createElement('button');quick.className='detail-evidence-link';quick.type='button';quick.textContent='查看 '+docs.length+' 页项目资料';const targetId='documents';quick.addEventListener('click',()=>nav.querySelector('[data-jump="'+targetId+'"]').click());content.querySelector('.detail-subtitle').after(quick);}
   }
 
+  function visualCaseMarkup(item){
+    const v=item.visualCase,e=escapeMarkup;
+    const picture=(src,alt,cls,lazy=true)=>'<button type="button" class="pv-picture '+cls+'" data-media-src="'+e(src)+'" aria-label="放大'+e(alt)+'"><img src="'+e(src)+'" alt="'+e(alt)+'" loading="'+(lazy?'lazy':'eager')+'" decoding="async"></button>';
+    const overview=v.screens.map(s=>'<figure>'+picture(s.src,s.alt,'pv-screen',false)+'<figcaption>'+e(s.title)+'</figcaption></figure>').join('');
+    const routes=v.routes.map(r=>'<div class="pv-route"><h3>'+e(r.title)+'</h3>'+r.steps.map(s=>'<div class="pv-route-step"><span aria-hidden="true">↓</span><span>'+e(s)+'</span></div>').join('')+'</div>').join('');
+    const decisions=v.decisions.map((d,i)=>'<section class="pv-section"><p class="pv-kicker">0'+(i+2)+' / 界面与取舍</p><h2>'+e(d.title)+'</h2><p class="pv-copy">'+e(d.body)+'</p>'+picture(v.screens[d.image].src,v.screens[d.image].alt,'pv-proof-screen')+'<p class="pv-source">实际界面 · 点击放大</p></section>').join('');
+    const process=v.process.map((s,i)=>'<li><span class="pv-step-no">0'+(i+1)+'</span><div><h3>'+e(s.title)+'</h3><p class="pv-copy">'+e(s.body)+'</p></div></li>').join('');
+    return '<article class="pv-case"><p class="pv-kicker">2026 / 个人网站与微信小程序</p><h1 id="detailTitle">郁葱空间</h1><p class="pv-intro">'+e(v.summary)+'</p><div class="pv-overview">'+overview+'</div><p class="pv-source">当前小程序实际预览</p><dl class="pv-meta"><dt>设计与实现</dt><dd>'+e(v.role)+'</dd><dt>交付</dt><dd>'+e(v.delivery)+'</dd></dl><section class="pv-section"><p class="pv-kicker">01 / 两条使用路径</p><h2>看作品，也认识我</h2><div class="pv-routes">'+routes+'</div></section>'+decisions+'<section class="pv-section detail-journey"><p class="pv-kicker">04 / 制作过程</p><h2>从内容到可用页面</h2><ol class="pv-process">'+process+'</ol>'+picture(v.workbench.src,v.workbench.alt,'pv-workbench')+'<p class="pv-source">'+e(v.workbench.caption)+'</p></section><p class="pv-footnote">'+e(v.sourceNote)+'</p><button class="detail-end" id="detailEnd" type="button">返回作品</button></article>';
+  }
   function openDetail(item){
     detailFocus=document.activeElement;
     state.detail=item;
@@ -413,7 +422,7 @@ function workCard(item,featured){
     layer.classList.add('is-visible');
     const c=$('#detailContent');
     c.dataset.projectId=item.id;
-    {
+    if(item.id==='lush'&&item.visualCase){c.innerHTML=visualCaseMarkup(item);}else{
       const cover=item.detailCover||item.cover;
       const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
       const experienceLink=item.id==='lush-fashion'?'<a class="detail-end detail-experience-link" href="https://albertlush-d1gq6ex78779a34a3-1443272999.tcloudbaseapp.com/orla-video-site-20260926/" target="_blank" rel="noopener noreferrer" aria-label="打开 LUSH 服装网站原型，新窗口">打开网站原型 <span aria-hidden="true">›</span></a>':'';
