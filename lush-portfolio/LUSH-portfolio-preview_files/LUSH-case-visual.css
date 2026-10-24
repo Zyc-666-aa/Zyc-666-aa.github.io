@@ -24,3 +24,13 @@
 .pv-case .pv-picture:focus-visible{outline:2px solid #b2cee5;outline-offset:5px}
 @media(max-width:480px){.pv-case .pv-overview{gap:8px;padding:16px 10px 12px}.pv-case .pv-overview figcaption{font-size:11px}.pv-case .pv-intro{font-size:17px}}
 @media(max-width:360px){.pv-case .pv-overview{gap:6px;padding:12px 8px}.pv-case .pv-route{padding:16px 12px}}
+
+.pv-case .pv-wireframe-section{margin-top:30px}
+.pv-case .pv-wireframe-grid{display:grid;align-items:start;gap:12px}
+.pv-case .pv-wireframe-grid--mobile{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pv-case .pv-wireframe-grid--desktop{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pv-case .pv-wireframe{min-width:0;margin:0}
+.pv-case .pv-wireframe-image{box-sizing:border-box;border:1px solid #8da7bf30;border-radius:8px;background:#05070a}
+.pv-case .pv-wireframe figcaption{margin-top:6px;text-align:center;color:#74879a;font-size:10px;letter-spacing:.08em}
+@media(min-width:760px){.pv-case .pv-wireframe-grid--mobile{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(max-width:360px){.pv-case .pv-wireframe-grid--mobile{gap:7px}.pv-case .pv-wireframe-grid--desktop{gap:8px}}
