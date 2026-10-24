@@ -66,7 +66,7 @@
   const qaNativeGlass=new URLSearchParams(window.location.search).get('qaNativeGlass')!=='0';
   const fallbackStickerNodes=[];
   $('.welcome-portfolio-label').textContent=welcomeConfig.label;
-  const updateWelcomeHint=()=>{$('.welcome-idle-hint').textContent=desktopShowcase.matches?'点击光球体验语音，向上拖动展开作品入口':'点击光球体验语音，上滑展开作品入口';};
+  const updateWelcomeHint=()=>{$('.welcome-idle-hint').textContent=desktopShowcase.matches?'拖动或点击玻璃球，展开作品集入口':welcomeConfig.hint;};
   updateWelcomeHint();if(desktopShowcase.addEventListener)desktopShowcase.addEventListener('change',updateWelcomeHint);else desktopShowcase.addListener?.(updateWelcomeHint);
   $('#welcomeCopy h1').textContent=welcomeConfig.title;enterButton.textContent=welcomeConfig.enterLabel;
   const canvas=document.createElement('canvas');canvas.className='liquid-canvas';canvas.setAttribute('aria-hidden','true');welcomeLayer.prepend(canvas);
@@ -90,7 +90,7 @@
     welcomeLayer.dataset.state=motion.state;welcomeLayer.style.setProperty('--liquid-p',g.p);
     Object.assign(welcomeDome.style,{left:g.cx+'px',top:g.cy+'px',width:g.r*2+'px',height:g.r*2+'px'});
     updateFallbackStickers(g);
-    const ready=motion.state==='revealed'||(motion.target===1&&g.p>.985),copyOpacity=Math.max(0,Math.min(1,(g.p-welcomeConfig.copyRevealStart)/(1-welcomeConfig.copyRevealStart)));welcomeCopy.style.opacity=String(copyOpacity);welcomeCopy.classList.toggle('liquid-visible',copyOpacity>0);welcomeCopy.classList.toggle('liquid-ready',ready);welcomeCopy.inert=!ready;enterButton.disabled=!ready;welcomeDome.setAttribute('aria-label',ready?'点击光球体验语音，使用查看作品按钮进入作品集':desktopShowcase.matches?'点击光球体验语音，向上拖动展开作品入口':'点击光球体验语音，上滑展开作品入口');
+    const ready=motion.state==='revealed'||(motion.target===1&&g.p>.985),copyOpacity=Math.max(0,Math.min(1,(g.p-welcomeConfig.copyRevealStart)/(1-welcomeConfig.copyRevealStart)));welcomeCopy.style.opacity=String(copyOpacity);welcomeCopy.classList.toggle('liquid-visible',copyOpacity>0);welcomeCopy.classList.toggle('liquid-ready',ready);welcomeCopy.inert=!ready;enterButton.disabled=!ready;welcomeDome.setAttribute('aria-label',ready?'收起作品集入口':desktopShowcase.matches?'拖动或点击玻璃球，展开作品集入口':'上滑展开作品集入口');
     const samples=window.__lushLiquid.samples;samples.push({t:now,p:motion.p,state:motion.state});if(samples.length>900)samples.shift();
     raf=requestAnimationFrame(liquidFrame);
   }
@@ -99,11 +99,11 @@
   let welcomePointerReleased=false;
   welcomeDome.addEventListener('pointerdown',e=>{if(e.button!==0||motion.drag)return;const p=point(e),g=motion.geometry(viewport.width,viewport.height);if(Math.hypot(p.x-g.cx,p.y-g.cy)>g.r)return;motion.down(p.x,p.y,performance.now(),e.pointerId,p.h,viewport.width);welcomeDome.setPointerCapture(e.pointerId);});
   welcomeDome.addEventListener('pointermove',e=>{const p=point(e);motion.move(p.x,p.y,performance.now(),e.pointerId);});
-  welcomeDome.addEventListener('pointerup',()=>{const tapped=!!motion.drag&&!motion.drag.moved;welcomePointerReleased=!!motion.drag;if(tapped){motion.release(performance.now(),true);document.dispatchEvent(new CustomEvent('albertvoice:open'));return;}motion.release(performance.now());});
+  welcomeDome.addEventListener('pointerup',()=>{welcomePointerReleased=!!motion.drag;motion.release(performance.now());});
   welcomeDome.addEventListener('pointercancel',()=>{welcomePointerReleased=false;motion.release(performance.now(),true);});
   welcomeDome.addEventListener('lostpointercapture',()=>{if(motion.drag)motion.release(performance.now(),true);});
-  welcomeDome.addEventListener('click',e=>{const pointerHandled=welcomePointerReleased;welcomePointerReleased=false;if(pointerHandled)return;if(e.detail===0){document.dispatchEvent(new CustomEvent('albertvoice:open'));return;}if(['idle','revealed','reduced'].includes(motion.state))document.dispatchEvent(new CustomEvent('albertvoice:open'));});
-  welcomeDome.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();document.dispatchEvent(new CustomEvent('albertvoice:open'));}});
+  welcomeDome.addEventListener('click',e=>{const pointerHandled=welcomePointerReleased;welcomePointerReleased=false;if(e.detail===0||pointerHandled)return;if(['idle','revealed','reduced'].includes(motion.state))motion.setTarget(motion.target?0:1);});
+  welcomeDome.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();motion.setTarget(motion.target?0:1);}});
   enterButton.addEventListener('click',e=>{e.stopPropagation();if(enterButton.disabled||!(motion.state==='revealed'||(motion.target===1&&motion.p>.985)))return;motion.enter();welcomeLayer.classList.add('liquid-exit');setTimeout(()=>{portfolioLayer.hidden=false;welcomeLayer.hidden=true;$('#previewFrame').classList.remove('liquid-welcome-active');welcomeLayer.classList.remove('liquid-exit');cancelAnimationFrame(raf);raf=0;render();$('#worksButton').focus();},180);});
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();failLiquid();});
   canvas.addEventListener('webglcontextrestored',()=>{renderer=null;failed=false;canvas.hidden=false;welcomeLayer.classList.remove('liquid-fallback');motion.reset();resizeLiquid();});
