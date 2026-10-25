@@ -23,7 +23,7 @@
     ['教育背景',data.resume.education].filter(Boolean).join('\n'),
     ['代表项目',...data.resume.selectedWork.map(item=>[item.title+'｜'+item.status,item.body].join('\n'))].join('\n'),
     ['工作与校园经历',...data.resume.experience.map(item=>[item.org+'｜'+item.role+'｜'+item.period,item.body].join('\n'))].join('\n'),
-    ['核心能力',data.resume.strengths.join(' / ')].join('\n'),
+    ['设计实践',data.resume.strengths.join(' / ')].join('\n'),
     includeTools?['工具',data.resume.tools.join(' / ')].join('\n'):'',
     data.resume.methods?.length?['协作方式',data.resume.methods.join(' / ')].join('\n'):''
   ].filter(Boolean).join('\n\n');
@@ -37,7 +37,7 @@
       '<section class="resume-preview-section"><h3>教育背景</h3><p class="resume-preview-body">'+esc(r.education)+'</p></section>'+
       '<section class="resume-preview-section"><h3>项目经历</h3>'+r.selectedWork.map(item=>'<article class="resume-preview-entry"><div class="resume-preview-entry-head"><h4>'+esc(item.title)+'</h4><span>'+esc(item.status)+'</span></div><p class="resume-preview-meta">'+[item.role,item.period].filter(Boolean).map(esc).join('｜')+'</p>'+points(item.points||[item.body])+(item.result?'<p class="resume-preview-result"><strong>成果</strong> '+esc(item.result)+'</p>':'')+'<button class="resume-preview-case" type="button" data-resume-project="'+esc(item.id)+'" aria-label="查看案例：'+esc(item.title)+'">查看项目案例 <span aria-hidden="true">›</span></button></article>').join('')+'</section>'+
       '<section class="resume-preview-section"><h3>工作与校园经历</h3>'+r.experience.map(item=>'<article class="resume-preview-entry"><h4>'+esc(item.org)+'</h4><p class="resume-preview-meta">'+[item.role,item.period].filter(Boolean).map(esc).join('｜')+'</p>'+points(item.points||[item.body])+'</article>').join('')+'</section>'+
-      '<section class="resume-preview-section"><h3>核心能力</h3>'+points(r.strengths)+'</section>'+
+      '<section class="resume-preview-section"><h3>设计实践</h3>'+points(r.strengths)+'</section>'+
       (r.methods&&r.methods.length?'<section class="resume-preview-section"><h3>协作方式</h3>'+points(r.methods)+'</section>':'')+'</div>';
   }
   function renderResumeToolsMarkup(){
