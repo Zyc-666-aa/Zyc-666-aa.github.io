@@ -69,6 +69,9 @@
 .liquid-candidate .mobile-project-subtitle{display:block;margin:0;color:#d7dce1;font-size:17px;line-height:1.55;overflow-wrap:anywhere}
 .liquid-candidate .mobile-project-summary{display:block;margin:13px 0 15px;color:#a1adb8;font-size:15px;line-height:1.65;overflow-wrap:anywhere}
 .liquid-candidate .mobile-project-facts{display:block;margin:0;border-top:1px solid rgba(198,216,231,.24)}
+@media(max-width:767px){
+.liquid-candidate .mobile-project-subtitle+.mobile-project-facts{margin-top:13px}
+}
 .liquid-candidate .mobile-project-meta{display:grid;grid-template-columns:58px minmax(0,1fr);gap:16px;min-width:0;padding:10px 0;border-bottom:1px solid rgba(198,216,231,.14);font-size:15px;line-height:1.55}
 .liquid-candidate .mobile-project-meta span{color:#aebdca}
 .liquid-candidate .mobile-project-meta strong{min-width:0;color:#dce2e7;font-weight:400;overflow-wrap:anywhere;word-break:break-word}

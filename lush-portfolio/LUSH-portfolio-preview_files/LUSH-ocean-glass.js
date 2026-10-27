@@ -90,26 +90,29 @@
     }
     function buildMaterial(show,fresh=false){
       stopVisual();
-      const nodes=[layers[0],layers[1],layers[2],head,content,lens,volume],delays=show?[0,35,65,90,100,45,45]:[70,45,20,0,0,20,35];
+      const nodes=[layers[0],layers[1],layers[2],head,content,lens,volume],isMenu=sheet.dataset.sheetView==='menu';
+      const sheetDuration=parseFloat(getComputedStyle(sheet).getPropertyValue('--sheet-duration'))||540;
+      const duration=show?(isMenu?Math.min(260,sheetDuration):300):180;
+      const delays=show?(isMenu?[0,20,40,60,Math.max(0,sheetDuration-duration),20,20]:[0,35,65,90,100,45,45]):[70,45,20,0,0,20,35];
       nodes.forEach((el,i)=>{
         const to=show?1:0,from=fresh?0:parseFloat(el.style.opacity||1);
         if(reduced.matches||!el.animate){el.style.opacity=String(to);return;}
-        const a=el.animate([{opacity:from},{opacity:to}],{duration:show?300:180,delay:delays[i],fill:'both',easing:'cubic-bezier(.2,.7,.2,1)'});
+        const a=el.animate([{opacity:from},{opacity:to}],{duration,delay:delays[i],fill:'both',easing:'cubic-bezier(.2,.7,.2,1)'});
         visual.push(a);a.onfinish=()=>{el.style.opacity=String(to);a.cancel();visual=visual.filter(x=>x!==a);};
       });
     }
     function animateTo(name,velocity=0,done){
       const from=readY();++revision;stopMotion();targetState=name;phase=name==='collapsed'?'closing':'settling';syncState();
-      const to=position(name),own=revision;
+      const to=position(name),own=revision,duration=parseFloat(getComputedStyle(sheet).getPropertyValue('--sheet-duration'))||340;
       const finish=()=>{if(own!==revision)return;paint(to);motion=null;state=name;phase=name==='collapsed'?'closed':'open';syncState();if(name!=='collapsed'){fitContent(name);respond(0);}done?.();};
       if(reduced.matches||!sheet.animate){finish();return;}
-      const samples=P.samples(from,to,velocity,540);
-      motion=sheet.animate(samples.map(f=>({transform:'translate3d(0,'+f.y+'px,0)',offset:f.offset})),{duration:540,easing:'linear'});
+      const samples=P.samples(from,to,velocity,duration);
+      motion=sheet.animate(samples.map(f=>({transform:'translate3d(0,'+f.y+'px,0)',offset:f.offset})),{duration,easing:'linear'});
       function trackMaterial(){
         if(own!==revision||!motion)return;
-        const index=P.clamp((Number(motion.currentTime)||0)/540*40,0,40),a=Math.floor(index),b=Math.min(40,a+1);
+        const index=P.clamp((Number(motion.currentTime)||0)/duration*40,0,40),a=Math.floor(index),b=Math.min(40,a+1);
         y=samples[a].y+(samples[b].y-samples[a].y)*(index-a);
-        const speed=(samples[b].y-samples[a].y)/(540/40);respond(speed);
+        const speed=(samples[b].y-samples[a].y)/(duration/40);respond(speed);
         settleFrame=requestAnimationFrame(trackMaterial);
       }
       settleFrame=requestAnimationFrame(trackMaterial);
