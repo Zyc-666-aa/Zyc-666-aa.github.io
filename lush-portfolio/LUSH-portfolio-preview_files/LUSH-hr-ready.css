@@ -208,3 +208,34 @@
 .liquid-candidate .detail-experience-link:active {
   transform: translateY(1px);
 }
+.liquid-candidate .resume-preview-profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 68px;
+  align-items: start;
+  gap: 14px;
+}
+
+.liquid-candidate .resume-preview-profile-copy {
+  min-width: 0;
+}
+
+.liquid-candidate .resume-preview-portrait {
+  display: block;
+  width: 68px;
+  height: 85px;
+  object-fit: cover;
+  border: 1px solid rgba(194, 213, 226, .2);
+  border-radius: 7px;
+}
+
+@media (max-width: 440px) {
+  .liquid-candidate .resume-preview-profile {
+    grid-template-columns: minmax(0, 1fr) 60px;
+    gap: 12px;
+  }
+
+  .liquid-candidate .resume-preview-portrait {
+    width: 60px;
+    height: 75px;
+  }
+}
