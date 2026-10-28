@@ -190,7 +190,7 @@
 
   function showLoadError() {
     if (!pendingOpen) return;
-    status.textContent = '语音界面加载失败。关闭后可长按 3 秒重试，也可以继续浏览作品集。';
+    status.textContent = '语音界面加载失败。可从“探索”菜单重试，或长按底部光球 3 秒。';
     close.focus({ preventScroll: true });
   }
 
