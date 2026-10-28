@@ -226,26 +226,11 @@
     return '<section class="detail-section"><h2>'+title+'</h2>'+visualMarkup+'<p>'+body+'</p>'+(chain||decision?'<div class="section-analysis">'+(chain?'<div class="analysis-row"><span class="analysis-label">链路</span><p class="analysis-copy">'+chain+'</p></div>':'')+(decision?'<div class="analysis-row"><span class="analysis-label">我的决策</span><p class="analysis-copy">'+decision+'</p></div>':'')+'</div>':'')+'</section>';
   }
   function quickCaseMarkup(item){const s=item.snapshot;if(!s)return '';const rows=[['设计价值',s.value],['我的范围',s.scope||item.role],['阶段结果',s.result]],images=s.onSiteImages||[];const proof=images.length?'<div class="snapshot-on-site"><div class="snapshot-on-site-head"><span>现场应用</span><span>ON SITE</span></div><div class="snapshot-on-site-grid">'+images.map(image=>'<figure class="snapshot-on-site-card"><img loading="lazy" src="'+image.src+'" alt="'+image.caption+'"><figcaption>'+image.caption+'</figcaption></figure>').join('')+'</div></div>':'';return '<section class="detail-quick-read" aria-label="案例快速阅读"><div class="quick-read-head"><span>30 SECOND READ</span><h2>先看价值</h2></div><div class="quick-read-grid">'+rows.map(row=>'<div class="quick-read-row"><span>'+row[0]+'</span><p>'+row[1]+'</p></div>').join('')+'</div>'+proof+'</section>';}
-  function mountDetailNavigation(item){
-    const content=$('#detailContent'), header=$('#detailLayer .detail-header');
-    header.querySelector('.detail-index')?.remove();
-    const quickRead=content.querySelector('.detail-quick-read'), snapshot=content.querySelector('.detail-snapshot');
-    const targets=[];
-    if(quickRead)targets.push(['result','结果',quickRead]);
-    if(snapshot)targets.push(['summary','摘要',snapshot]);
-    else if(!quickRead)targets.push(['summary','摘要',content.querySelector('#detailTitle')]);
-    targets.push(['process','过程',content.querySelector('.detail-journey')||content.querySelector('.detail-section')]);
-    targets.push(['review','复盘',content.querySelector('.journey-review')]);
-    targets.push(['documents','资料',content.querySelector('.project-documents')]);
-    const visibleTargets=targets.filter(x=>x[2]);
-    const nav=document.createElement('nav');nav.className='detail-index';nav.setAttribute('aria-label','项目区块');
-    for(const [id,label,target] of visibleTargets){target.id='case-'+id;target.tabIndex=-1;const button=document.createElement('button');button.type='button';button.textContent=label;button.dataset.jump=id;button.setAttribute('aria-controls',target.id);button.addEventListener('click',()=>{content.scrollTop+=target.getBoundingClientRect().top-content.getBoundingClientRect().top-18;target.focus({preventScroll:true});update();});nav.append(button);}
-    header.append(nav);
-    let frame=0;
-    function update(){frame=0;const edge=content.getBoundingClientRect().top+80;let active=visibleTargets[0]?.[0];for(const [id,,target]of visibleTargets){if(target.getBoundingClientRect().top<=edge)active=id;}if(content.scrollTop+content.clientHeight>=content.scrollHeight-8)active=visibleTargets.at(-1)?.[0];nav.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',b.dataset.jump===active?'location':'false'));}
-    content.onscroll=()=>{if(!frame)frame=requestAnimationFrame(update);};update();
-    const docs=item.documents||[];
-    if(docs.length){const quick=document.createElement('button');quick.className='detail-evidence-link';quick.type='button';quick.textContent='查看 '+docs.length+' 页项目资料';quick.addEventListener('click',()=>nav.querySelector('[data-jump="documents"]').click());const detailMetaAnchor=content.querySelector('.detail-subtitle')||content.querySelector('#detailTitle');if(detailMetaAnchor)detailMetaAnchor.after(quick);}
+  function premiereCaseMarkup(item){
+    const story=item.caseNarrative||{},steps=story.steps||[],result=story.result||item.snapshot?.result||item.detailDelivery||'';
+    const images=item.snapshot?.onSiteImages||[];
+    const evidence=images.length?'<div class="premiere-case-evidence" aria-label="首映礼现场应用"><div class="premiere-case-evidence-heading"><span>现场应用</span><span>首映礼现场照片</span></div><div class="premiere-case-evidence-grid">'+images.slice(0,2).map(image=>'<figure><button type="button" data-media-src="'+escapeMarkup(image.src)+'" aria-label="查看'+escapeMarkup(image.caption||'现场照片')+'"><img loading="lazy" src="'+escapeMarkup(image.src)+'" alt="'+escapeMarkup(image.caption||'现场照片')+'"></button><figcaption>'+escapeMarkup(image.caption||'')+'</figcaption></figure>').join('')+'</div></div>':'';
+    return '<section class="premiere-case" aria-label="首映礼设计逻辑"><div class="premiere-case-heading"><span class="eyebrow">CASE LOGIC</span><h2>'+escapeMarkup(story.title||'从影片情绪到首映现场')+'</h2><p>'+escapeMarkup(story.intro||item.intro||'')+'</p></div><ol class="premiere-case-steps">'+steps.map((step,index)=>'<li class="premiere-case-step"><span class="premiere-case-step-index">'+String(index+1).padStart(2,'0')+'</span><div><h3>'+escapeMarkup(step.title||'')+'</h3><p>'+escapeMarkup(step.body||'')+'</p></div></li>').join('')+'</ol><div class="premiere-case-result"><span>交付结果</span><p>'+escapeMarkup(result)+'</p></div>'+evidence+'<p class="premiere-case-credit"><span>我的职责</span><strong>'+escapeMarkup(item.role||'')+'</strong><span>制作工具</span><strong>'+escapeMarkup(item.tools||'')+'</strong></p></section>';
   }
   function pauseDetailMedia(){const video=$('#detailContent video');if(video)video.pause();}
   function closeDetail(after){const layer=$('#detailLayer');if(layer.hidden){if(after)after();return;}pauseDetailMedia();const restore=detailFocus;detailFocus=null;layer.classList.remove('is-visible');layer.classList.add('is-closing');setTimeout(()=>{if(layer.classList.contains('is-visible'))return;layer.hidden=true;layer.classList.remove('is-closing');state.detail=null;if(after)after();else if(restore&&typeof restore.focus==='function')restore.focus();},220);}
@@ -384,7 +369,10 @@ function workCard(item,featured){
     const content=$('#detailContent'), header=$('#detailLayer .detail-header');
     header.querySelector('.detail-index')?.remove();
     const targets=[];
-    {
+    if(item.id==='dear-you-premiere'){
+      targets.push(['summary','摘要',content.querySelector('#detailTitle')]);
+      targets.push(['process','过程',content.querySelector('.premiere-case-steps')]);
+    }else{
       const quickRead=content.querySelector('.detail-quick-read'), snapshot=content.querySelector('.detail-snapshot');
       if(quickRead)targets.push(['result','结果',quickRead]);
       if(snapshot)targets.push(['summary','摘要',snapshot]);
@@ -428,7 +416,9 @@ function workCard(item,featured){
       const coverMarkup='<button class="detail-cover-button" id="detailCoverButton" type="button" aria-label="全屏查看'+item.title+'主视觉"><img class="detail-cover" src="'+cover+'" alt="'+item.title+'"><span class="detail-cover-hint" aria-hidden="true">点击全屏查看</span></button>';
       const secondaryPosterMarkup=item.secondaryPoster?'<button type="button" class="detail-cover-button detail-secondary-poster" data-media-src="'+escapeMarkup(item.secondaryPoster.src)+'" aria-label="全屏查看第二张海报"><img class="detail-cover" src="'+escapeMarkup(item.secondaryPoster.src)+'" alt="'+escapeMarkup(item.secondaryPoster.alt||item.title)+'" loading="lazy" decoding="async"><span class="detail-cover-hint" aria-hidden="true">'+escapeMarkup(item.secondaryPoster.label||'海报 02')+' · 点击全屏查看</span></button>':'';
       const experienceLink=item.id==='lush-fashion'?'<a class="detail-end detail-experience-link" href="https://albertlush-d1gq6ex78779a34a3-1443272999.tcloudbaseapp.com/orla-video-site-20260926/" target="_blank" rel="noopener noreferrer" aria-label="打开 LUSH 服装网站原型，新窗口">打开网站原型 <span aria-hidden="true">›</span></a>':'';
-      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1>'+(item.id==='dear-you-premiere'?'' : '<p class="detail-subtitle">'+item.subtitle+'</p>')+experienceLink+interactionVideoMarkup(item)+coverMarkup+secondaryPosterMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item)+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
+      const isPremiere=item.id==='dear-you-premiere';
+      const detailSections=isPremiere?coverMarkup+secondaryPosterMarkup+premiereCaseMarkup(item):interactionVideoMarkup(item)+coverMarkup+secondaryPosterMarkup+compactCaseSignals(item)+compactOutcome(item)+'<div class="detail-meta"><div><span>角色</span><strong>'+item.role+'</strong></div><div><span>时间</span><strong>'+item.year+'</strong></div></div>'+compactProcess(item)+decisionTreeMarkup(item)+compactStory(item)+compactEvidence(item);
+      c.innerHTML='<div class="detail-scroll-wordmark"><img src="'+ROOT_ASSET+'lush-wordmark-mobile.png" alt="LUSH"></div><span class="eyebrow">'+item.status+' / '+item.category+'</span><h1 id="detailTitle">'+item.title+'</h1>'+(isPremiere?'' : '<p class="detail-subtitle">'+item.subtitle+'</p>')+experienceLink+detailSections+'<button class="detail-end" id="detailEnd" type="button">返回作品</button>';
     }
     const detailCover=c.querySelector('.detail-cover');if(detailCover){detailCover.loading='eager';detailCover.decoding='async';detailCover.fetchPriority='high';}
     if(item.id==='dear-you-premiere'){
