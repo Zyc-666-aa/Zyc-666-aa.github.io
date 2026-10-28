@@ -7,10 +7,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#000000">
+  <meta name="albert-voice-api" content="">
   <title>LUSH｜作品集</title>
   <link rel="icon" type="image/png" sizes="256x256" href="/lush-portfolio/LUSH-portfolio-preview_files/assets/root/lush-mark-favicon-v1.png?v=20261020-logo-mark">
   <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-mini-preview.css?v=20261011-native-site-sync-v12">
-  <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-liquid-candidate.css?v=20261020-portfolio-release-v1">
+  <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-liquid-candidate.css?v=20261028-voice-hold-v1">
 <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-case-visual.css?v=20261024-wireframes-v1">
   <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-uiux.css?v=20261011-native-site-sync-v12">
   <link rel="stylesheet" href="LUSH-portfolio-preview_files/LUSH-process-redesign.css?v=20261027-premiere-second-poster-v1">
@@ -45,6 +46,72 @@
       </div>
     </section>
 
+      <div class="albert-voice-overlay" id="albertVoiceDialog" hidden role="dialog" aria-modal="true" aria-labelledby="albertVoiceTitle" aria-describedby="albertVoiceStatus">
+        <section class="albert-voice-panel" data-state="idle">
+          <header class="albert-voice-header">
+            <div class="albert-voice-brand"><p class="albert-voice-kicker">ALBERT / DIGITAL SELF</p><h2 id="albertVoiceTitle">和 Albert 聊一会儿</h2></div>
+            <div class="albert-voice-identity"><span class="albert-voice-identity-dot" aria-hidden="true"></span><span id="albertVoiceIdentityLabel">语音对话</span></div>
+            <button class="albert-voice-close" id="albertVoiceClose" type="button" aria-label="关闭语音体验">关闭</button>
+          </header>
+          <div class="albert-voice-content">
+            <section class="albert-voice-stage" aria-label="语音交互状态">
+              <div class="albert-voice-visual" id="albertVoiceVisual" data-state="idle" role="img" aria-label="Albert 语音主体，当前静候交流">
+                <svg class="albert-voice-rings" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="76"></circle><circle cx="100" cy="100" r="61"></circle><circle cx="100" cy="100" r="46"></circle></svg>
+                <span class="albert-voice-orb" aria-hidden="true"><span class="albert-voice-orb-highlight"></span></span>
+                <span class="albert-voice-meter" aria-hidden="true"><span id="albertVoiceMeterFill"></span></span>
+              </div>
+              <p class="albert-voice-state-label" id="albertVoiceStateLabel">等你开口</p>
+              <p class="albert-voice-status" id="albertVoiceStatus" role="status" aria-live="polite">可以先提问。</p>
+            </section>
+            <section class="albert-voice-latest" aria-label="最新回答">
+              <p class="albert-voice-response-label">最新回答</p>
+              <p class="albert-voice-latest-text" id="albertVoiceLatestText">想聊什么？设计、作品或者 AI 都可以。</p>
+              <div class="albert-voice-response-actions">
+                <button class="albert-voice-text-action" id="albertVoiceSpeakCurrent" type="button" hidden>播放 AI 语音</button>
+                <button class="albert-voice-text-action" id="albertVoiceStopSpeaking" type="button" hidden>停止播放</button>
+                <button class="albert-voice-text-action albert-voice-work-link" id="albertVoiceOpenPortfolio" type="button" hidden>查看作品集</button>
+              </div>
+            </section>
+            <div class="albert-voice-prompts" role="group" aria-label="推荐话题">
+              <button type="button" data-prompt="你怎么看 AI 和设计？">聊 AI</button>
+              <button type="button" data-prompt="介绍一下你的服装设计背景">聊设计</button>
+              <button type="button" data-prompt="你会怎么回答，才像我？">聊表达</button>
+            </div>
+            <details class="albert-voice-history" id="albertVoiceHistory" hidden>
+              <summary><span>对话记录</span><span class="albert-voice-history-count" id="albertVoiceHistoryCount">0</span></summary>
+              <div class="albert-voice-messages" id="albertVoiceMessages" aria-live="off" aria-relevant="additions text"></div>
+              <p class="albert-voice-history-empty" id="albertVoiceHistoryEmpty" hidden>当前没有对话记录。</p>
+              <button class="albert-voice-clear" id="albertVoiceClear" type="button">清除本页会话</button>
+            </details>
+            <section class="albert-voice-mic-area" aria-label="语音输入">
+              <button class="albert-voice-mic" id="albertVoiceMic" type="button" aria-pressed="false">体验麦克风</button>
+              <p class="albert-voice-meter-reading" id="albertVoiceMeterReading" aria-live="off">麦克风未开启</p>
+            </section>
+            <form class="albert-voice-form" id="albertVoiceForm">
+              <label for="albertVoiceInput">文字输入</label>
+              <div class="albert-voice-input-row"><input id="albertVoiceInput" name="message" type="text" maxlength="100" autocomplete="off" placeholder="输入问题"><button type="submit">发送</button></div>
+            </form>
+            <details class="albert-voice-services" id="albertVoiceServices">
+              <summary><span>服务说明</span></summary>
+              <div class="albert-voice-service-content">
+                <section class="albert-voice-consent" id="albertVoiceAiConsent" hidden aria-label="AI 服务说明">
+                  <p id="albertVoiceAiDisclosure"></p><a id="albertVoiceAiPrivacy" target="_blank" rel="noopener noreferrer">查看 AI 服务隐私说明</a> <a id="albertVoiceTtsPrivacy" target="_blank" rel="noopener noreferrer">查看语音合成隐私说明</a>
+                  <label><input id="albertVoiceAiConsentCheck" type="checkbox">我已阅读并同意问题处理及回答语音合成说明</label>
+                </section>
+                <section class="albert-voice-consent" id="albertVoiceAudioConsent" hidden aria-label="录音处理说明">
+                  <p id="albertVoiceAudioDisclosure"></p><a id="albertVoiceAudioPrivacy" target="_blank" rel="noopener noreferrer">查看录音处理隐私说明</a>
+                  <label><input id="albertVoiceAudioConsentCheck" type="checkbox">我已阅读并同意以上录音处理说明</label>
+                </section>
+                <details class="albert-voice-pair" id="albertVoicePair" hidden><summary>同步网站与微信额度</summary><p>生成一次性绑定码后，在小程序中完成绑定。只合并额度，不合并聊天记录。</p><button id="albertVoicePairButton" type="button">生成绑定码</button><output id="albertVoicePairCode" aria-live="polite"></output></details>
+                <details class="albert-voice-pair albert-voice-admin" id="albertVoiceAdmin" hidden><summary>本机测试用量与预算</summary><p>金额为应用估算，供应商账单可能因延迟或其他调用而不同。预算调整只影响本机应用停止接收新请求的上限。</p><button id="albertVoiceUsage" type="button">查看本月用量</button><output id="albertVoiceUsageOutput" aria-live="polite"></output><label for="albertVoiceBudget">手动设置应用停止上限（元）</label><input id="albertVoiceBudget" type="number" min="1" max="100" step="0.01" inputmode="decimal"><button id="albertVoiceBudgetApply" type="button">调整上限</button><output id="albertVoiceBudgetOutput" aria-live="polite"></output></details>
+                <p class="albert-voice-footnote" id="albertVoiceFootnote">当前是本地 Mock 版本，尚未接入真实 AI 或语音服务。</p>
+                <p class="albert-voice-mic-note" id="albertVoiceMicNote">仅本地音量可视化，不会保存或上传声音。</p>
+              </div>
+            </details>
+          </div>
+        </section>
+      </div>
+
     <section class="portfolio-layer" id="portfolioLayer" hidden aria-label="LUSH 作品集">
       <div class="uiverse-starfield" aria-hidden="true"><div class="uiverse-stars-1"></div><div class="uiverse-stars-2"></div><div class="uiverse-stars-3"></div></div>
       <div class="wechat-capsule-preview" aria-hidden="true"><span class="wechat-capsule-dots"><i></i><i></i><i></i></span><span class="wechat-capsule-divider"></span><span class="wechat-capsule-ring"></span></div>
@@ -53,7 +120,7 @@
       </main>
       <nav class="dock" aria-label="底部导航">
         <button class="dock-side current" id="worksButton" type="button" aria-current="page" aria-label="探索"><span class="dock-star" aria-hidden="true"></span><span class="dock-label">探索</span></button>
-        <button class="dock-plus" id="menuButton" type="button" aria-label="打开页面目录" aria-haspopup="dialog" aria-expanded="false"></button>
+        <button class="dock-plus" id="menuButton" type="button" aria-label="打开页面目录；按住三秒体验语音" title="短按打开目录，长按 3 秒体验语音" aria-haspopup="dialog" aria-expanded="false"><span class="voice-hold-ring" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" pathLength="100"></circle></svg></span></button>
         <button class="dock-side" id="aboutButton" type="button" aria-current="false" aria-label="关于"><span class="dock-planet" aria-hidden="true"></span><span class="dock-label">关于</span></button>
       </nav>
       <div class="sheet-overlay" id="sheetOverlay" hidden>
@@ -102,5 +169,6 @@
   <script defer src="LUSH-portfolio-preview_files/LUSH-sheet-optics.js?v=20261014-optical-model-v5"></script>
   <script defer src="LUSH-portfolio-preview_files/LUSH-ocean-glass.js?v=20261027-explore-optical-glass-v1"></script>
   <script defer src="LUSH-portfolio-preview_files/LUSH-liquid-candidate.js?v=20261028-resume-portrait-v1"></script>
+  <script defer src="LUSH-portfolio-preview_files/albert-voice-loader.js?v=20261028-persona-v2"></script>
 </body>
 </html>
