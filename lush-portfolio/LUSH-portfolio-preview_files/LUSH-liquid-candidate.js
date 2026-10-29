@@ -47,7 +47,7 @@
     return '<p class="contact-hint">选择一种方便的方式联系我</p><div class="contact-method-list">'+rows.join('')+'</div>';
   }
   const resumeText=(includeTools=true)=>[
-    [data.resume.name+' / '+data.resume.english,'个人定位：'+data.resume.role,data.resume.summary].filter(Boolean).join('\n'),
+    [data.resume.name+' / '+data.resume.english,data.resume.role,data.resume.summary].filter(Boolean).join('\n'),
     ['联系方式',['电话：'+data.contact.phone,'邮箱：'+data.contact.email,'GitHub：https://github.com/'+data.contact.github].filter(Boolean).join(' / ')].join('\n'),
     ['教育背景',data.resume.education].filter(Boolean).join('\n'),
     ['代表项目',...data.resume.selectedWork.map(item=>[item.title+'｜'+item.status,item.body].join('\n'))].join('\n'),
@@ -61,7 +61,7 @@
     const r=data.resume,esc=value=>escapeMarkup(value||'');
     const points=items=>'<ul class="resume-preview-points">'+(items||[]).map(point=>'<li>'+esc(point)+'</li>').join('')+'</ul>';
     const contacts=[['电话',data.contact.phone],['邮箱',data.contact.email],['GitHub','https://github.com/'+data.contact.github]].filter(item=>item[1]);
-    return '<div class="resume-preview"><header class="resume-preview-profile"><div class="resume-preview-profile-copy"><p class="resume-preview-name">'+esc(r.name)+' / '+esc(r.english)+'</p><span class="resume-preview-label">个人定位</span><p class="resume-preview-role">'+esc(r.role)+'</p><p class="resume-preview-summary">'+esc(r.summary)+'</p></div><img class="resume-preview-portrait" src="/lush-portfolio/LUSH-portfolio-preview_files/assets/portfolio/resume/albert-portrait-320.jpg" alt="张誉聪个人形象照" width="68" height="85" loading="lazy" decoding="async"></header>'+
+    return '<div class="resume-preview"><header class="resume-preview-profile"><div class="resume-preview-profile-copy"><p class="resume-preview-name">'+esc(r.name)+' / '+esc(r.english)+'</p><p class="resume-preview-role">'+esc(r.role)+'</p><p class="resume-preview-summary">'+esc(r.summary)+'</p></div><img class="resume-preview-portrait" src="/lush-portfolio/LUSH-portfolio-preview_files/assets/portfolio/resume/albert-portrait-320.jpg" alt="张誉聪个人形象照" width="68" height="85" loading="lazy" decoding="async"></header>'+
       '<section class="resume-preview-section"><h3>联系方式</h3><div class="resume-preview-contacts">'+contacts.map(item=>'<p><span>'+esc(item[0])+'</span><span>'+esc(item[1])+'</span></p>').join('')+'</div></section>'+
       '<section class="resume-preview-section"><h3>教育背景</h3><p class="resume-preview-body">'+esc(r.education)+'</p></section>'+
       '<section class="resume-preview-section"><h3>项目经历</h3>'+r.selectedWork.map(item=>'<article class="resume-preview-entry"><div class="resume-preview-entry-head"><h4>'+esc(item.title)+'</h4><span>'+esc(item.status)+'</span></div><p class="resume-preview-meta">'+[item.role,item.period].filter(Boolean).map(esc).join('｜')+'</p>'+points(item.points||[item.body])+(item.result?'<p class="resume-preview-result"><strong>成果</strong> '+esc(item.result)+'</p>':'')+'<button class="resume-preview-case" type="button" data-resume-project="'+esc(item.id)+'" aria-label="查看案例：'+esc(item.title)+'">查看项目案例 <span aria-hidden="true">›</span></button></article>').join('')+'</section>'+
