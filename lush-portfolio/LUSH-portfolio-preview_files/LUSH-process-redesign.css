@@ -1367,3 +1367,8 @@
   font-size: 11px;
   line-height: 1.5;
 }
+
+
+/* Premiere original landscape gallery v2. */
+.liquid-candidate .premiere-case-evidence-grid img,.liquid-candidate .case-onsite-evidence img,.liquid-candidate .snapshot-on-site-card img{display:block;width:100%;height:auto!important;aspect-ratio:auto;object-fit:contain;object-position:center}
+@media(max-width:680px){.liquid-candidate .premiere-case-evidence-grid,.liquid-candidate .case-onsite-evidence,.liquid-candidate .snapshot-on-site-grid{grid-template-columns:1fr}}
