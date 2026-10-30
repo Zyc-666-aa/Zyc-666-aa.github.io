@@ -398,7 +398,7 @@ body.document-viewer-open{overflow:hidden}
 .snapshot-on-site-head>span:last-child{color:#72869a;font-size:10px;letter-spacing:2px}
 .snapshot-on-site-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .snapshot-on-site-card{min-width:0;margin:0}
-.snapshot-on-site-card img{display:block;width:100%;height:132px;object-fit:cover;border-radius:8px;background:#0a0d12}
+.snapshot-on-site-card img{display:block;width:100%;height:auto;object-fit:contain;border-radius:8px;background:#0a0d12}
 .snapshot-on-site-card figcaption{margin-top:5px;color:#8a9bad;font-size:11px;line-height:1.45}
 @media(max-width:360px){.snapshot-grid{grid-template-columns:1fr}.snapshot-head{display:block}.snapshot-head>h2{margin-top:6px}}
 /* Case-study podcast layout: evidence visuals sit before the reasoning. */
